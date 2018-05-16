@@ -14,7 +14,7 @@ namespace Test
         static void Main(string[] args)
         {
 
-            BadMomDataService service = new BadMomDataService(new EFUnitOfWork("data source=UAPSPC313-22\\SQLEXPRESS;initial catalog=BadMomResource;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"));
+            BadMomDataService service = new BadMomDataService(new EFUnitOfWork("data source=ELESSARPC\\SQLEXPRESS;initial catalog=BadMomResource;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"));
 
             service.AddUser(new User()
             {
@@ -28,16 +28,16 @@ namespace Test
 
             });
 
-            //var user = service.GetUserById(1);
+            var user = service.GetUserById(1);
 
-            //service.AddMessage(new Message()
-            //{
-            //    Body = "test test test",
-            //    Created = DateTime.Now,
-            //    Title = "Test",
-            //    UserId = 1,
-            //    Theme = 1
-            //});
+            service.AddMessage(new Message()
+            {
+                Body = "test test test",
+                Created = DateTime.Now,
+                Title = "Test",
+                UserId = 1,
+                Theme = 1
+            });
 
             var res = service.GetMessageByUserId(1);
 
