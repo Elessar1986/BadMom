@@ -1,0 +1,156 @@
+﻿body {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.Test {
+    width: 170px;
+    height: 100px;
+    /*background-color: #FF1168;*/
+    background-image: url('../resorces/shell-logo-design.gif');
+    background-size:100% 100%;
+    position: absolute;
+    top: 20px;
+}
+
+.TestLeft {
+
+    left: 10%;
+}
+
+@media (max-width: 992px) {
+    /*.dropdown-toggle::after {
+        display: none
+    }*/ 
+
+    .TestLeft {
+        left: 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    
+    .TestLeft {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.pull-right {
+    margin-left: auto;
+    margin-right: 0;
+}
+.bg-gray {
+    background-color: #8F8F8F;
+}
+
+.bg-violetlight {
+    background-color: #FF1168;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: #FF1168 !important;
+    }
+
+.nav-item a:hover {
+    color: #FF1168 !important;
+}
+
+.card-header {
+    background-color: #9E1E4C;
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #8F8F8F;
+    color: white;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #8F8F8F;
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+}
+
+.color-pink {
+    color: #FF1168
+}
