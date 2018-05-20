@@ -1,5 +1,6 @@
 namespace BadMom.BLL.DataTransferObjects
 {
+    using BadMom.DAL.Model.Abstract;
     using System;
     using System.Collections.Generic;
 
@@ -24,5 +25,6 @@ namespace BadMom.BLL.DataTransferObjects
 
         public byte[] Photo { get; set; }
 
+        public bool Confirmed { get; set; }
     }
 }

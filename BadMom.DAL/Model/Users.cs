@@ -1,5 +1,6 @@
 namespace BadMom.DAL.Model
 {
+    using BadMom.DAL.Model.Abstract;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -48,6 +49,8 @@ namespace BadMom.DAL.Model
         public DateTime? LastUpdate { get; set; }
 
         public byte[] Photo { get; set; }
+
+        public bool Confirmed { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Advert> Advert { get; set; }

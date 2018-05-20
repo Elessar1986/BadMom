@@ -1,4 +1,6 @@
-﻿@{
+﻿@using BadMom.Models.Registration
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -41,7 +43,7 @@
         <div class="col-4" >
 
             <div class="card d-none d-sm-none d-md-block">
-                @Html.Partial("_Login")
+                @Html.Partial("_Login", new UserLoginData())
             </div>
 
         </div>

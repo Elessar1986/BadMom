@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BadMom.BLL.Infrastrutcure
 {
-    class ServiceModule : NinjectModule
+    public class ServiceModule : NinjectModule
     {
         private string connectionString;
 

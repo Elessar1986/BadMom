@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Model\Abstract\IUser.cs" />
     <Compile Include="Model\Advert.cs" />
     <Compile Include="Model\BadMomDB.cs" />
     <Compile Include="Model\Category.cs" />
@@ -91,7 +92,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

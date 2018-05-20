@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BadMom.DAL.Model;
+using BadMom.DAL.Repositories;
+using AutoMapper.Configuration;
+using BadMom.DAL.Model.Abstract;
 
 namespace BadMom.BLL.Services
 {
@@ -19,6 +22,11 @@ namespace BadMom.BLL.Services
         public BadMomDataService(IUnitOfWork unit)
         {
             data = unit;
+        }
+
+        public BadMomDataService(string connectionString)
+        {
+            data = new EFUnitOfWork(connectionString);
         }
 
         public void AddUser(User user)
@@ -48,7 +56,7 @@ namespace BadMom.BLL.Services
             if(user != null)
             {
                 var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
-                var getUser = mapper.Map<Users, User>(user);
+                var getUser = mapper.Map<Users, User>((Users)user);
                 return getUser;
             }
             return null;
@@ -61,6 +69,15 @@ namespace BadMom.BLL.Services
             
             var message = mapper.Map<DAL.Model.Messages, DataTransferObjects.Message>(mes);
             return message;
+        }
+
+        public User FindUserByLogin(string login)
+        {
+            var user = data.Users.Find(u => u.Login == login).First();
+
+            var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
+            var getUser = mapper.Map<Users, User>((Users)user);
+            return getUser;
         }
     }
 }

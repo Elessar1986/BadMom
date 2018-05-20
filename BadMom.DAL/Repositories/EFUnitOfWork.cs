@@ -1,5 +1,6 @@
 ﻿using BadMom.DAL.Interfaces;
 using BadMom.DAL.Model;
+using BadMom.DAL.Model.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
