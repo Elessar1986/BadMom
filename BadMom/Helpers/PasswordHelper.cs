@@ -23,7 +23,7 @@ namespace BadMom.Helpers
         {
             string salt = CreateSalt();
 
-            string stringDataToHash = "Password" + salt;
+            string stringDataToHash = password + salt;
             // Convert the data to hash to an array of Bytes.
             byte[] bytValue = Encoding.UTF8.GetBytes(stringDataToHash);
             // Compute the Hash. This returns an array of Bytes.

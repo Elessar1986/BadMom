@@ -73,7 +73,7 @@ namespace BadMom.BLL.Services
 
         public User FindUserByLogin(string login)
         {
-            var user = data.Users.Find(u => u.Login == login).First();
+            var user = data.Users.Find(u => u.Login == login).FirstOrDefault();
 
             var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
             var getUser = mapper.Map<Users, User>((Users)user);
