@@ -9,11 +9,17 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 {
     interface IDataHelper
     {
-        void CreateUser(RegistrUserVM user, UserPasswordData passData);
+        UserData CreateUser(RegistrUserVM user, UserPasswordData passData);
 
         UserPasswordData GetPasswordData(string login);
 
+        string[] GetUserRoles(string login);
 
+        UserData ConfirmAuth(string login, string pass);
+
+        bool CheckUserToChangePass(string login, string pass);
+
+        UserData ChangePass(UserPasswordData passData);
 
     }
 }

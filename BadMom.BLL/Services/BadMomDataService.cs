@@ -11,6 +11,7 @@ using BadMom.DAL.Model;
 using BadMom.DAL.Repositories;
 using AutoMapper.Configuration;
 using BadMom.DAL.Model.Abstract;
+using BadMom.BLL.Infrastrutcure;
 
 namespace BadMom.BLL.Services
 {
@@ -19,10 +20,10 @@ namespace BadMom.BLL.Services
 
         IUnitOfWork data { get; set; }
 
-        public BadMomDataService(IUnitOfWork unit)
-        {
-            data = unit;
-        }
+        //public BadMomDataService(IUnitOfWork unit)
+        //{
+        //    data = unit;
+        //}
 
         public BadMomDataService(string connectionString)
         {
@@ -31,6 +32,8 @@ namespace BadMom.BLL.Services
 
         public void AddUser(User user)
         {
+            if (data.Users.Find(x => x.Email == user.Email).Count() != 0) throw new ValidationException("Пользователь с таким e-mail уже зарегистрирован!", "Email");
+            if (data.Users.Find(x => x.Login == user.Login).Count() != 0) throw new ValidationException("Пользователь с таким логином уже зарегистрирован!", "Login");
             var mapper = new MapperConfiguration(c => c.CreateMap<User, Users>()).CreateMapper();
             var newUser = mapper.Map<User, Users>(user);
             data.Users.Create(newUser);
@@ -73,11 +76,65 @@ namespace BadMom.BLL.Services
 
         public User FindUserByLogin(string login)
         {
-            var user = data.Users.Find(u => u.Login == login).FirstOrDefault();
+            var user = data.Users.Find(u => u.Login == login || u.Email == login).FirstOrDefault();
 
-            var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
-            var getUser = mapper.Map<Users, User>((Users)user);
-            return getUser;
+           if(user != null)
+            {
+                var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
+                var getUser = mapper.Map<Users, User>((Users)user);
+                return getUser;
+            }
+            return null;
+        }
+
+        public User ConfirmAuth(string login, string pass)
+        {
+            var user = data.Users.Find(u => u.Login == login || u.Email == login).FirstOrDefault();
+            if(user != null && !user.Confirmed && user.PasswordHash.Equals(pass))
+            {
+                user.Confirmed = true;
+                data.Users.Update(user);
+                data.Save();
+                var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
+                var getUser = mapper.Map<Users, User>(user);
+                return getUser;
+            }
+            return null;
+        }
+
+        public bool CheckUserToChangePass(string login, string pass)
+        {
+            var user = data.Users.Find(u => u.Login == login || u.PasswordHash == pass).FirstOrDefault();
+            if(user != null)
+            {
+                if (!user.Confirmed) throw new ValidationException("Пользователь не активировал свой аккаунт!", "");
+                return true;
+            }
+            return false;
+        }
+
+        public User ChangePass(string login, string pass, string salt)
+        {
+            var user = data.Users.Find(u => u.Login == login).FirstOrDefault();
+            if(user != null)
+            {
+                user.PasswordHash = pass;
+                user.Salt = salt;
+                data.Users.Update(user);
+                data.Save();
+                var mapper = new MapperConfiguration(c => c.CreateMap<Users, User>()).CreateMapper();
+                var getUser = mapper.Map<Users, User>(user);
+                return getUser;
+            }
+            return null;
+        }
+
+        public void SendLoggerMessage(DataTransferObjects.logEvents logEvents)
+        {
+            var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.logEvents, DAL.Model.logEvents>()).CreateMapper();
+            var newEvent = mapper.Map<DataTransferObjects.logEvents, DAL.Model.logEvents>(logEvents);
+            data.logEvents.Create(newEvent);
+            data.Save();
         }
     }
 }

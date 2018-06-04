@@ -1,0 +1,10 @@
+﻿@model BadMom.Models.Registration.UserPasswordData
+@{
+    ViewBag.Title = "ChangePassLink";
+}
+
+<div class="text-center">
+    <a href="http://localhost:12287/Registration/ChangePass?login=@Model.Login&pass=@Model.passwordHash">Сменить пароль</a>
+</div>
+
+

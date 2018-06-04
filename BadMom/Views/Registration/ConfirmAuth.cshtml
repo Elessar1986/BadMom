@@ -1,0 +1,28 @@
+﻿@using BadMom.Models.Registration
+@model BadMom.Models.Registration.UserData
+    
+@{
+    ViewBag.Title = "ConfirmAuth";
+}
+
+
+
+
+
+<div class="container">
+
+    <h2>Поздравляем, @Model.Login, вы прошли авторизацию! Теперь вы можете войти на ресурс используя свой логин и пароль. </h2>
+
+    <br />
+
+    <div class="card  d-none d-sm-none d-md-block">
+        <div class="row">
+            <div class="col-12">
+                @Html.Partial("_Login", new UserLoginDataVM())
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

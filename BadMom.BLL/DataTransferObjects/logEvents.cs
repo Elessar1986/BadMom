@@ -13,6 +13,6 @@ namespace BadMom.BLL.DataTransferObjects
 
         public string Description { get; set; }
 
-        public logTypes logTypes { get; set; }
+        public logTypes Type { get; set; }
     }
 }

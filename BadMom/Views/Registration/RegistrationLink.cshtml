@@ -1,0 +1,9 @@
+﻿@model BadMom.Models.Registration.UserData
+@{
+    ViewBag.Title = "RegistrationLink";
+}
+
+<div class="text-center">
+    <a href="http://localhost:12287/Registration/ConfirmAuth?login=@Model.Login&pass=@Model.PasswordHash">Подтвердить регистрацию</a>
+</div>
+

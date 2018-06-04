@@ -1,0 +1,19 @@
+﻿@using BadMom.Models.Registration
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+
+    <p style="color: red">@ViewBag.WrongPassOrLog</p>
+
+    <div class="card  d-none d-sm-none d-md-block">
+        <div class="row">
+            <div class="col-12">
+                @Html.Partial("_Login", new UserLoginDataVM())
+            </div>
+        </div>
+
+    </div>
+
+</div>

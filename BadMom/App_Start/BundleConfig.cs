@@ -29,6 +29,29 @@ namespace BadMom
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //bundles.Add(new StyleBundle("~/Content/badmom").Include(
+            //          "~/Content/bootstrap.css",
+            //          "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/badmom").Include(
+                     "~/Content/bootstrap.css",
+                     "~/Content/badmom/fontastic.css",
+                     "~/Content/badmom/jquery.fancybox.min.css.css",
+                     "~/Content/layout.css",
+                     "~/Content/badmom/style.default.css"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/fancyapps").Include(
+                       "~/Scripts/fancyapps/jquery.fancybox.min.js"));
+
+
+
+
+
+
+
+
         }
     }
 }

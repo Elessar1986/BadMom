@@ -14,7 +14,7 @@ namespace Test
         static void Main(string[] args)
         {
 
-            BadMomDataService service = new BadMomDataService(new EFUnitOfWork("data source=UAPSPC313-22\\SQLEXPRESS;initial catalog=BadMomResource;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"));
+            BadMomDataService service = new BadMomDataService("BadMomResource");
             //service.AddUser(new User()
             //{
             //    PasswordHash = "sdsdsdsdsd",

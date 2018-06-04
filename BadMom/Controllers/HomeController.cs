@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BadMom.Models.Registration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ namespace BadMom.Controllers
         public ActionResult Index()
         {
 
-
+            
             return View();
         }
 

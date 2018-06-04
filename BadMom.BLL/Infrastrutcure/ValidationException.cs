@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BadMom.BLL.Infrastrutcure
 {
-    class ValidationException : Exception
+    public class ValidationException : Exception
     {
         public string Property { get; protected set; }
 

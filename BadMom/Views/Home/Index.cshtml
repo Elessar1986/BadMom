@@ -1,51 +1,70 @@
 ﻿@using BadMom.Models.Registration
-
+@model BadMom.Models.Registration.UserLoginDataVM
 @{
     ViewBag.Title = "Home Page";
 }
-
 <div class="">
     <div class="row">
         <div class="col-sm-12  col-md-8">
-
             <div class="card">
                 <div class="card-header">
                     Новости
                 </div>
                 <div class="card-body">
-
                 </div>
             </div>
-
             <br />
-
             <div class="card">
                 <div class="card-header">
                     Последнее
                 </div>
                 <div class="card-body">
-
                 </div>
             </div>
-
             <br />
-
             <div class="card">
                 <div class="card-header">
                     Популярное
                 </div>
                 <div class="card-body">
-
                 </div>
             </div>
-
         </div>
-        <div class="col-4" >
+        <div class="col-4">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="card  d-none d-sm-none d-md-block login-main-padding">
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.Partial("_Login", Model)
+                        </div>
+                        <div class="col-12 text-center">
 
-            <div class="card d-none d-sm-none d-md-block">
-                @Html.Partial("_Login", new UserLoginData())
-            </div>
+                        </div>
+                    </div>
 
+                </div>
+            }
+            else
+            {
+
+                <div class="card  d-none d-sm-none d-md-block">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            Личные данные
+                        </div>
+                        <div class="col-12 text-center">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            }
         </div>
     </div>
 </div>
+
+<br />
+<br />
+<br />

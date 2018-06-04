@@ -3,12 +3,10 @@ namespace BadMom.BLL.DataTransferObjects
     using System;
     using System.Collections.Generic;
 
-    public partial class logTypes
+    public enum logTypes
     {
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
+        Error = 1,
+        Security = 2,
+        Info = 3
     }
 }

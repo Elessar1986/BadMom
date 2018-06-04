@@ -18,7 +18,15 @@ namespace BadMom.BLL.Interfaces
 
         void AddMessage(Message mess);
 
+        User ConfirmAuth(string login, string pass);
+
+        bool CheckUserToChangePass(string login, string pass);
+
         Message GetMessageByUserId(long id);
+
+        User ChangePass(string login, string pass, string salt);
+
+        void SendLoggerMessage(logEvents logEvents);
 
         void Dispose();
     }

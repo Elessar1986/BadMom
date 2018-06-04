@@ -15,6 +15,7 @@ namespace BadMom.Models.Registration
 
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
+        [MinLength(8,ErrorMessage = "Пароль меньше 8 символов!")]
         [Required]
         public string Password { get; set; }
 
@@ -25,6 +26,7 @@ namespace BadMom.Models.Registration
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "E-mail")]
+        [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }
 

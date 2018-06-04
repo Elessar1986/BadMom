@@ -11,5 +11,7 @@ namespace BadMom.Models.Registration
 
         public string salt { get; set; }
 
+        public string Login { get; set; }
+
     }
 }

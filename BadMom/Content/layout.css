@@ -1,0 +1,14 @@
+﻿body {
+}
+
+.main-background {
+    background-color: #ff0051cc !important;
+}
+
+footer.main-footer {
+    background-color: #9600ff !important;
+}
+
+.login-main-padding {
+    padding: 20px;
+}

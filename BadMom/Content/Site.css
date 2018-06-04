@@ -27,7 +27,7 @@ textarea {
     width: 170px;
     height: 100px;
     /*background-color: #FF1168;*/
-    background-image: url('../resorces/shell-logo-design.gif');
+    background-image: url('../resources/shell-logo-design.gif');
     background-size:100% 100%;
     position: absolute;
     top: 20px;
@@ -153,4 +153,8 @@ textarea {
 
 .color-pink {
     color: #FF1168
+}
+
+.paddingBottomZero{
+    padding-bottom: 0 !important;
 }

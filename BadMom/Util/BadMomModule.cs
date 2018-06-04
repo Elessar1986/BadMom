@@ -36,7 +36,7 @@ namespace BadMom.Util
         }
         private void AddBindings()
         {
-            kernel.Bind<IBadMomDataService>().To<BadMomDataService>().WithConstructorArgument("BadMom");
+            kernel.Bind<IBadMomDataService>().To<BadMomDataService>().WithConstructorArgument("BadMomResource");
         }
     }
 }

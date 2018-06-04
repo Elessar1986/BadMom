@@ -1,13 +1,37 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@model BadMom.Models.Shared.Error
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h2>Error</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExInnerDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExInnerDescription)
+        </dd>
+
+    </dl>
+</div>
