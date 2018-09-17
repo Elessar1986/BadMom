@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTransferObjects\AdminUserData.cs" />
     <Compile Include="DataTransferObjects\Advert.cs" />
     <Compile Include="DataTransferObjects\Category.cs" />
     <Compile Include="DataTransferObjects\Comment.cs" />

@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<BadMom.Models.Admin.AdminUserDataVM>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+
+
+
+<div class="container">
+
+
+
+    <table class="table table-light table-hover users-table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Login</th>
+                <th class="d-none d-md-table-cell" scope="col">Зарегистрирован</th>
+                <th scope="col">E-mail</th>
+                <th class="d-none d-md-table-cell" scope="col">Роль</th>
+                <th scope="col">Conf</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+
+            <tr class="user-item">
+                <td>@item.Id</td>
+                <th scope="row">
+                    @item.Login
+                </th>
+
+                <td class="d-none d-md-table-cell">@item.Created</td>
+                <td>@item.Email</td>
+                <td class="d-none d-md-table-cell">@item.Roles</td>
+                @if (item.Confirmed == true)
+    {
+            <td>да</td>
+}
+else
+{
+            <td>нет</td>
+}
+                <td> @item.Status</td>
+
+            </tr>
+
+
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+
+
+
+    <nav class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("Users", new { page }))
+    </nav>
+
+
+
+</div>

@@ -26,7 +26,7 @@
                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
 
-                            <img src="@imgSrc" class="img-fluid"/>
+                            <img src="@imgSrc" class="img-fluid" />
                         }
                         else
                         {<img src="~/Resources/img/blog-post-3.jpeg" alt="..." class="img-fluid">}
@@ -76,41 +76,14 @@
                                 </div>
                                 <div class="comments meta-last"><i class="fa fa-comments-o"></i>@Model.Comments.Count</div>
 
-                              
+
                             </div>
                         </div>
                         <div class="post-body">
                             <p class="lead">@Model.Body</p>
                             <p></p>
 
-                            @*<p> <img src="img/featured-pic-3.jpeg" alt="..." class="img-fluid"></p>
-                                <h3>Lorem Ipsum Dolor</h3>
-                                <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p>
-                                <blockquote class="blockquote">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-                                    <footer class="blockquote-footer">
-                                        Someone famous in
-                                        <cite title="Source Title">Source Title</cite>
-                                    </footer>
-                                </blockquote>
-                                <p>quasi nam. Libero dicta eum recusandae, commodi, ad, autem at ea iusto numquam veritatis, officiis. Accusantium optio minus, voluptatem? Quia reprehenderit, veniam quibusdam provident, fugit iusto ullam voluptas neque soluta adipisci ad.</p>*@
                         </div>
-
-                        @*<div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
-                                <a href="#" class="prev-post text-left d-flex align-items-center">
-                                    <div class="icon prev"><i class="fa fa-angle-left"></i></div>
-                                    <div class="text">
-                                        <strong class="text-primary">Previous Post </strong>
-                                        <h6>I Bought a Wedding Dress.</h6>
-                                    </div>
-                                </a><a href="#" class="next-post text-right d-flex align-items-center justify-content-end">
-                                    <div class="text">
-                                        <strong class="text-primary">Next Post </strong>
-                                        <h6>I Bought a Wedding Dress.</h6>
-                                    </div>
-                                    <div class="icon next"><i class="fa fa-angle-right">   </i></div>
-                                </a>
-                            </div>*@
 
                         @*-----------------COMMENTS------------------------*@
 
@@ -121,7 +94,7 @@
                             <div id="commentsDiv">
                                 @Html.Partial("Comments", Model.Comments)
                             </div>
-                         
+
                         </div>
                         <div class="add-comment">
                             <header>
@@ -169,6 +142,23 @@
         </main>
         <aside class="col-lg-4">
 
+            <!-- Widget [Categories Widget]-->
+            <div class="widget categories">
+                <header>
+                    <h3 class="h6">Категории</h3>
+                </header>
+                @{
+            List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
+            foreach (var item in themes)
+            {
+                <div class="item d-flex justify-content-between">
+                    @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
+                    <span>@item.MessageCount</span>
+                </div>
+    }
+                }
+
+            </div>
 
             <div class="widget latest-posts">
                 <header>
@@ -176,20 +166,20 @@
                 </header>
                 <div class="blog-posts">
                     @foreach (var item in (List<LastMessage>)ViewBag.LastMessage)
-                    {
-                        <a href="~/blog/post?message=@item.Id">
-                            <div class="item d-flex align-items-center">
-                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                                <div class="title">
-                                    <strong>@item.Title</strong>
-                                    <div class="d-flex align-items-center">
-                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
-                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
-                                    </div>
-                                </div>
+            {
+                <a href="~/blog/post?message=@item.Id">
+                    <div class="item d-flex align-items-center">
+                        <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                        <div class="title">
+                            <strong>@item.Title</strong>
+                            <div class="d-flex align-items-center">
+                                <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
                             </div>
-                        </a>
-                    }
+                        </div>
+                    </div>
+                </a>
+    }
 
                 </div>
                 <header>
@@ -197,41 +187,24 @@
                 </header>
                 <div class="blog-posts">
                     @foreach (var item in (List<FeaturedMessage>)ViewBag.FeaturedMessage)
-                    {
-                        <a href="~/blog/post?message=@item.Id">
-                            <div class="item d-flex align-items-center">
-                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                                <div class="title">
-                                    <strong>@item.Title</strong>
-                                    <div class="d-flex align-items-center">
-                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
-                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
-                                    </div>
-                                </div>
+            {
+                <a href="~/blog/post?message=@item.Id">
+                    <div class="item d-flex align-items-center">
+                        <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                        <div class="title">
+                            <strong>@item.Title</strong>
+                            <div class="d-flex align-items-center">
+                                <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
                             </div>
-                        </a>
-                    }
+                        </div>
+                    </div>
+                </a>
+    }
 
                 </div>
             </div>
 
-            <!-- Widget [Categories Widget]-->
-            <div class="widget categories">
-                <header>
-                    <h3 class="h6">Категории</h3>
-                </header>
-                @{
-                    List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
-                    foreach (var item in themes)
-                    {
-                        <div class="item d-flex justify-content-between">
-                            @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
-                            <span>@item.MessageCount</span>
-                        </div>
-                    }
-                }
-
-            </div>
 
         </aside>
     </div>

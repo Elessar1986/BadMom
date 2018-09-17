@@ -2,6 +2,7 @@
 using BadMom.BLL.DataTransferObjects;
 using BadMom.BLL.Interfaces;
 using BadMom.Helpers.DataServiceHelper.Abstract;
+using BadMom.Models.Admin;
 using BadMom.Models.Advert;
 using BadMom.Models.Blog;
 using BadMom.Models.Planer;
@@ -672,6 +673,14 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             {
                 throw ex;
             }
+        }
+
+        public List<AdminUserDataVM> GetAllUsers()
+        {
+            var users = data.GetAllUsers();
+            var mapper = new MapperConfiguration(c => c.CreateMap<AdminUserData, AdminUserDataVM>()).CreateMapper();
+            var mappedRes = mapper.Map<List<AdminUserData>, List<AdminUserDataVM>>(users);
+            return mappedRes;
         }
     }
 }

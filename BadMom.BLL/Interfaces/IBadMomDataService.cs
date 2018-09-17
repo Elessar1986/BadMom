@@ -113,6 +113,8 @@ namespace BadMom.BLL.Interfaces
 
         List<Events> GetEventsByUser(string userName);
 
+        List<AdminUserData> GetAllUsers();
+
         void Dispose();
     }
 }

@@ -9,6 +9,7 @@ using BadMom.Models.Wallet;
 using BadMom.Models.User;
 using BadMom.Models.Advert;
 using BadMom.Models.Planer;
+using BadMom.Models.Admin;
 
 namespace BadMom.Helpers.DataServiceHelper.Abstract
 {
@@ -117,5 +118,7 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
         void DeleteEvent(long eventId);
 
         List<EventVM> GetEventsByUser(string userName);
+
+        List<AdminUserDataVM> GetAllUsers();
     }
 }

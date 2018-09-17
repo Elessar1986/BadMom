@@ -24,11 +24,12 @@ namespace BadMom
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/popper.mim.js",
                       "~/Scripts/bootstrap.js",
+                      //"~/Scripts/bootstrap.bundle.js",
                        "~/Scripts/bootstrap-datepicker.min.js",
                       "~/Scripts/locales/bootstrap-datepicker.ru.min.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js"
+                       /*"~/Scripts/popper.js"*/));
 
             bundles.Add(new ScriptBundle("~/bundles/new").Include(
                       "~/Scripts/registration/new.js"));
@@ -98,6 +99,9 @@ namespace BadMom
 
             bundles.Add(new StyleBundle("~/Content/wallet").Include(
                                    "~/Content/wallet.css"));
+
+            bundles.Add(new StyleBundle("~/Content/admin").Include(
+                                   "~/Content/admin.css"));
 
             bundles.Add(new StyleBundle("~/Content/homepage").Include(
                                    "~/Content/homepage.css"));

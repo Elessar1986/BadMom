@@ -88,14 +88,8 @@
             </li>
             @if (User.IsInRole("admin"))
             {
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Админка</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown2">
-                        <a class="dropdown-item" href="#">Профили</a>
-                        <a class="dropdown-item" href="#">Блог</a>
-                        <a class="dropdown-item" href="#">Сооющения</a>
-                        <a class="dropdown-item" href="#">Обьявления</a>
-                    </div>
+                <li class="nav-item ">
+                    <a class="nav-link" href="@Url.Action("Users", "Admin")">Админка<span class="sr-only">(current)</span></a>
                 </li>
             }
 

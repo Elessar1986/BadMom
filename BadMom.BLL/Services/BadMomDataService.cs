@@ -158,7 +158,7 @@ namespace BadMom.BLL.Services
             var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.logEvents, DAL.Model.logEvents>().ForMember(
             x => x.Type, a => a.MapFrom(d => d.Type))).CreateMapper();
             var newEvent = mapper.Map<DataTransferObjects.logEvents, DAL.Model.logEvents>(logEvents);
-            if (newEvent.Description.Length > 490) newEvent.Description = newEvent.Description.Substring(0, 490);
+            //if (newEvent.Description.Length > 490) newEvent.Description = newEvent.Description.Substring(0, 490);
 
             data.logEvents.Create(newEvent);
             data.Save();
@@ -855,6 +855,15 @@ namespace BadMom.BLL.Services
             var mapper = new MapperConfiguration(c => c.CreateMap<DAL.Model.Events, DataTransferObjects.Events>()).CreateMapper();
 
             var mappedRes = mapper.Map<List<DAL.Model.Events>, List<DataTransferObjects.Events>>(events);
+            return mappedRes;
+        }
+
+        public List<AdminUserData> GetAllUsers()
+        {
+            var users = data.Users.GetAll().ToList();
+            var mapper = new MapperConfiguration(c => c.CreateMap<DAL.Model.Users, DataTransferObjects.AdminUserData>()).CreateMapper();
+
+            var mappedRes = mapper.Map<List<DAL.Model.Users>, List<DataTransferObjects.AdminUserData>>(users);
             return mappedRes;
         }
     }

@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    @Styles.Render("~/Content/admin")
+}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark admin-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Главная</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="@Url.Action("Users")">Пользователи</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Посты</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Обьявления</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Списки</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="#">Причины дохода</a>
+                    <a class="dropdown-item" href="#">Причины расхода</a>
+                    <a class="dropdown-item" href="#">Тип счета</a>
+                    <a class="dropdown-item" href="#">Категории обьявлений</a>
+                    <a class="dropdown-item" href="#">Категории блога</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Логи</a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+
+
+@RenderBody()

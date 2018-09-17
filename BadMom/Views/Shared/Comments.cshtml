@@ -22,7 +22,7 @@
                 </div>
                 <div class="title">
                     <strong>@Html.ActionLink(@item.Users.Login, "UserInfo", "User", new { UserName = @item.Users.Login }, new { })</strong>
-                    @if (item.Users.Login == User.Identity.Name)
+                    @if (item.Users.Login == User.Identity.Name || User.IsInRole("admin"))
                     {
 
                         @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
