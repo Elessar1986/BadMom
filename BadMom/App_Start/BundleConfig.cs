@@ -25,7 +25,7 @@ namespace BadMom
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      //"~/Scripts/bootstrap.bundle.js",
+                       //"~/Scripts/bootstrap.bundle.js",
                        "~/Scripts/bootstrap-datepicker.min.js",
                       "~/Scripts/locales/bootstrap-datepicker.ru.min.js",
                       "~/Scripts/respond.js"
@@ -68,6 +68,10 @@ namespace BadMom
                       "~/Scripts/bootstrap-datepicker.min.js",
                       "~/Scripts/locales/bootstrap-datepicker.ru.min.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/contextmenu").Include(
+                      "~/Scripts/jquery.contextMenu.min.js",
+                      "~/Scripts/jquery.ui.position.min.js"));
 
             //-------------STYLES--------------------------------------------------------
 
@@ -114,6 +118,9 @@ namespace BadMom
 
             bundles.Add(new StyleBundle("~/Content/bootstrap-datepicker").Include(
                                   "~/Content/bootstrap-datepicker3.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/contextmenu").Include(
+                                 "~/Content/jquery.contextMenu.min.css"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include(
             //          "~/Content/bootstrap.css",

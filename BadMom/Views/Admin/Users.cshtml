@@ -11,7 +11,7 @@
 
 <div class="container">
 
-
+    @*<span class="context-menu-one btn btn-neutral">right click me</span>*@
 
     <table class="table table-light table-hover users-table">
         <thead>
@@ -32,26 +32,26 @@
                 foreach (var item in Model)
                 {
 
-            <tr class="user-item">
-                <td>@item.Id</td>
-                <th scope="row">
-                    @item.Login
-                </th>
+                    <tr class="user-item context-menu-one" id="@item.Id">
+                        <td>@item.Id</td>
+                        <th scope="row">
+                            @item.Login
+                        </th>
 
-                <td class="d-none d-md-table-cell">@item.Created</td>
-                <td>@item.Email</td>
-                <td class="d-none d-md-table-cell">@item.Roles</td>
-                @if (item.Confirmed == true)
-    {
-            <td>да</td>
-}
-else
-{
-            <td>нет</td>
-}
-                <td> @item.Status</td>
+                        <td class="d-none d-md-table-cell">@item.Created</td>
+                        <td>@item.Email</td>
+                        <td class="d-none d-md-table-cell">@item.Roles</td>
+                        @if (item.Confirmed == true)
+                        {
+                            <td>да</td>
+                        }
+                        else
+                        {
+                            <td>нет</td>
+                        }
+                        <td> @item.Status</td>
 
-            </tr>
+                    </tr>
 
 
                 }
@@ -71,3 +71,5 @@ else
 
 
 </div>
+
+
