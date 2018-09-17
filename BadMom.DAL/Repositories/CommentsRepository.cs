@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.Comment.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.Comment.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.Comment.Include(c => c.Users).Where(predicate).ToList();
         }
 
-        public Comment Get(int id)
+        public Comment Get(long id)
         {
             return db.Comment.Find(id);
         }

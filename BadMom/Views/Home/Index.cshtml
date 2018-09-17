@@ -3,68 +3,131 @@
 @{
     ViewBag.Title = "Home Page";
 }
+
+@section styles{
+    @Styles.Render("~/Content/homepage")
+}
+
 <div class="">
-    <div class="row">
-        <div class="col-sm-12  col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    Новости
-                </div>
-                <div class="card-body">
-                </div>
-            </div>
-            <br />
-            <div class="card">
-                <div class="card-header">
-                    Последнее
-                </div>
-                <div class="card-body">
-                </div>
-            </div>
-            <br />
-            <div class="card">
-                <div class="card-header">
-                    Популярное
-                </div>
-                <div class="card-body">
+    <section style="background: url(../../Resources/main3.jpg);background-color: #8287ee; background-size: cover; background-position: center center" class="hero-wallet">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7" style="color:black">
+                    <h1>Ресурс семейного досуга</h1><a href="#" class="hero-link">УЗНАТЬ БОЛЬШЕ</a>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <div class="card  d-none d-sm-none d-md-block login-main-padding">
-                    <div class="row">
-                        <div class="col-12">
-                            @Html.Partial("_Login", Model)
+    </section>
+
+
+    <!-- Intro Section-->
+    <section class="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="h3">Some great intro here</h2>
+                    <p class="text-big">Place a nice <strong>introduction</strong> here <strong>to catch reader's attention</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <div class="album py-5 bg-light" style="padding-top: 1rem !important;">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow main-menu-item" onclick="window.location = '@Url.Action("Index","Blog")'">
+                        <img class="card-img-top" src="~/Resources/blog_main.jpg"  alt="Card image cap">
+                        <div class="card-header">
+                            Блог
                         </div>
-                        <div class="col-12 text-center">
+                        <div class="card-body">
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
                         </div>
                     </div>
-
                 </div>
-            }
-            else
-            {
-
-                <div class="card  d-none d-sm-none d-md-block">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            Личные данные
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow main-menu-item" onclick="window.location = '@Url.Action("Index","Advert")'">
+                        <img class="card-img-top" src="~/Resources/gifts1.jpg" alt="Card image cap">
+                        <div class="card-header">
+                            Личные обьявления
                         </div>
-                        <div class="col-12 text-center">
+                        <div class="card-body">
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
                         </div>
                     </div>
-
                 </div>
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow main-menu-item" onclick="window.location = '@Url.Action("Index","Planer")'">
+                        <img class="card-img-top" src="~/Resources/planer_main.jpg" alt="Card image cap">
+                        <div class="card-header">
+                            Планировщик
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 
-            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-6 box-shadow main-menu-item" onclick="window.location = '@Url.Action("Index","Wallet")'">
+                        <img class="card-img-top" src="~/Resources/wallet_main.jpg" alt="Card image cap">
+                        <div class="card-header">
+                            Кошелек
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Gallery Section-->
+    <!--<section class="gallery no-padding">
+            <div class="row">
+                <div class="mix col-lg-3 col-md-3 col-sm-6">
+                    <div class="item">
+                        <a href="~/Resources/img/gallery-1.jpg" data-fancybox="gallery" class="image">
+                            <img src="~/Resources/img/gallery-1.jpg" alt="..." class="img-fluid">
+                            <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="mix col-lg-3 col-md-3 col-sm-6">
+                    <div class="item">
+                        <a href="~/Resources/img/gallery-2.jpg" data-fancybox="gallery" class="image">
+                            <img src="~/Resources/img/gallery-2.jpg" alt="..." class="img-fluid">
+                            <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="mix col-lg-3 col-md-3 col-sm-6">
+                    <div class="item">
+                        <a href="~/Resources/img/gallery-3.jpg" data-fancybox="gallery" class="image">
+                            <img src="~/Resources/img/gallery-3.jpg" alt="..." class="img-fluid">
+                            <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="mix col-lg-3 col-md-3 col-sm-6">
+                    <div class="item">
+                        <a href="~/Resources/img/gallery-4.jpg" data-fancybox="gallery" class="image">
+                            <img src="~/Resources/img/gallery-4.jpg" alt="..." class="img-fluid">
+                            <div class="overlay d-flex align-items-center justify-content-center"><i class="icon-search"></i></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>-->
+
 </div>
 
-<br />
-<br />
-<br />

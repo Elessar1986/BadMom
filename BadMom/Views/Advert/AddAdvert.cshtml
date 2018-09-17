@@ -1,0 +1,86 @@
+﻿@model BadMom.Models.Advert.AdvertVM
+@{
+    ViewBag.Title = "обьявления";
+    Layout = "~/Views/Advert/_AdvertLayout.cshtml";
+    ViewBag.Menu = "add";
+}
+
+<div class="container">
+
+    <div style="margin-bottom:5%;margin-top:1%;">
+        <div class="col-12">
+
+
+            <div class="advert-add">
+                <div class="text-center header">
+                    Добавить обьявление
+                </div>
+
+                @using (Html.BeginForm("AddAdvert", "Advert", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    @Html.TextBoxFor(model => model.Title, new { @placeholder = "Заголовок", @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-12">
+                                    @Html.DropDownListFor(model => model.Category, ViewBag.Categories as List<SelectListItem>, new { @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group col-12">
+                                    @Html.TextAreaFor(model => model.Body, new { @placeholder = "Текст обьявления", @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-12">
+
+                                    @Html.TextBoxFor(model => model.Price, new { @placeholder = "Цена", @class = "form-control decimalItem", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-12">
+                                    @Html.Label("Новое")
+                                    @Html.EditorFor(model => model.New, new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div>
+                                <div class="form-group">
+
+                                    <img style="display:inline; max-width:300px; max-height:200px;" src="http://via.placeholder.com/300x200" id="avatar_preview" />
+
+                                </div>
+                                <div class="form-group d-flex justify-content-end">
+                                    <label class="btn btn-secondary">
+                                        <input style="display:none;" type="file" name="fileUpload" accept="image/*" onchange="readURL(this);" />
+                                        Добавить фото
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group d-flex justify-content-end">
+                        <button type="submit" class="btn btn-secondary">Опубликовать обьявление</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/new")
+
+}
+

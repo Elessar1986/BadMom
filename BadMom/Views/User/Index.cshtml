@@ -1,0 +1,88 @@
+﻿@model BadMom.Models.Registration.UserData
+@{
+    ViewBag.Title = "Личные данные";
+    Layout = "~/Views/User/_MyProfileLayout.cshtml";
+    ViewBag.menu = "main";
+}
+
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class=" info-table">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Почта:
+                    </div>
+                    <div class="data">
+                        @Html.DisplayFor(model => model.Email)
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Статус:
+                    </div>
+                    <div class="data">
+                        @switch (Model.Roles)
+                        {
+                            case "user":
+                                <text>Пользователь</text>
+                                break;
+                            case "user/admin":
+                                <text>Администратор</text>
+                                break;
+                            default:
+                                break;
+                        }
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Зарегестрирован(а):
+                    </div>
+                    <div class="data">
+                        @Html.DisplayFor(model => model.Created)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+  
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Сообщение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @*@Scripts.Render("~/bundles/wallet");*@
+
+    <script>
+
+
+
+    </script>
+
+
+}
+
+

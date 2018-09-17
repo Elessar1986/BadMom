@@ -8,7 +8,9 @@ namespace BadMom.BLL.DataTransferObjects
     {
         public long Id { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateStart { get; set; }
+
+        public DateTime? DateEnd { get; set; }
 
         public DateTime Created { get; set; }
 
@@ -18,10 +20,19 @@ namespace BadMom.BLL.DataTransferObjects
 
         public bool Remind { get; set; }
 
-        public EventType EventType { get; set; }
+        public int Type { get; set; }
 
-        public Source Source1 { get; set; }
+        public long? Source { get; set; }
 
-        public User User { get; set; }
+        public long UserId { get; set; }
+
+        public string Title { get; set; }
+
+        public virtual EventType EventType { get; set; }
+
+        public virtual Source Source1 { get; set; }
+
+        public long? AdvertId { get; set; }
+
     }
 }

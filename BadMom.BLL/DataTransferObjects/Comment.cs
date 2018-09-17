@@ -19,6 +19,6 @@ namespace BadMom.BLL.DataTransferObjects
 
         public DateTime? LastUpdate { get; set; }
 
-        public User User { get; set; }
+        public User Users { get; set; }
     }
 }

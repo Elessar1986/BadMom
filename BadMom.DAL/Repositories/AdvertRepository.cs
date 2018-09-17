@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.Advert.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.Advert.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.Advert.Include(o => o.Category1).Include(c => c.Users).Where(predicate).ToList();
         }
 
-        public Advert Get(int id)
+        public Advert Get(long id)
         {
             return db.Advert.Find(id);
         }

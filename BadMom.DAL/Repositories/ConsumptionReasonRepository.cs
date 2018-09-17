@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.ConsumptionReason.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.ConsumptionReason.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.ConsumptionReason.Where(predicate).ToList();
         }
 
-        public ConsumptionReason Get(int id)
+        public ConsumptionReason Get(long id)
         {
             return db.ConsumptionReason.Find(id);
         }

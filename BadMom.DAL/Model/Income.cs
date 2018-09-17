@@ -28,6 +28,8 @@ namespace BadMom.DAL.Model
 
         public long Destination { get; set; }
 
+        public decimal Sum { get; set; }
+
         public virtual IncomeReason IncomeReason { get; set; }
 
         public virtual OperationType OperationType { get; set; }

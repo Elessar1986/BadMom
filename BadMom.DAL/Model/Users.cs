@@ -1,6 +1,5 @@
 namespace BadMom.DAL.Model
 {
-    using BadMom.DAL.Model.Abstract;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -16,8 +15,11 @@ namespace BadMom.DAL.Model
             Comment = new HashSet<Comment>();
             Consumption = new HashSet<Consumption>();
             Events = new HashSet<Events>();
+            FavoriteAdvert = new HashSet<FavoriteAdvert>();
             Income = new HashSet<Income>();
             Messages = new HashSet<Messages>();
+            PersonalMessage = new HashSet<PersonalMessage>();
+            PersonalMessage1 = new HashSet<PersonalMessage>();
             Source = new HashSet<Source>();
             Messages1 = new HashSet<Messages>();
         }
@@ -52,6 +54,10 @@ namespace BadMom.DAL.Model
 
         public bool Confirmed { get; set; }
 
+        public bool? Gender { get; set; }
+
+        public int? Status { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Advert> Advert { get; set; }
 
@@ -65,10 +71,19 @@ namespace BadMom.DAL.Model
         public virtual ICollection<Events> Events { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FavoriteAdvert> FavoriteAdvert { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Income> Income { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messages> Messages { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PersonalMessage> PersonalMessage { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PersonalMessage> PersonalMessage1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Source> Source { get; set; }

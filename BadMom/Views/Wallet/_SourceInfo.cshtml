@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.SourceInfoVM>
+@{
+    Layout = null;
+}
+
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col" class="hide-md"></th>
+            <th scope="col" class="hide-sm">Описание</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Причина</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                if (item.ConsumptionReason == null)
+                {
+                    <tr>
+                        <th scope="row" class="hide-md">@item.Date.ToShortDateString()</th>
+                        <td class="hide-sm">@item.Description</td>
+                        <td style="color:#388e3c">@item.Sum</td>
+                        <td>@item.IncomeReason.Name</td>
+                        
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row" class="hide-md">@item.Date.ToShortDateString()</th>
+                        <td class="hide-sm">@item.Description</td>
+                        <td style="color:#ff1744">@item.Sum</td>
+                        <td>@item.ConsumptionReason.Name</td>
+
+                       
+                    </tr>
+                }
+            }
+        }
+
+
+    </tbody>
+</table>
+
+

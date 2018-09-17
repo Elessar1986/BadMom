@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Обьявления";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/Content/advert")
+}
+
+
+<section style="background: url(../../Resources/adver1.png);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7" style="color:black">
+                <h1>Личные обьявления</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<nav class="navbar navbar-expand-lg navbar-dark  advert-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        @*<span class="navbar-toggler-icon"></span>*@
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link @if (ViewBag.Menu == "main"){ <text>active</text> }" href="@Url.Action("Index")">Все обьявления<span class="sr-only">(current)</span></a>
+            </li>
+            @*<li class="nav-item">
+                    <a class="nav-link  @if (ViewBag.Menu == "add"){ <text>active</text> }" href="@Url.Action("AddAdvert")">Добавить обьявление</a>
+                </li>*@
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu != "main"){ <text>disabled</text> }" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Сортировать по</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown08">
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "price_down", onpage = ViewBag.onpage , search = ViewBag.search, filter = ViewBag.filter  })">Цене вниз</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "price_up", onpage = ViewBag.onpage , search = ViewBag.search, filter = ViewBag.filter })">Цене вверх</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "date_down", onpage = ViewBag.onpage , search = ViewBag.search, filter = ViewBag.filter })">Дате вниз</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "date_up", onpage = ViewBag.onpage , search = ViewBag.search, filter = ViewBag.filter })">Дате вверх</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu != "main"){ <text>disabled</text> }" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Категория</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown08">
+                    @foreach (var item in ViewBag.Categories as List<SelectListItem>)
+                    {
+                        <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = item.Value, onpage = ViewBag.onpage, filter = ViewBag.filter })">@item.Text</a>
+                    }
+
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu != "main"){ <text>disabled</text> }" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Показать на странице</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown08">
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = 5, search = ViewBag.search, filter = ViewBag.filter })">5</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = 10, search = ViewBag.search, filter = ViewBag.filter })">10</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = 20, search = ViewBag.search, filter = ViewBag.filter })">20</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = 50, search = ViewBag.search, filter = ViewBag.filter })">50</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu != "main"){ <text>disabled</text> }" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Фильтр</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown08">
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = ViewBag.onpage , search = ViewBag.search, filter = "all" })">Все</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = ViewBag.onpage , search = ViewBag.search, filter = "new" })">Новое</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = ViewBag.order, onpage = ViewBag.onpage , search = ViewBag.search, filter = "old" })">Б/У</a>
+                </div>
+            </li>
+        </ul>
+        @using (Html.BeginForm("Index", "Advert", FormMethod.Get, new { @class = "form-inline my-2 my-md-0" }))
+        {
+            <input class="form-control" type="text" placeholder="Поиск обьявлений" aria-label="Search" name="search" @if (ViewBag.Menu != "main") { <text> disabled</text> }>
+            <input type="hidden" name="categoryId" value="ViewBag.categoryId">
+            <input type="hidden" name="order" value="default">
+            @*<input type="hidden" name="onpage" value="ViewBag.onpage">*@
+            <input type="hidden" name="filter" value="all">
+        }
+
+    </div>
+    <div class="d-flex align-content-center align-items-center add-advert" onclick="window.location = '@Url.Action("AddAdvert")'">
+
+        <i class="fa fa-3x fa-plus-square" style="margin-right:3px;"></i> Добавить обьявление
+
+    </div>
+</nav>
+
+
+
+
+@RenderBody()
+
+
+@section scripts{
+    <script>
+        var addEventUrl = '@Url.Action("AddEvent", "Planer")';
+
+        $.ajaxSetup({ cache: false });
+    </script>
+    @Scripts.Render("~/bundles/advert");
+
+
+}
+
+
+@RenderSection("scripts", required: false)
+

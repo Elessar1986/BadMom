@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.Messages.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.Messages.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.Messages.Include(o => o.Comment).Include(c => c.Users1).Include(c => c.Themes).Include(c => c.Users).Where(predicate).ToList();
         }
 
-        public Messages Get(int id)
+        public Messages Get(long id)
         {
             return db.Messages.Find(id);
         }

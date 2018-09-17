@@ -27,6 +27,10 @@ namespace BadMom.DAL.Model
         [StringLength(50)]
         public string Name { get; set; }
 
+        public decimal Sum { get; set; }
+
+        public DateTime Created { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Consumption> Consumption { get; set; }
 

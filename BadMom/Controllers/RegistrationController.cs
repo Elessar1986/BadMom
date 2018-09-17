@@ -7,6 +7,8 @@ using BadMom.Models.Registration;
 using BadMom.Models.Shared;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,6 +29,7 @@ namespace BadMom.Controllers
         {
             logger = new LoggerHelper(service);
             dataHelper = new DataHelper(service);
+            ViewBag.ActiveMenu = "Registration";
         }
         // GET: Registration
         public ActionResult New()
@@ -36,11 +39,18 @@ namespace BadMom.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(RegistrUserVM user)
+        public ActionResult New(RegistrUserVM user, HttpPostedFileBase fileUpload)
         {
 
             if (ModelState.IsValid)
             {
+                if(fileUpload != null)
+                {
+                    var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true),200,200);
+                    ImageConverter _imageConverter = new ImageConverter();
+                    byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
+                    user.Photo = xByte;
+                }
                 UserData newUser = new UserData();
                 try
                 {
@@ -51,7 +61,7 @@ namespace BadMom.Controllers
                     ModelState.AddModelError(ve.Property, ve.Message);
                     return View(user);
                 }
-                emailHelper.SendAuthLink(newUser.Login, newUser.PasswordHash, newUser.Email); 
+                emailHelper.SendEmail(newUser.Login, newUser.PasswordHash, newUser.Email, EmailHelper.EmailType.Registration); 
                 return View("RegistrationLink",newUser);        //for test
             }
             else
@@ -72,27 +82,50 @@ namespace BadMom.Controllers
             if (ModelState.IsValid)
             {
                 var passData = dataHelper.GetPasswordData(loginData.Login);
-                if (passwordHelper.CheckPassword(loginData.Password, passData))
+                if(passData == null)
+                {
+                    ModelState.AddModelError("Login", "Неправильный логин или E-mail!");
+                    return View(loginData);
+                }else
+                if ( passwordHelper.CheckPassword(loginData.Password, passData))
                 {
                     FormsAuthentication.SetAuthCookie(passData.Login, true);
+                    var user = dataHelper.GetUserData(passData.Login);
+                    Session["userId"] = user.Id;
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError("Password", "Неправильный пароль!");
+                }
             }
-            return RedirectToAction("Login", "Registration", new { wrongPass = true });
+            
+            return View(loginData);
         }
 
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public ActionResult ConfirmAuth(string login, string pass)
+        public ActionResult ConfirmAuth()
         {
-            var user = dataHelper.ConfirmAuth(login, pass);
-            if(user != null) {
-                return View(user);
+            string login;
+            string pass;
+            if (Request.QueryString.AllKeys.Length == 2 && Request.QueryString.AllKeys.Contains("login") && Request.QueryString.AllKeys.Contains("pass"))
+            {
+                login = Request.QueryString["login"];
+                pass = Request.QueryString["pass"].Replace(' ','+');
+
+                var user = dataHelper.ConfirmAuth(login, pass);
+                if (user != null)
+                {
+                    return View(user);
+                }
+                return View("Error");
             }
             return View("Error");
         }
@@ -117,7 +150,7 @@ namespace BadMom.Controllers
                 {
                     throw;
                 }
-                if (emailHelper.SendChangePassLink(passData))
+                if (emailHelper.SendEmail(passData.Login, passData.passwordHash, userEmail.Email, EmailHelper.EmailType.ChangePassword))
                 {
 
                 }
@@ -126,15 +159,22 @@ namespace BadMom.Controllers
             return View();
         }
 
-        public ActionResult ChangePass(string login, string pass)
+        public ActionResult ChangePass()
         {
             try
             {
-                if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(pass) && dataHelper.CheckUserToChangePass(login, pass))
+                string login;
+                string pass;
+                if (Request.QueryString.AllKeys.Length == 2 && Request.QueryString.AllKeys.Contains("login") && Request.QueryString.AllKeys.Contains("pass"))
                 {
-                    Session["cp_Login"] = login;
-                    Session["cp_Pass"] = pass;
-                    return View();
+                    login = Request.QueryString["login"];
+                    pass = Request.QueryString["pass"].Replace(' ', '+');
+                    if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(pass) && dataHelper.CheckUserToChangePass(login, pass))
+                    {
+                        Session["cp_Login"] = login;
+                        Session["cp_Pass"] = pass;
+                        return View();
+                    }
                 }
             }
             catch (ValidationException ve)
@@ -143,6 +183,8 @@ namespace BadMom.Controllers
             }
             return View("Error", new Error() { ExDescription = "Error in login data!" });
         }
+
+       
 
         [HttpPost]
         public ActionResult ChangePass(ChangePass changePass)
@@ -175,5 +217,7 @@ namespace BadMom.Controllers
             }
             return View(changePass);
         }
+
+       
     }
 }

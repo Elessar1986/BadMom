@@ -17,7 +17,7 @@ namespace BadMom.DAL.Model
 
         public DateTime Created { get; set; }
 
-        public DateTime LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -29,7 +29,9 @@ namespace BadMom.DAL.Model
 
         public long Source { get; set; }
 
-        public bool Potentian { get; set; }
+        public bool? Potentian { get; set; }
+
+        public decimal Sum { get; set; }
 
         public virtual ConsumptionReason ConsumptionReason { get; set; }
 

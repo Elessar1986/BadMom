@@ -1,37 +1,47 @@
 ﻿@model BadMom.Models.Shared.Error
-
 @{
     ViewBag.Title = "Error";
 }
-
-<h2>Error</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Code)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Code)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExInnerDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExInnerDescription)
-        </dd>
-
-    </dl>
+<section style="background: url(../../Resources/code.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1>Ошибка</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <h3>Уважаймый, @User.Identity.Name, во времмя выполнения данной операции произошла ошибка!</h3>
+            }
+        </div>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                @*<dt>
+                    @Html.DisplayNameFor(model => model.Code)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Code)
+                </dd>*@
+                <dt>
+                    @Html.DisplayNameFor(model => model.ExDescription)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ExDescription)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ExInnerDescription)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ExInnerDescription)
+                </dd>
+            </dl>
+        </div>
+    </div>
 </div>
+

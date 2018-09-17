@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.IncomeReason.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.IncomeReason.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.IncomeReason.Where(predicate).ToList();
         }
 
-        public IncomeReason Get(int id)
+        public IncomeReason Get(long id)
         {
             return db.IncomeReason.Find(id);
         }

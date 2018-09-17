@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.OperationType.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.OperationType.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.OperationType.Where(predicate).ToList();
         }
 
-        public OperationType Get(int id)
+        public OperationType Get(long id)
         {
             return db.OperationType.Find(id);
         }

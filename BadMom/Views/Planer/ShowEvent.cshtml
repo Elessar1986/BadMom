@@ -1,0 +1,68 @@
+﻿@model BadMom.Models.Planer.EventVM
+
+
+
+
+<div class="modal-header" style="background-color: @Model.EventType.Color">
+    <h5 class="modal-title">@Model.Title</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="type">
+        @Model.EventType.Name
+    </div>
+
+    <div class="d-flex">
+        <div class="dateTitle">Начало: </div>
+        <div>@Model.DateStart.ToShortDateString()  @Model.DateStart.ToShortTimeString()</div>
+        @if (Model.DateEnd != null)
+        {
+            <div class="dateTitle">Конец: </div>
+            <div>@Model.DateEnd.Value.ToShortDateString() @Model.DateEnd.Value.ToShortTimeString()</div>
+        }
+    </div>
+
+    <div class="">
+        @Model.Description
+    </div>
+
+    @if (Model.Type == 1)
+    {
+        if (Model.Source != null)
+        {
+            <div class="d-flex">
+                <div class="dateTitle">Счет:</div>
+                <div>@Model.Source1.Name</div>
+                @if (Model.AdvertId != null)
+                {
+                <div><a href="@Url.Action("ShowAdvert","Advert",new {id = Model.AdvertId})" style="color: @Model.EventType.Color">Посмотреть обьявление</a></div>
+                }
+            </div>
+        }
+
+
+    }
+
+    <div class="d-flex">
+        <div class="dateTitle">
+            Напоминание:
+        </div>
+        @if (Model.Remind)
+        {
+            <div>да</div>
+        }
+        else
+        {
+            <div>нет</div>
+        }
+    </div>
+
+
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: @Model.EventType.Color">Закрыть</button>
+    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("DeleteEvent","Planer", new { id = Model.Id })'" style="background-color: @Model.EventType.Color">Удалить</button>
+</div>

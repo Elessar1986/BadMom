@@ -1,0 +1,154 @@
+﻿.planer-nav {
+    background-color: #327e7e !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+
+    .planer-nav a {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+        .planer-nav a:hover {
+            color: #4a4141 !important;
+        }
+
+        .planer-nav a.active {
+            color: white !important;
+        }
+
+        .planer-nav a.disabled {
+            color: #4a4141 !important;
+        }
+
+.main-title {
+    color: #000000;
+}
+
+.main-calendar {
+    margin-top: 40px;
+}
+
+.fc-button {
+    color: #000000;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 11px;
+    /*background-color: #327e7e !important;*/
+    margin-bottom: 2px;
+}
+
+.modal-header {
+    background-color: #327e7e;
+    color: white;
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+}
+
+.modal-title {
+    letter-spacing: 0.03em !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    font-size: 20px !important;
+    letter-spacing: 0.08em !important;
+}
+
+.modal-body div {
+    color: #7a7a7a !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    margin: 5px;
+}
+
+.modal-body a {
+    color: #327e7e;
+}
+
+.modal-body div.type {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: black !important;
+}
+
+.modal-body div.dateTitle {
+    color: black !important;
+    font-weight: 700 !important;
+}
+
+.modal-footer {
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+}
+
+    .modal-footer button {
+        background-color: #327e7e;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        letter-spacing: 0.03em !important;
+        font-size: 11px !important;
+    }
+
+.add-event-mod {
+    /*width: auto;*/
+}
+
+
+.event-add {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+
+
+    .event-add .header {
+        color: #0c8100;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+
+    .event-add input,
+    .event-add textarea,
+    .event-add select,
+    .event-add label,
+    .event-add option,
+    .event-add button {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+    .event-add input,
+    .event-add select {
+        height: 33px !important;
+        /*width: 250px;*/
+    }
+
+        .event-add input[type=checkbox] {
+            width: 250px;
+        }
+
+
+    .event-add button {
+        background-color: #607a8b;
+    }
+
+    .event-add .form-group {
+        margin-bottom: 0px;
+        height: 35px !important;
+    }
+
+        .event-add .form-group.text-area-group {
+            height: auto !important;
+        }

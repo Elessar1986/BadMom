@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.Income>
+@{
+    Layout = null;
+}
+
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Описание</th>
+            <th class="d-none d-md-table-cell" scope="col">Источник</th>
+            <th scope="col">Сумма</th>
+            <th class="d-none d-md-table-cell" scope="col">Причина</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Date.Value.ToShortDateString()</th>
+                    <td>@item.Description</td>
+                    <td class="d-none d-md-table-cell">@item.Source.Name</td>
+                    <td style="color:#388e3c">@item.Sum</td>
+                    <td class="d-none d-md-table-cell">@item.IncomeReason.Name</td>
+                    <td> @Ajax.ActionLink(" ", "#", new { incomeID = item.Id }, new AjaxOptions { UpdateTargetId = "incomeDiv" }, new { @class = "fa fa-gears", @style = "color:#303f9f" })</td>
+                    <td> @Ajax.ActionLink(" ", "DeleteIncome", new { incomeId = item.Id }, new AjaxOptions { UpdateTargetId = "incomeDiv", HttpMethod = "POST" }, new { @class = "fa fa-trash", @style = "color:red" })</td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+

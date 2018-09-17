@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.EventType.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.EventType.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.EventType.Where(predicate).ToList();
         }
 
-        public EventType Get(int id)
+        public EventType Get(long id)
         {
             return db.EventType.Find(id);
         }

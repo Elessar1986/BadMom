@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Model\Abstract\IUser.cs" />
     <Compile Include="Model\Advert.cs" />
     <Compile Include="Model\BadMomDB.cs" />
     <Compile Include="Model\Category.cs" />
@@ -60,12 +59,14 @@
     <Compile Include="Model\ConsumptionReason.cs" />
     <Compile Include="Model\Events.cs" />
     <Compile Include="Model\EventType.cs" />
+    <Compile Include="Model\FavoriteAdvert.cs" />
     <Compile Include="Model\Income.cs" />
     <Compile Include="Model\IncomeReason.cs" />
     <Compile Include="Model\logEvents.cs" />
     <Compile Include="Model\logTypes.cs" />
     <Compile Include="Model\Messages.cs" />
     <Compile Include="Model\OperationType.cs" />
+    <Compile Include="Model\PersonalMessage.cs" />
     <Compile Include="Model\ResourceType.cs" />
     <Compile Include="Model\Source.cs" />
     <Compile Include="Model\Themes.cs" />
@@ -79,23 +80,27 @@
     <Compile Include="Repositories\EFUnitOfWork.cs" />
     <Compile Include="Repositories\EventsRepository.cs" />
     <Compile Include="Repositories\EventTypeRepository.cs" />
+    <Compile Include="Repositories\FavoriteAdvertRepository.cs" />
     <Compile Include="Repositories\IncomeReasonRepository.cs" />
     <Compile Include="Repositories\IncomeRepository.cs" />
     <Compile Include="Repositories\logEventsRepository.cs" />
     <Compile Include="Repositories\logTypesRepository.cs" />
     <Compile Include="Repositories\MessagesRepository.cs" />
     <Compile Include="Repositories\OperationTypeRepository.cs" />
+    <Compile Include="Repositories\PersonalMessageRepository.cs" />
     <Compile Include="Repositories\ResourceTypeRepository.cs" />
     <Compile Include="Repositories\SourceRepository.cs" />
     <Compile Include="Repositories\ThemesRepository.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,88 @@
+﻿@model List<BadMom.Models.Blog.CommentVM>
+
+
+@foreach (var item in Model)
+{
+    <div class="comment">
+        <div class="comment-header d-flex justify-content-between">
+            <div class="user d-flex align-items-center">
+                <div class="image">
+                    @if (item.Users.Photo.Length != 0)
+                    {
+                        var base64 = Convert.ToBase64String(item.Users.Photo);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                        <img src="@imgSrc" class="img-fluid" />
+                    }
+                    else
+                    {
+                        <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                    }
+                </div>
+                <div class="title">
+                    <strong>@Html.ActionLink(@item.Users.Login, "UserInfo", "User", new { UserName = @item.Users.Login }, new { })</strong>
+                    @if (item.Users.Login == User.Identity.Name)
+                    {
+
+                        @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
+                    }
+                    <span class="date">@item.Created.ToShortDateString() / @item.Created.ToShortTimeString()</span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-body">
+            <p>@item.Body</p>
+        </div>
+    </div>
+}
+
+
+@*@if (Model.Count >= 5)
+    {
+        <button id="showAllComments" class="btn btn-secondary">Посмотреть все комментарии <i class="fa fa-arrow-circle-o-down"></i></button>
+
+        <div id="allComments" hidden>
+
+            @for (int i = 5; i < Model.Count; i++)
+            {
+                <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                        <div class="user d-flex align-items-center">
+                            <div class="image">
+                                @if (Model[i].Users.Photo.Length != 0)
+                                {
+                                    var base64 = Convert.ToBase64String(Model[i].Users.Photo);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                    <img src="@imgSrc" class="img-fluid" />
+                                }
+                                else
+                                {
+                                    <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                                }
+                            </div>
+                            <div class="title">
+                                <strong>@Model[i].Users.Login</strong>
+                                @if (Model[i].Users.Login == User.Identity.Name)
+                                {
+                                    Html.ActionLink(" ", "DeleteComment", new { commentId = Model[i].Id }, new { @class = "fa fa-trash" });
+                                }
+                                 <span class="date">@Model[i].Created.ToShortDateString() / @Model[i].Created.ToShortTimeString()</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p>@Model[i].Body</p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+
+
+    }*@

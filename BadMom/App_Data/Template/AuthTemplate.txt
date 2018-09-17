@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<body style="font-size:17px; background-color: #ffcb17">
+<font face="Helvetica, Arial, sans-serif">
+
+<img style="margin:10px" src="http://goodmomonline.com.ua/Resources/logo.png">
+
+<div style="width:600px; height:300px; padding:10px; margin-top:10px;">
+
+<p>Уважаемый, {0},<p>
+
+<p>Для подтверждения регистрации на GoodMom перейдите по ссылке:</p>
+<p>
+<a style="font-weight:700" href="{1}">Подтвердить регистрацию</a>
+</p>
+
+<p>Если это письмо отправлено вам по ошибке просто удалите его.</p>
+
+<br/>
+<p>С уважением, администрация сайта.</p>
+</div>
+</body>
+</html>

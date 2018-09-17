@@ -19,12 +19,14 @@ namespace BadMom.DAL.Model
         public virtual DbSet<ConsumptionReason> ConsumptionReason { get; set; }
         public virtual DbSet<Events> Events { get; set; }
         public virtual DbSet<EventType> EventType { get; set; }
+        public virtual DbSet<FavoriteAdvert> FavoriteAdvert { get; set; }
         public virtual DbSet<Income> Income { get; set; }
         public virtual DbSet<IncomeReason> IncomeReason { get; set; }
         public virtual DbSet<logEvents> logEvents { get; set; }
         public virtual DbSet<logTypes> logTypes { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
         public virtual DbSet<OperationType> OperationType { get; set; }
+        public virtual DbSet<PersonalMessage> PersonalMessage { get; set; }
         public virtual DbSet<ResourceType> ResourceType { get; set; }
         public virtual DbSet<Source> Source { get; set; }
         public virtual DbSet<Themes> Themes { get; set; }
@@ -32,6 +34,11 @@ namespace BadMom.DAL.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Advert>()
+                .HasMany(e => e.FavoriteAdvert)
+                .WithRequired(e => e.Advert)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Advert)
                 .WithRequired(e => e.Category1)
@@ -43,6 +50,10 @@ namespace BadMom.DAL.Model
                 .WithRequired(e => e.ConsumptionReason)
                 .HasForeignKey(e => e.Reason)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EventType>()
+                .Property(e => e.Color)
+                .IsFixedLength();
 
             modelBuilder.Entity<EventType>()
                 .HasMany(e => e.Events)
@@ -135,6 +146,12 @@ namespace BadMom.DAL.Model
                 .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<Users>()
+                .HasMany(e => e.FavoriteAdvert)
+                .WithRequired(e => e.Users)
+                .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Users>()
                 .HasMany(e => e.Income)
                 .WithRequired(e => e.Users)
                 .HasForeignKey(e => e.UserId);
@@ -142,7 +159,18 @@ namespace BadMom.DAL.Model
             modelBuilder.Entity<Users>()
                 .HasMany(e => e.Messages)
                 .WithRequired(e => e.Users)
-                .HasForeignKey(e => e.UserId)
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<Users>()
+                .HasMany(e => e.PersonalMessage)
+                .WithRequired(e => e.Users)
+                .HasForeignKey(e => e.UserFrom)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Users>()
+                .HasMany(e => e.PersonalMessage1)
+                .WithRequired(e => e.Users1)
+                .HasForeignKey(e => e.UserTo)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Users>()

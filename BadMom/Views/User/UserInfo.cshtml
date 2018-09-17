@@ -1,0 +1,87 @@
+﻿@model BadMom.Models.Registration.UserData
+@{
+    ViewBag.Title = "Личные данные";
+    Layout = "~/Views/User/_UserLayout.cshtml";
+    ViewBag.Menu = "info";
+}
+
+
+<div class="info-body">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class=" info-table">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            Почта:
+                        </div>
+                        <div class="data">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            Статус:
+                        </div>
+                        <div class="data">
+                            @switch (Model.Roles)
+                            {
+                                case "user":
+                                    <text>Пользователь</text>
+                                    break;
+                                case "user/admin":
+                                    <text>Администратор</text>
+                                    break;
+                                default:
+                                    break;
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            Зарегестрирован(а):
+                        </div>
+                        <div class="data">
+                            @Html.DisplayFor(model => model.Created)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sendMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Сообщение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @Html.Partial("_PersonalMessage", new BadMom.Models.User.PersonalMessage() { UserTo = Model.Id })
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/user")
+
+    <script>
+
+
+
+    </script>
+
+
+}

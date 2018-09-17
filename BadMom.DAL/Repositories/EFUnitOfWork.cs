@@ -1,6 +1,5 @@
 ﻿using BadMom.DAL.Interfaces;
 using BadMom.DAL.Model;
-using BadMom.DAL.Model.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,8 @@ namespace BadMom.DAL.Repositories
         private SourceRepository sourceRepository;
         private ThemesRepository themesRepository;
         private UsersRepository usersRepository;
-
+        private PersonalMessageRepository personalMessageRepository;
+        private FavoriteAdvertRepository favoriteAdvertRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -205,6 +205,25 @@ namespace BadMom.DAL.Repositories
             }
         }
 
+        public IRepository<PersonalMessage> PersonalMessage
+        {
+            get
+            {
+                if (personalMessageRepository == null)
+                    personalMessageRepository = new PersonalMessageRepository(db);
+                return personalMessageRepository;
+            }
+        }
+
+        public IRepository<FavoriteAdvert> FavoriteAdvert
+        {
+            get
+            {
+                if (favoriteAdvertRepository == null)
+                    favoriteAdvertRepository = new FavoriteAdvertRepository(db);
+                return favoriteAdvertRepository;
+            }
+        }
 
         public void Save()
         {

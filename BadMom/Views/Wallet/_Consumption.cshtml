@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.Consumption>
+@{
+    Layout = null;
+}
+
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Описание</th>
+            <th class="d-none d-md-table-cell" scope="col">Источник</th>
+            <th scope="col">Сумма</th>
+            <th class="d-none d-md-table-cell" scope="col">Причина</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if(Model != null){
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Date.Value.ToShortDateString()</th>
+                    <td>@item.Description</td>
+                    <td class="d-none d-md-table-cell">@item.Source1.Name</td>
+                    <td style="color:#ff1744">@item.Sum</td>
+                    <td class="d-none d-md-table-cell">@item.ConsumptionReason.Name</td>
+                    <td> @Ajax.ActionLink(" ", "#", new { consumptionId = item.Id }, new AjaxOptions { UpdateTargetId = "consumptionDiv" }, new { @class = "fa fa-gears", @style = "color:#303f9f" })</td>
+                    <td> @Ajax.ActionLink(" ", "DeleteConsumption", new { consumptionId = item.Id }, new AjaxOptions { UpdateTargetId = "consumptionDiv", HttpMethod = "POST" }, new { @class = "fa fa-trash", @style = "color:#ff1744" })</td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+

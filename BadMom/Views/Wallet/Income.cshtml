@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.Income>
+@{
+    Layout = "~/Views/Wallet/_WalletLayout.cshtml";
+    ViewBag.Menu = "income";
+}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark wallet-nav income-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        Фильтры
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center wallet-form" id="navbarsExample08">
+        <ul class="navbar-nav"></ul>
+        @using (Html.BeginForm("Income", "Wallet", FormMethod.Post, new { @class = "form-inline my-2 my-md-0" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="input-daterange" style="width: auto;">
+                <input type="text" class="input-sm form-control" name="dateFrom" value="@DateTime.Now.AddMonths(-1).ToShortDateString()" />
+                <input type="text" class="input-sm form-control" name="dateTo" value="@DateTime.Now.ToShortDateString()" />
+            </div>
+            @Html.DropDownList("sourceId", (List<SelectListItem>)ViewBag.SourcesFilter, new { @id = "Sources", @class = "form-control", @required = "required" })
+            <button type="submit">Показать</button>
+        }
+    </div>
+</nav>
+
+
+<div class="container wallet-main-head">
+
+    <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <div class="d-flex align-content-center align-items-center add-advert" >
+
+            <i class="fa fa-3x fa-plus-square" style="margin-right:3px;"></i> Добавить доход
+
+        </div>
+    </a>
+
+    <div class="collapse" id="collapseExample">
+        @Html.Partial("_AddIncome", new BadMom.Models.Wallet.Income())
+    </div>
+
+    <div id="incomeDiv" class="wallet-main">
+
+        @Html.Partial("_Incomes", Model)
+
+    </div>
+
+
+
+
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Добавить доход</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @Html.Partial("_AddIncome", new BadMom.Models.Wallet.Income() { Date = DateTime.Now })
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+
+    <script>
+
+
+
+    </script>
+
+
+}

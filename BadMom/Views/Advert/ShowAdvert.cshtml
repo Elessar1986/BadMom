@@ -1,0 +1,144 @@
+﻿@model BadMom.Models.Advert.AdvertVM
+@using BadMom.Models.Registration
+
+@{
+    ViewBag.Title = "Обьявления";
+    Layout = "~/Views/Advert/_AdvertLayout.cshtml";
+}
+
+
+<div class="container">
+    <div class="advert-main">
+        <div class="row advert-details">
+
+            <div class="col-12 advert-element">
+                <div class="d-flex justify-content-between">
+                    <div class="photo">
+                        <a href="#">
+                            @if (Model.Photo != null && Model.Photo.Length != 0)
+                            {
+                                var base64 = Convert.ToBase64String(Model.Photo);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                <img src="@imgSrc" class="img-fluid" />
+                            }
+                            else
+                            {<img src="~/Resources/img/blog-post-2.jpg" alt="..." class="img-fluid">}
+                        </a>
+                    </div>
+                    <div class="content-block">
+                        <div class="header">
+                            @Model.Title
+                        </div>
+                        <div class="info-block">
+                            @Html.ActionLink(@Model.UserName, "UserInfo", "User", new { UserName = @Model.UserName }, new { })
+                            @Model.Created.ToShortDateString()
+                        </div>
+                        <div class="body">
+
+                            @Model.Body
+
+                        </div>
+
+                    </div>
+                    <div class="button-panel d-none d-sm-block">
+                        <button class="btn btn-default " onclick="window.history.back()">Назад</button>
+                        @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.UserName)
+                        {
+                            <button class="btn btn-default saler">Редактировать</button>
+                            <button class="btn btn-default favorite">Удалить</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-default saler" onclick="window.location='@Url.Action("UserMessages","User", new { id = Model.UserId, userLogin = Model.UserName })'">Написать продавцу</button>
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                @*<button class="btn btn-default saler" onclick="window.location='@Url.Action("AddEvent","Planer", new { dateStart = DateTime.Now, advertId = Model.Id })'">Запланировать покупку</button>*@
+                                @*<button class="btn btn-default saler" onclick="javascript:AddEventModal(@DateTime.Now, @Model.Id);">Запланировать покупку</button>*@
+                                @Ajax.ActionLink("Запланировать покупку", "AddEvent", "Planer", new { dateStart = DateTime.Now, advertId = Model.Id, title = Model.Title }, new AjaxOptions
+                                {
+                                    OnSuccess = "AddEventModal",
+                                    UpdateTargetId = "addEventDiv"
+                                }, new { @class = "btn btn-default saler" })
+
+                                var id = string.Concat("favoriteButton", Model.Id);
+                                <div id="@id">
+                                    @if ((ViewBag.User as UserData).FavoriteAdverts.Contains(Model.Id))
+                                    {
+                                        @Ajax.ActionLink("Убрать из избранного", "FromFavorite", new { advertId = Model.Id, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default not-favorite" });
+                                    }
+                                    else
+                                    {
+                                        @Ajax.ActionLink("В избранное", "ToFavorite", new { advertId = Model.Id, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default favorite" });
+                                    }
+                                </div>
+
+                            }
+                        }
+
+                        <div class="d-flex justify-content-end align-content-end">
+                            <div class="price">
+                                @Model.Price &#8372
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-panel d-sm-none">
+                    <button class="btn btn-default " onclick="window.history.back()">Назад</button>
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.UserName)
+                    {
+                        <button class="btn btn-default saler">Редактировать</button>
+                        <button class="btn btn-default favorite">Удалить</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-default saler" onclick="window.location='@Url.Action("UserMessages","User", new { id = Model.UserId, userLogin = Model.UserName })'">Написать продавцу</button>
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            @*<button class="btn btn-default saler" onclick="window.location='@Url.Action("AddEvent","Planer", new { dateStart = DateTime.Now, advertId = Model.Id })'">Запланировать покупку</button>*@
+                            @*<button class="btn btn-default saler" onclick="javascript:AddEventModal(@DateTime.Now, @Model.Id);">Запланировать покупку</button>*@
+                            @Ajax.ActionLink("Запланировать покупку", "AddEvent", "Planer", new { dateStart = DateTime.Now, advertId = Model.Id, title = Model.Title }, new AjaxOptions
+                            {
+                                OnSuccess = "AddEventModal",
+                                UpdateTargetId = "addEventDiv"
+                            }, new { @class = "btn btn-default saler" })
+
+                            var id = string.Concat("favoriteButton", Model.Id);
+                            <div id="@id">
+                                @if ((ViewBag.User as UserData).FavoriteAdverts.Contains(Model.Id))
+                                {
+                                    @Ajax.ActionLink("Убрать из избранного", "FromFavorite", new { advertId = Model.Id, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default not-favorite" });
+                                }
+                                else
+                                {
+                                    @Ajax.ActionLink("В избранное", "ToFavorite", new { advertId = Model.Id, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default favorite" });
+                                }
+                            </div>
+
+                        }
+                    }
+
+                    <div class="d-flex justify-content-end align-content-end">
+                        <div class="price">
+                            @Model.Price &#8372
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" tabindex="20" role="dialog" id="addEventModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content add-event-mod" id="addEventDiv">
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,169 @@
+﻿@model BadMom.Models.Registration.UserData
+@using BadMom.Models.User
+@{
+    ViewBag.Title = "Сообщения";
+    Layout = "~/Views/User/_MyProfileLayout.cshtml";
+    ViewBag.menu = "mess";
+}
+
+
+
+<div class="container">
+
+
+    <div class="row messages">
+
+
+
+        <main class="col-md-12 main-wallet">
+            @foreach (var item in ViewBag.UsersMessages as List<PrivateMessageByUserVM>)
+            {
+
+
+                if (item.Messages.First().UserFrom == Model.Id)
+                {
+
+                    <div class="row user-first-message-out @if(item.Messages.First().Status == PersonalMessageStatus.Readed) { <text>user-first-message-readed</text> } " onclick="window.location='UserMessages?id=@item.Id';">
+
+                        <div class="col-10">
+                            <div class="blog-post">
+                                <div class="post-comments" style="margin-top:0px;">
+                                    <div class="comment">
+                                        <div class="comment-header d-flex justify-content-between">
+                                            <div class="user d-flex align-items-center">
+                                                <div class="image">
+                                                    @if (item.Avatar.Length != 0)
+                                                    {
+                                                        var base64 = Convert.ToBase64String(item.Avatar);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                        <img src="@imgSrc" class="img-fluid rounded-circle" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                                                    }
+                                                </div>
+                                                <div class="title">
+                                                    <strong>@Html.ActionLink(@item.Login, "UserInfo", "User", new { UserName = @item.Login }, new { })</strong>
+                                                    @*@if (item.Value.Login == User.Identity.Name)
+                                                        {
+
+                                                            @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
+                                                        }*@
+                                                    <span class="date">@item.Messages.First().Created.ToShortDateString() / @item.Messages.First().Created.ToShortTimeString()</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment-body" style="margin-bottom:0px; padding-bottom:0px;">
+                                            <p>@item.Messages.First().Body</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 d-none d-md-block align-items-center" style="background-color:#2e8ac9;">
+                            
+                                <div class="" >
+                                    <i class="fa fa-5x fa-arrow-circle-o-up" style="color:white"></i>
+                                </div>
+                            
+                        </div>
+
+
+                    </div>
+                }
+                else
+                {
+                    <div class="row user-first-message-in  @if(item.Messages.First().Status == PersonalMessageStatus.Readed) { <text>user-first-message-readed</text> } " style="border: 2px solid #eee; margin: 10px; padding:5px; cursor: pointer;" onclick="window.location='UserMessages?id=@item.Id';">
+
+                        <div class="col-10">
+                            <div class="blog-post">
+                                <div class="post-comments" style="margin-top:0px;">
+                                    <div class="comment">
+                                        <div class="comment-header d-flex justify-content-between">
+                                            <div class="user d-flex align-items-center">
+                                                <div class="image">
+                                                    @if (item.Avatar.Length != 0)
+                                                    {
+                                                        var base64 = Convert.ToBase64String(item.Avatar);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                        <img src="@imgSrc" class="img-fluid rounded-circle" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                                                    }
+                                                </div>
+                                                <div class="title">
+                                                    <strong>@Html.ActionLink(@item.Login, "UserInfo", "User", new { UserName = @item.Login }, new { })</strong>
+                                                    @*@if (item.Value.Login == User.Identity.Name)
+                                                        {
+
+                                                            @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
+                                                        }*@
+                                                    <span class="date">@item.Messages.First().Created.ToShortDateString() / @item.Messages.First().Created.ToShortTimeString()</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment-body" style="margin-bottom:0px; padding-bottom:0px;">
+                                            <p>@item.Messages.First().Body</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 d-none d-md-block" style="background-color:#2ec930">
+                            <i class="fa fa-5x fa-arrow-circle-o-down" style="color:white"></i>
+                        </div>
+
+
+                    </div>
+                }
+
+
+
+            }
+
+
+
+
+
+        </main>
+
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Сообщение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @*@Scripts.Render("~/bundles/wallet");*@
+
+    <script>
+
+
+
+    </script>
+
+
+}
+
+
+
+

@@ -1,0 +1,12 @@
+﻿@model BadMom.Models.Blog.Like
+
+@if (Model.myLike)
+{
+    @Ajax.ActionLink(" ", "DislikeMessage", new { messageId = Model.messageId }, new AjaxOptions { UpdateTargetId = "userLike" }, new { @class = "fa fa-heart", @style="color:red"});
+}
+else
+{
+    @Ajax.ActionLink(" ", "LikeMessage", new { messageId = Model.messageId }, new AjaxOptions { UpdateTargetId = "userLike" }, new { @class = "fa fa-heart" });
+}
+
+@Model.likes

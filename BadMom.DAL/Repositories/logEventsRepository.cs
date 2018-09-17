@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.logEvents.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.logEvents.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.logEvents.Include(o => o.logTypes).Where(predicate).ToList();
         }
 
-        public logEvents Get(int id)
+        public logEvents Get(long id)
         {
             return db.logEvents.Find(id);
         }

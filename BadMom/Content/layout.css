@@ -1,14 +1,104 @@
-﻿body {
+body {
 }
 
 .main-background {
-    background-color: #ff0051cc !important;
+    background-color: #ffcb17 !important;
 }
 
 footer.main-footer {
-    background-color: #9600ff !important;
+    background-color:  black !important;
 }
 
-.login-main-padding {
+/*.login-main-padding {
     padding: 20px;
+}*/
+
+.round-frame {
+    max-width: 200px;
+    min-width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.logo-smaler {
+    width: 250px;
+}
+
+.logo-footer {
+    width: 100px;
+}
+
+footer.main-footer {
+    padding: 40px;
+}
+
+    footer.main-footer .copyrights {
+        margin-top: 20px;
+    }
+
+@media (max-width: 768px) {
+    .hide-md {
+        display: none !important;
+    }
+
+    footer.main-footer {
+        padding: 20px;
+    }
+
+        footer.main-footer .copyrights {
+            margin-top: 10px;
+        }
+
+}
+
+@media (max-width: 576px) {
+    .hide-sm {
+        display: none !important;
+    }
+
+    .logo-smaler {
+        width: 150px;
+    }
+
+    footer.main-footer{
+        padding: 0px;
+    }
+
+        footer.main-footer .copyrights{
+            margin-top: 0px;
+        }
+}
+
+.navbar-collapse a {
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}
+
+
+.title-user-message {
+    margin: 80px 0px;
+    
+}
+
+    .title-user-message h3 {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 25px !important;
+    }
+
+
+.main-navbar {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.text-danger{
+    font-size: 10px;
 }

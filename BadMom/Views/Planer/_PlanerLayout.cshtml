@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Планировщик";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    @Styles.Render("~/Content/planer")
+    @Styles.Render("~/Content/calendar")
+    @Styles.Render("~/Content/bootstrap-datetimepicker")
+    <link href="~/Content/fullcalendar.print.min.css" media="print" rel="stylesheet" />
+}
+
+
+<section style="background: url(../../Resources/inner-banner-calendar.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 main-title" style="color:black">
+                <h1>Планировщик</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<nav class="navbar navbar-expand-lg navbar-dark planer-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        @*<span class="navbar-toggler-icon"></span>*@
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link @if (ViewBag.Menu == "main"){ <text>active</text> }" href="#">Информация</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu == "setting"){ <text>active</text> }" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">События</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="#">Запланировать</a>
+                    <a class="dropdown-item" href="#">Просмотр</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if (ViewBag.Menu == "setting"){ <text>active</text> }" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Покупки</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="#">Добавить</a>
+                    <a class="dropdown-item" href="#">Просмотреть</a>
+
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+
+
+
+@RenderBody()
+
+
+@section scripts{
+    <script>
+        var getEventsUrl = '@Url.Action("GetUserEvents", "Planer")';
+        var showEventUrl = '@Url.Action("GetEventById", "Planer")';
+        var addEventUrl = '@Url.Action("AddEvent", "Planer")';
+
+    </script>
+    @Scripts.Render("~/bundles/planer");
+    @Scripts.Render("~/bundles/calendar");
+    @Scripts.Render("~/bundles/mycalendar");
+    @Scripts.Render("~/bundles/bootstrap-datetimepicker");
+
+
+}
+
+
+@RenderSection("scripts", required: false)
+
+
+

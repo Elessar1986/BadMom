@@ -10,5 +10,6 @@ namespace BadMom.BLL.DataTransferObjects
 
         public string Name { get; set; }
 
+        public string Color { get; set; }
     }
 }

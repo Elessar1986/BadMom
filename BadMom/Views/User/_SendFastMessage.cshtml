@@ -1,0 +1,23 @@
+﻿@model BadMom.Models.User.PersonalMessage
+@*@using (Ajax.BeginForm("SendFastMessage", new { }, new AjaxOptions { LoadingElementId = "messagesDiv" }, new { @class = "messageForm" }))*@
+@using(Html.BeginForm("SendFastMessage","User", FormMethod.Post, new { @class = "messageForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-9">
+
+            <div class="form-group">
+                @*<input type="text" name="body" placeholder="Сообщение..." class="form-control">*@
+                @Html.TextBoxFor(m => m.Body, new { @class = "form-control", @placeholder = "Сообщение..." })
+                @Html.HiddenFor(x => x.UserTo)
+            </div>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end">
+            <div>
+                <button type="submit" class="btn btn-primary button-padding">Написать</button>
+            </div>
+        </div>
+    </div>
+
+
+}

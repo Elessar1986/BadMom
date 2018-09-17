@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = "~/Views/Wallet/_WalletLayout.cshtml";
+    ViewBag.Menu = "statistics";
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark wallet-nav income-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        Фильтры
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center wallet-form" id="navbarsExample08">
+        <ul class="navbar-nav"></ul>
+        @using (Html.BeginForm("Statistics", "Wallet", FormMethod.Post, new { @class = "form-inline my-2 my-md-0" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="input-daterange" style="width: auto;">
+                <input type="text" class="input-sm form-control" name="dateFrom" value="@DateTime.Now.AddMonths(-1).ToShortDateString()" />
+                <input type="text" class="input-sm form-control" name="dateTo" value="@DateTime.Now.ToShortDateString()" />
+            </div>
+            <button type="submit">Показать</button>
+        }
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="title-user-message text-center">
+        <h3>Временно не доступно</h3>
+    </div>
+    
+</div>
+
+@section scripts{
+    <script>
+
+        //$('.input-daterange').datepicker({
+        //    format: 'dd.mm.yyyy',
+        //    language: "ru"
+        //});
+
+    </script>
+
+
+}

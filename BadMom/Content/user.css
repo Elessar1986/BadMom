@@ -1,0 +1,211 @@
+﻿.user-first-message-out {
+    border: 2px solid #eee;
+    margin: 10px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #3388c633;
+}
+
+.user-first-message-in {
+    border: 2px solid #eee;
+    margin: 10px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #2ec93066;
+}
+
+.user-first-message-readed {
+    background-color: white;
+}
+
+.user-info-card {
+    margin-bottom: 10px;
+}
+
+.user-info-card-header {
+    background-color: rgba(218, 233, 76, 0.69);
+}
+
+.message-out {
+    margin-right: 30px;
+    border-radius: 5px;
+    background-color: #60ff0099;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px !important;
+}
+
+.message-in {
+    margin-left: 30px !important;
+    border-radius: 5px;
+    background-color: #00b7ff99;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px !important;
+}
+
+.button-padding {
+    margin: 0px 5px;
+}
+
+.message-header {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.messageForm {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.row-margin-zero {
+    margin: 0px;
+}
+
+@media (max-width: 575px) {
+    .message-out {
+        margin-right: 10px;
+    }
+
+    .message-in {
+        margin-left: 0px !important;
+    }
+
+    .message-header {
+        margin-bottom: 5px;
+        margin-top: 0px;
+    }
+}
+
+
+.user-nav {
+    background-color: #6814f2 !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+
+    .user-nav a {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+        .user-nav a:hover {
+            color: #4a4141 !important;
+        }
+
+        .user-nav a.active {
+            color: white !important;
+        }
+
+        .user-nav a.disabled {
+            color: #4a4141 !important;
+        }
+
+.profile-nav {
+    background-color: #1565c0 !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+
+    .profile-nav a {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+        .profile-nav a:hover {
+            color: #4a4141 !important;
+        }
+
+        .profile-nav a.active {
+            color: white !important;
+        }
+
+        .profile-nav a.disabled {
+            color: #4a4141 !important;
+        }
+
+.login {
+    color: #000000;
+}
+
+.profile-header .login {
+    color: #000000;
+}
+
+.no-message {
+    color: #000000 !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 25px !important;
+    margin: 100px 0px;
+}
+
+.info-table {
+    color: #000000 !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    margin: 80px 0px;
+}
+
+    .info-table .data {
+        color: #4a4141 !important;
+    }
+
+.info-body {
+    background-color: #8ae5fe;
+}
+
+
+.messageForm input,
+.messageForm button {
+    letter-spacing: 0.08em !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}
+
+.messageForm input {
+    font-weight: 500 !important;
+}
+
+.messageForm button {
+    color: white;
+    background-color: #0c8100;
+}
+
+.profile-main .messages div {
+    letter-spacing: 0.06em !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+.comment-like {
+    color: #000000;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 23px;
+    margin-top: 20px;
+}
+
+    .comment-like i {
+        margin-right: 5px;
+        color: #ff0000
+    }
+
+        .comment-like i.comment {
+            color: #005dff
+        }

@@ -1,0 +1,12 @@
+﻿@using BadMom.Models.Registration
+@model BadMom.Models.Advert.Favorite
+
+@{var id = string.Concat("favoriteButton", @Model.AdvertId); }
+@if ((ViewBag.User as UserData).FavoriteAdverts.Contains(Model.AdvertId))
+{
+    @Ajax.ActionLink("Убрать из избранного", "FromFavorite", new { advertId = Model.AdvertId, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default not-favorite" });
+}
+else
+{
+    @Ajax.ActionLink("В избранное", "ToFavorite", new { advertId = Model.AdvertId, userId = (ViewBag.User as UserData).Id }, new AjaxOptions { UpdateTargetId = id }, new { @class = "btn btn-default favorite" });
+}

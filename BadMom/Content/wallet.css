@@ -1,0 +1,146 @@
+﻿.wallet-nav {
+    background-color: #3d97d2 !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    z-index: 10;
+}
+
+    .wallet-nav a,
+    .wallet-nav button{
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+        background: none;
+        border: none;
+    }
+
+        .wallet-nav a:hover,
+        .wallet-nav button:hover {
+            color: #4a4141 !important;
+        }
+
+        .wallet-nav a.active {
+            color: white !important;
+        }
+
+        .wallet-nav a.disabled {
+            color: #4a4141 !important;
+        }
+
+    .wallet-nav .wallet-form {
+        padding-bottom: 3px;
+    }
+
+        .wallet-nav .wallet-form input,
+        .wallet-nav .wallet-form option,
+        .wallet-nav .wallet-form select {
+            letter-spacing: 0.08em !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            font-size: 13px !important;
+        }
+
+        .wallet-nav .wallet-form select {
+            margin: 0px 3px;
+            width: 225px;
+            height: 33px !important;
+        }
+
+
+.income-nav{
+    z-index:9
+}
+
+.main-title {
+    color: #000000;
+}
+
+.wallet-main {
+    margin-bottom: 30px;
+}
+
+    .wallet-main th,
+    .wallet-main .resource-name {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+    .wallet-main td,
+    .wallet-main .resource-info,
+    .wallet-main .resorce-sum {
+        color: #7a7a7a !important;
+        letter-spacing: 0.03em !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        font-size: 14px !important;
+    }
+
+    .wallet-main .resorce-sum {
+        color: #000000 !important;
+
+    }
+
+
+.wallet-add {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 3px solid #3d97d2;
+}
+
+    .wallet-add .header {
+        color: #0c8100;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+
+    .wallet-add input,
+    .wallet-add textarea,
+    .wallet-add select,
+    .wallet-add label,
+    .wallet-add option,
+    .wallet-add button {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+    .wallet-add input,
+    .wallet-add select {
+        height: 33px !important;
+        /*width: 250px;*/
+    }
+
+    .wallet-add button {
+        background-color: #607a8b;
+    }
+
+    .wallet-add .form-group {
+        margin-bottom: 0px;
+        /*height: 35px !important;*/
+    }
+
+.wallet-main-head a {
+    color: #3d97d2;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}
+
+@media (max-width: 575px) {
+    .table th, .table td {
+        padding: 0.2rem;
+    }
+}

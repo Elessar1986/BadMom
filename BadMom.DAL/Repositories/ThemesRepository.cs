@@ -23,7 +23,7 @@ namespace BadMom.DAL.Repositories
             db.Themes.Add(item);
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var item = db.Themes.Find(id);
             if (item != null)
@@ -35,7 +35,7 @@ namespace BadMom.DAL.Repositories
             return db.Themes.Where(predicate).ToList();
         }
 
-        public Themes Get(int id)
+        public Themes Get(long id)
         {
             return db.Themes.Find(id);
         }

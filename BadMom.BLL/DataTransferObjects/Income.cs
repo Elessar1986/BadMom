@@ -21,6 +21,15 @@ namespace BadMom.BLL.DataTransferObjects
 
         public Source Source { get; set; }
 
-        public User Users { get; set; }
+        public long UserId { get; set; }
+
+        public long Reason { get; set; }
+
+        public decimal Sum { get; set; }
+
+        public long Type { get; set; }
+
+        public long Destination { get; set; }
+
     }
 }

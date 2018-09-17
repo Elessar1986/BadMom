@@ -1,0 +1,164 @@
+﻿@model BadMom.Models.Registration.UserData
+@using BadMom.Models.User
+@{
+    ViewBag.Title = "Сообщения";
+    Layout = "~/Views/User/_MyProfileLayout.cshtml";
+    ViewBag.menu = "mess";
+}
+
+@*@section styles{
+
+    @Styles.Render("~/Content/user")
+
+}*@
+
+
+
+<div class="container">
+
+
+    <div class="row messages">
+
+
+
+        <main class="col-md-12 main-wallet">
+
+            <div>
+                <div class="row row-margin-zero">
+                    @Html.Partial("_SendFastMessage", new BadMom.Models.User.PersonalMessage() { UserTo = (ViewBag.UserMessages as PrivateMessageByUserVM).Id })
+                </div>
+                @*<div class="d-flex flex-row justify-content-end message-header">
+                        <div class="form-holder">
+                            <form action="#">
+                                <div class="form-group">
+                                    <input type="text" name="body" placeholder="Сообщение..." class="form-control">
+
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <a href="#" class="btn btn-primary button-padding">Написать</a>
+                        </div>
+                        <div>
+                            <a href="#" class="btn btn-primary button-padding">Назад</a>
+                        </div>
+
+                    </div>*@
+                <div style="border:2px solid #eee; padding:5px 5px">
+
+
+                    @{
+                        var user = ViewBag.UserMessages as PrivateMessageByUserVM;
+                        foreach (var item in user.Messages)
+                        {
+                            if (user.Id == item.UserFrom)
+                            {
+                                <div class="blog-post">
+                                    <div class="post-comments" style="margin-top:0px;">
+                                        <div class="comment">
+                                            <div class="comment-header d-flex justify-content-between">
+                                                <div class="user d-flex  align-items-center justify-content-start">
+                                                    <div class="image">
+                                                        @if (user.Avatar.Length != 0)
+                                                        {
+                                                            var base64 = Convert.ToBase64String(user.Avatar);
+                                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                            <img src="@imgSrc" class="img-fluid rounded-circle" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                                                        }
+                                                    </div>
+                                                    <div class="title d-none d-md-inline">
+                                                        <strong>@Html.ActionLink(user.Login, "UserInfo", "User", new { UserName = user.Login }, new { })</strong>
+                                                        @*@if (item.Value.Login == User.Identity.Name)
+                                                            {
+
+                                                                @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
+                                                            }*@
+                                                        <span class="date">@item.Created.ToShortDateString() / @item.Created.ToShortTimeString()</span>
+                                                    </div>
+                                                    <div class="message-in d-flex align-content-center align-items-center" style="margin-bottom:0px; padding-bottom:0px;">
+                                                        <p>@item.Body</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="blog-post">
+                                    <div class="post-comments" style="margin-top:0px;">
+                                        <div class="comment">
+                                            <div class="comment-header d-flex justify-content-end">
+                                                <div class="user d-flex flex-row-reverse justify-content-end">
+                                                    <div class="image">
+                                                        @if (Model.Photo.Length != 0)
+                                                        {
+                                                            var base64 = Convert.ToBase64String(Model.Photo);
+                                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                            <img src="@imgSrc" class="img-fluid rounded-circle" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid rounded-circle" />
+                                                        }
+                                                    </div>
+                                                    <div class="title d-none d-md-inline">
+                                                        <strong>@Html.ActionLink(Model.Login, "UserInfo", "User", new { UserName = Model.Login }, new { })</strong>
+                                                        @*@if (item.Value.Login == User.Identity.Name)
+                                                            {
+
+                                                                @Ajax.ActionLink(" ", "DeleteComment", new { commentId = item.Id, messageId = item.MessageId }, new AjaxOptions { UpdateTargetId = "commentsDiv" }, new { @class = "fa fa-trash", @style = "color:red" });
+                                                            }*@
+                                                        <span class="date">@item.Created.ToShortDateString() / @item.Created.ToShortTimeString()</span>
+                                                    </div>
+                                                    <div class="comment-body message-out" style="margin-bottom:0px; padding-bottom:0px;">
+                                                        <p>@item.Body</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                    }
+                </div>
+            </div>
+
+
+
+
+        </main>
+
+    </div>
+</div>
+
+
+@section scripts{
+
+    @*@Scripts.Render("~/bundles/wallet");*@
+
+    <script>
+
+
+
+    </script>
+
+
+}
+
+

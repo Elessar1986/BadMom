@@ -1,0 +1,374 @@
+﻿.advert-nav {
+    background-color: #0c8100 !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    color: white;
+    z-index:10;
+}
+
+    .advert-nav a {
+        color: #000000 !important;
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+        .advert-nav a:hover {
+            color: #4a4141 !important;
+        }
+
+        .advert-nav a.active {
+            color: white !important;
+        }
+
+        .advert-nav a.disabled {
+            color: #4a4141 !important;
+        }
+
+    .advert-nav input {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+    .advert-nav .add-advert {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+    .advert-nav .add-advert:hover{
+        cursor: pointer;
+    }
+
+.advert-main {
+    margin-top: 20px;
+}
+
+.advert-element {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #9996
+}
+
+    .advert-element .photo {
+        width: 30%;
+    }
+
+    .advert-element .content-block {
+        padding: 4px;
+        width: 50%;
+        height: 100%;
+    }
+
+        .advert-element .content-block .header {
+            color: #999;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .advert-element .content-block .info-block {
+            color: #000000;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 11px;
+            height: 100%;
+            margin-bottom: 5px;
+        }
+
+        .advert-element .content-block .body {
+            color: #000000;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+    .advert-element .button-panel {
+        width: 20%;
+    }
+
+        .advert-element .button-panel button,
+        .advert-element .button-panel a{
+            color: #000000;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 11px;
+            background-color: #0c8100;
+            margin-bottom: 2px;
+            width: 100%;
+        }
+
+            .advert-element .button-panel button.favorite,
+            .advert-element .button-panel a.favorite{
+                background-color: #b6ff00;
+            }
+
+            .advert-element .button-panel button.not-favorite,
+            .advert-element .button-panel a.not-favorite {
+                background-color: #f59e01;
+                padding-left: 3px;
+                letter-spacing: 0.01em !important;
+                font-weight: 700;
+                font-size: 8px;
+            }
+
+
+            .advert-element .button-panel button.edit {
+                background-color: #1565c0;
+                color: white;
+                padding-left: 7px;
+            }
+
+            .advert-element .button-panel button.delete {
+                background-color: #1e88e5 ;
+                color: white;
+            }
+            .advert-element .button-panel button.view {
+                color: white;
+                background-color: #1976d2;
+                /*border: 1px solid #005dff;*/
+            }
+
+
+
+        .advert-element .button-panel .price {
+            color: #0c8100;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+.advert-details {
+}
+
+    .advert-details .advert-element .content-block .header {
+        font-size: 16px;
+    }
+
+    .advert-details .advert-element .content-block .info-block {
+        margin-bottom: 15px;
+    }
+
+    .advert-details .advert-element .content-block .body {
+        font-size: 13px;
+    }
+
+    .advert-details .advert-element .button-panel {
+        width: 20%;
+    }
+
+        .advert-details .advert-element .button-panel button,
+        .advert-details .advert-element .button-panel a{
+            color: #000000;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 13px;
+            background-color: #0c8100;
+            margin-bottom: 2px;
+            width: 100%;
+        }
+
+            .advert-details .advert-element .button-panel button.favorite,
+            .advert-details .advert-element .button-panel a.favorite {
+                background-color: #b6ff00;
+            }
+
+            .advert-details .advert-element .button-panel button.not-favorite,
+            .advert-details .advert-element .button-panel a.not-favorite {
+                background-color: #f59e01;
+            }
+
+            .advert-details .advert-element .button-panel button.saler {
+                background-color: #64dd17
+            }
+
+        .advert-details .advert-element .button-panel .price {
+            color: #0c8100;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 23px;
+            margin-top: 20px;
+        }
+
+        
+
+
+.advert-add {
+    margin-bottom: 40px;
+    padding: 30px;
+    border: 3px solid #eee;
+}
+
+@media (max-width: 576px) {
+    .advert-add {
+        margin-bottom: 20px;
+        padding: 5px;
+        border: 3px solid #eee;
+    }
+
+    .advert-details .advert-element .button-panel {
+        width: 100%;
+    }
+
+    .advert-element .button-panel {
+        width: 100%;
+    }
+}
+    .advert-add .header {
+        color: #0c8100;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+
+    .advert-add input,
+    .advert-add textarea,
+    .advert-add select,
+    .advert-add label,
+    .advert-add option,
+    .advert-add button {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+        .advert-add label.btn {
+            background-color: #b6ff00;
+            color: #000000;
+        }
+
+    .advert-add button {
+        background-color: #0c8100;
+    }
+
+.no-message {
+    color: #000000 !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 25px !important;
+    margin: 100px 0px;
+}
+
+.modal-header {
+    background-color: #327e7e;
+    color: white;
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+}
+
+.modal-title {
+    letter-spacing: 0.03em !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    font-size: 20px !important;
+    letter-spacing: 0.08em !important;
+}
+
+.modal-body div {
+    color: #7a7a7a !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    margin: 5px;
+}
+
+.modal-body a {
+    color: #327e7e;
+}
+
+.modal-body div.type {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: black !important;
+}
+
+.modal-body div.dateTitle {
+    color: black !important;
+    font-weight: 700 !important;
+}
+
+.modal-footer {
+    padding-bottom: 3px !important;
+    padding-top: 3px !important;
+}
+
+    .modal-footer button {
+        background-color: #327e7e;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        text-decoration: none !important;
+        letter-spacing: 0.03em !important;
+        font-size: 11px !important;
+    }
+
+.event-add {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+
+
+    .event-add .header {
+        color: #0c8100;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+
+    .event-add input,
+    .event-add textarea,
+    .event-add select,
+    .event-add label,
+    .event-add option,
+    .event-add button {
+        letter-spacing: 0.08em !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        font-size: 13px !important;
+    }
+
+    .event-add input,
+    .event-add select {
+        height: 33px !important;
+        /*width: 250px;*/
+    }
+
+    .event-add input[type=checkbox] {
+        width: 250px;
+    }
+
+    .event-add button {
+        background-color: #607a8b;
+    }
+
+    .event-add .form-group {
+        margin-bottom: 0px;
+        height: 35px !important;
+    }
+
+        .event-add .form-group.text-area-group {
+            height: auto !important;
+        }

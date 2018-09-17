@@ -61,12 +61,15 @@
     <Compile Include="DataTransferObjects\ConsumptionReason.cs" />
     <Compile Include="DataTransferObjects\Events.cs" />
     <Compile Include="DataTransferObjects\EventType.cs" />
+    <Compile Include="DataTransferObjects\FavoriteAdvert.cs" />
     <Compile Include="DataTransferObjects\Income.cs" />
     <Compile Include="DataTransferObjects\IncomeReason.cs" />
     <Compile Include="DataTransferObjects\logEvents.cs" />
     <Compile Include="DataTransferObjects\logTypes.cs" />
     <Compile Include="DataTransferObjects\Message.cs" />
     <Compile Include="DataTransferObjects\OperationType.cs" />
+    <Compile Include="DataTransferObjects\PersonalMessage.cs" />
+    <Compile Include="DataTransferObjects\PrivateMessageByUser.cs" />
     <Compile Include="DataTransferObjects\ResourceType.cs" />
     <Compile Include="DataTransferObjects\Source.cs" />
     <Compile Include="DataTransferObjects\Themes.cs" />

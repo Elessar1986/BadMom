@@ -1,0 +1,47 @@
+﻿@model BadMom.Models.Advert.Favorite
+@{
+    ViewBag.Title = "ToFavorite";
+    Layout = "~/Views/Advert/_AdvertLayout.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm("AddToFavorite","Advert", new { redirect = ViewBag.Redirect },FormMethod.Get))
+    {
+        <div class="advert-main">
+            <div class="row advert-details">
+
+                <div class="col-12 advert-element">
+                    <div class="d-flex justify-content-end">
+
+                        <div class="content-block">
+                            <div class="header text-center">
+                                Установить напоминание?
+                            </div>
+
+                            <div class="body" style="z-index: 999;">
+
+                                @Html.TextBoxFor(m => m.PlaningOn, new { @id = "Date", @class = "form-control bs-datepicker", @required = "required" })
+                                @Html.ValidationMessageFor(m => m.PlaningOn, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(m => m.AdvertId)
+                            </div>
+
+                        </div>
+                        <div class="button-panel d-none d-sm-block">
+                            <button class="btn btn-default " onclick="window.history.back()">Назад</button>
+                            <button class="btn btn-default saler" type="submit">Добавит</button>
+                            <button class="btn btn-default favorite" type="button" onclick="window.location='@Url.Action("AddToFavorite", "Advert", new { AdvertId = Model.AdvertId, redirect = ViewBag.Redirect })'">Нет</button>
+
+
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    }
+    </div>
+

@@ -12,6 +12,12 @@ namespace BadMom.BLL.DataTransferObjects
 
         public ResourceType ResourceType { get; set; }
 
-        public User User { get; set; }
+        public long UserId { get; set; }
+
+        public decimal Sum { get; set; }
+
+        public long Type { get; set; }
+
+        public DateTime Created { get; set; }
     }
 }

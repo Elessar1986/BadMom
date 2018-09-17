@@ -45,7 +45,7 @@ namespace BadMom.Helpers
                 data.SendLoggerMessage(logEvent);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

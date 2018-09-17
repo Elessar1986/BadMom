@@ -9,10 +9,21 @@ namespace BadMom.Controllers
 {
     public class HomeController : Controller
     {
+
+        public HomeController()
+        {
+            ViewBag.ActiveMenu = "Home";
+        }
+
         public ActionResult Index()
         {
 
-            
+            return View();
+        }
+
+        public ActionResult Error()
+        {
+
             return View();
         }
 

@@ -21,6 +21,9 @@ namespace BadMom.DAL.Model
         [StringLength(50)]
         public string Name { get; set; }
 
+        [StringLength(10)]
+        public string Color { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Events> Events { get; set; }
     }

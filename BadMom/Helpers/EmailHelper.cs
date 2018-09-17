@@ -1,26 +1,60 @@
 ﻿using BadMom.Models.Registration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace BadMom.Helpers
 {
     public class EmailHelper
     {
-        public bool SendAuthLink(string login, string passHash, string email)
+
+        public bool SendEmail(string login, string passHash, string email, EmailType type)
         {
-
-
-            return false;
+            SmtpClient client = new SmtpClient();
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("info@goodmomonline.com.ua");
+            mailMessage.To.Add(email);
+            mailMessage.IsBodyHtml = true;
+            switch (type)
+            {
+                case EmailType.Registration:
+                    mailMessage.Subject = "Подтвердить регистрайию на GoodMom";
+                    mailMessage.Body = GetBody(WebConfigurationManager.AppSettings["AuthTemplate"].ToString(), login, passHash, WebConfigurationManager.AppSettings["AuthLink"].ToString());
+                    break;
+                case EmailType.ChangePassword:
+                    mailMessage.Subject = "Подтвердить смену пароля на GoodMom";
+                    mailMessage.Body = GetBody(WebConfigurationManager.AppSettings["ChangePassTemplate"].ToString(), login, passHash, WebConfigurationManager.AppSettings["ChangePassLink"].ToString());
+                    break;
+                default:
+                    break;
+            }
+           
+            client.Send(mailMessage);
+            return true;
         }
 
-        public bool SendChangePassLink(UserPasswordData passData)
+        private string GetBody(string templateName, string login, string password, string link)
         {
-
-
-            return false;
+            string body;
+            using (var sr = new StreamReader(HttpContext.Current.Server.MapPath("\\App_Data\\Template\\") + templateName))
+            {
+                body = sr.ReadToEnd();
+            }
+            
+            string messageBody = string.Format(body, login, link + "?login=" + login + "&pass=" + password);
+            return messageBody;
         }
 
+        public enum EmailType
+        {
+            Registration,
+            ChangePassword
+        }
     }
 }

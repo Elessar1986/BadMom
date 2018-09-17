@@ -1,0 +1,81 @@
+﻿@using BadMom.Models.Registration
+@{
+    ViewBag.Title = "Личные данные";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    @Styles.Render("~/Content/user")
+    @Styles.Render("~/Content/advert")
+}
+@*@RenderSection("styles", required: false)*@
+
+@{ var user = (ViewBag.User as UserData);}
+<section style="background: url(../../Resources/The-physiotherapist-banner-nhs04sz884l8lghbms573azwkdyz9fjxbf1ozdhnso.png);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container personal-cabinet-container">
+        <div class="row">
+            <div class="col-6 col-md-3 d-none d-md-block">
+                <div class="round-frame">
+                    @if ((ViewBag.User as UserData).Photo != null && (ViewBag.User as UserData).Photo.Length != 0)
+                    {
+                        var base64 = Convert.ToBase64String((ViewBag.User as UserData).Photo);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                        <img src="@imgSrc" />
+                    }
+                    else
+                    {
+                        <img style=" max-width:200px; max-height:200px;" src="~/Resources/user-icon-png-pnglogocom.png" />
+                    }
+                </div>
+
+            </div>
+            <div class="col-md-3 col-6 login">
+
+                <h1>
+                    @user.Login
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<nav class="navbar navbar-expand-lg navbar-dark user-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        @*<span class="navbar-toggler-icon"></span>*@
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link @if (ViewBag.Menu == "info"){ <text>active</text> }" href="@Url.Action("UserInfo", new { UserName = user.Login })">Информация<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link @if (ViewBag.Menu == "advert"){ <text>active</text> }" href="@Url.Action("UserAdvert",new { id = user.Id, userName = user.Login })">Обьявления</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link @if (ViewBag.Menu == "mess"){ <text>active</text> }" href="@Url.Action("UserMessages", new { id = user.Id, userLogin = user.Login })">Личное сообщение</a>
+            </li>
+
+            @*<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @if (ViewBag.Menu != "main"){ <text>disabled</text> }" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Показать на странице</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown08">
+                        <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "price_down" })">5</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "price_up" })">10</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "date_down" })">20</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { categoryId = ViewBag.categoryId, order = "date_up" })">50</a>
+                    </div>
+                </li>*@
+        </ul>
+    </div>
+</nav>
+
+@RenderBody()
+
+
+@RenderSection("scripts", required: false)
+

@@ -1,0 +1,135 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.Source>
+
+@{
+    Layout = "~/Views/Wallet/_WalletLayout.cshtml";
+    ViewBag.Menu = "resource";
+}
+
+<div class="container wallet-main-head">
+
+    <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <div class="d-flex align-content-center align-items-center add-advert">
+
+            <i class="fa fa-3x fa-plus-square" style="margin-right:3px;"></i> Добавить счет
+
+        </div>
+    </a>
+
+    <div class="collapse" id="collapseExample">
+        @Html.Partial("_AddSource", new BadMom.Models.Wallet.Source())
+    </div>
+
+    <div id="sourceDiv" class="row wallet-main">
+
+        @Html.Partial("_Resources", Model)
+
+    </div>
+
+</div>
+
+@*<div class="container">
+
+
+    <div class="row">
+
+
+
+        <main class="col-md-9 main-wallet">
+
+
+            <div id="sourceDiv" class="row wallet-main">
+
+                @Html.Partial("_Resources", Model)
+
+            </div>
+
+
+        </main>
+
+    </div>
+</div>*@
+
+
+
+<div class="modal fade" id="ResourseInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Информация</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div id="sourceInfoDiv">
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+@*<div class="modal fade" id="AddResourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Добавить ресурс</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Ajax.BeginForm("AddResource", "Wallet", new AjaxOptions
+                {
+                    UpdateTargetId = "sourceDiv"
+                ,
+                    OnSuccess = "OnSuccess"
+                }))
+                {
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="form-group col-sm-8 offset-sm-2">
+                                @Html.TextBox("Name", null, new { @id = "login", @placeholder = "Название (кредит.карта, з/п ...)", @class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("t", "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-8 offset-sm-2">
+                                @Html.TextBox("Sum", null, new { @id = "Password", @placeholder = "Сумма на данный момент", @class = "form-control decimalItem", @required = "required" })
+                                @Html.ValidationMessage("t", "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-8 offset-sm-2">
+                                @Html.DropDownList("Type", (List<SelectListItem>)ViewBag.ResourceType, new { @id = "Password", @class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("t", "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>*@
+
+@section scripts{
+
+
+
+    <script>
+
+
+
+
+
+    </script>
+
+
+}

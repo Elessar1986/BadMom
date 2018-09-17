@@ -1,0 +1,45 @@
+﻿@model BadMom.Models.Wallet.Source
+
+<div class="container">
+
+    <div style="margin-bottom:1%;margin-top:1%;">
+
+        <div class="wallet-add">
+
+
+            @using (Ajax.BeginForm("AddResource", "Wallet", new AjaxOptions
+            {
+                UpdateTargetId = "sourceDiv"
+,
+                OnSuccess = "OnSuccess"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="form-group col-sm-6 col-md-4">
+                        @Html.TextBoxFor(m => m.Name, new { @id = "Description", @placeholder = "Описание расхода", @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-4">
+                        @Html.DropDownListFor(m => m.Type, (List<SelectListItem>)ViewBag.ResourceType, new { @id = "OperationType", @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-4">
+                        @Html.TextBoxFor(m => m.Sum, new { @id = "Sum", @class = "form-control decimalItem", @placeholder = "Сумма", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Sum, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="form-group d-flex justify-content-center align-content-center align-items-center">
+                    <button type="submit" class="btn btn-secondary">Добавить</button>
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>

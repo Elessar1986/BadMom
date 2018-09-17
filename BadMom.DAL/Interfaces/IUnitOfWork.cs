@@ -1,5 +1,4 @@
 ﻿using BadMom.DAL.Model;
-using BadMom.DAL.Model.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,8 @@ namespace BadMom.DAL.Interfaces
         IRepository<Source> Source { get; }
         IRepository<Themes> Themes { get; }
         IRepository<Users> Users { get; }
-
+        IRepository<PersonalMessage> PersonalMessage { get; }
+        IRepository<FavoriteAdvert> FavoriteAdvert { get; }
 
         void Save();
     }

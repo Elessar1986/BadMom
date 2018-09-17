@@ -14,7 +14,7 @@ namespace BadMom.DAL.Model
 
         public int Type { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateStart { get; set; }
 
         public DateTime Created { get; set; }
 
@@ -26,6 +26,13 @@ namespace BadMom.DAL.Model
         public long? Source { get; set; }
 
         public bool Remind { get; set; }
+
+        public DateTime? DateEnd { get; set; }
+
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        public long? AdvertId { get; set; }
 
         public virtual EventType EventType { get; set; }
 

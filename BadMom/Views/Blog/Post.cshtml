@@ -1,0 +1,255 @@
+﻿@using BadMom.Models.Blog
+@model BadMom.Models.Blog.PostVM
+@{
+    ViewBag.Title = "Index";
+}
+<section style="background: url(../../Resources/banner-blog.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1>Блог</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8">
+            <div class="container">
+                <div class="post-single">
+                    <div class="post-thumbnail">
+                        @if (Model.Photo != null && Model.Photo.Length != 0)
+                        {
+                            var base64 = Convert.ToBase64String(Model.Photo);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                            <img src="@imgSrc" class="img-fluid"/>
+                        }
+                        else
+                        {<img src="~/Resources/img/blog-post-3.jpeg" alt="..." class="img-fluid">}
+                    </div>
+                    <div class="post-details">
+                        <div class="post-meta d-flex justify-content-between">
+                            <div class="category"><a href="@Url.Action("Index", "Blog", new { themeId = Model.ThemeObj.Id })">@Model.ThemeObj.Name</a></div>
+                        </div>
+                        <h1>@Model.Title<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+                        <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
+                            <a href="#" class="author d-flex align-items-center flex-wrap">
+                                <div class="avatar">
+                                    @if (Model.User.Photo.Length != 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(Model.User.Photo);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                        <img src="@imgSrc" class="img-fluid" />
+                                    }
+                                    else
+                                    {
+                                        <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid" />
+                                    }
+                                </div>
+                                <div class="title"><span>@Html.ActionLink(@Model.User.Login, "UserInfo", "User", new { UserName = Model.User.Login }, new { })</span></div>
+                            </a>
+                            <div class="d-flex align-items-center flex-wrap">
+                                <div class="date"><i class="fa fa-clock-o"></i> @Model.Created.ToShortDateString()</div>
+                                <div class="views" id="userLike">
+                                    @if (Model.UsersLikes.Select(x => x.Login).Contains(User.Identity.Name))
+                                    {
+                                        @Ajax.ActionLink(" ", "DislikeMessage", new { messageId = Model.Id }, new AjaxOptions { UpdateTargetId = "userLike" }, new { @class = "fa fa-heart", @style = "color:red" });
+
+                                    }
+                                    else
+                                    {
+                                        @Ajax.ActionLink(" ", "LikeMessage", new { messageId = Model.Id }, new AjaxOptions
+                                        {
+
+                                            OnSuccess = "OnSuccess"
+
+                                        }, new { @class = "fa fa-heart" });
+                                    }
+
+                                    @Model.UsersLikes.Count
+                                </div>
+                                <div class="comments meta-last"><i class="fa fa-comments-o"></i>@Model.Comments.Count</div>
+
+                              
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <p class="lead">@Model.Body</p>
+                            <p></p>
+
+                            @*<p> <img src="img/featured-pic-3.jpeg" alt="..." class="img-fluid"></p>
+                                <h3>Lorem Ipsum Dolor</h3>
+                                <p>div Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda temporibus iusto voluptates deleniti similique rerum ducimus sint ex odio saepe. Sapiente quae pariatur ratione quis perspiciatis deleniti accusantium</p>
+                                <blockquote class="blockquote">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                                    <footer class="blockquote-footer">
+                                        Someone famous in
+                                        <cite title="Source Title">Source Title</cite>
+                                    </footer>
+                                </blockquote>
+                                <p>quasi nam. Libero dicta eum recusandae, commodi, ad, autem at ea iusto numquam veritatis, officiis. Accusantium optio minus, voluptatem? Quia reprehenderit, veniam quibusdam provident, fugit iusto ullam voluptas neque soluta adipisci ad.</p>*@
+                        </div>
+
+                        @*<div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                                <a href="#" class="prev-post text-left d-flex align-items-center">
+                                    <div class="icon prev"><i class="fa fa-angle-left"></i></div>
+                                    <div class="text">
+                                        <strong class="text-primary">Previous Post </strong>
+                                        <h6>I Bought a Wedding Dress.</h6>
+                                    </div>
+                                </a><a href="#" class="next-post text-right d-flex align-items-center justify-content-end">
+                                    <div class="text">
+                                        <strong class="text-primary">Next Post </strong>
+                                        <h6>I Bought a Wedding Dress.</h6>
+                                    </div>
+                                    <div class="icon next"><i class="fa fa-angle-right">   </i></div>
+                                </a>
+                            </div>*@
+
+                        @*-----------------COMMENTS------------------------*@
+
+                        <div class="post-comments">
+                            <header>
+                                <h3 class="h6">Комментарии<span class="no-of-comments">(@Model.Comments.Count)</span></h3>
+                            </header>
+                            <div id="commentsDiv">
+                                @Html.Partial("Comments", Model.Comments)
+                            </div>
+                         
+                        </div>
+                        <div class="add-comment">
+                            <header>
+                                <h3 class="h6">
+                                    Добавить комментарий
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {<textt>(может только зарегистрированый пользователь)</textt>}
+                                </h3>
+                            </header>
+                            @using (Ajax.BeginForm("AddComment", "Blog", null, new AjaxOptions
+                            {
+                                UpdateTargetId = "commentsDiv",
+                                OnSuccess = "OnSuccessAddComment"
+                            }, new { @class = "commenting-form" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="row">
+
+                                    <div class="form-group col-md-12">
+                                        <textarea name="Comment" id="usercomment" placeholder="Ваши комментарии..." class="form-control" required></textarea>
+                                        <input type="hidden" name="MessageId" value="@Model.Id" />
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <button type="submit" class="btn btn-secondary">Отправить</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-secondary" disabled>Отправить</button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+        <aside class="col-lg-4">
+
+
+            <div class="widget latest-posts">
+                <header>
+                    <h3 class="h6">Последние посты</h3>
+                </header>
+                <div class="blog-posts">
+                    @foreach (var item in (List<LastMessage>)ViewBag.LastMessage)
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+                <header>
+                    <h3 class="h6">Популярные посты</h3>
+                </header>
+                <div class="blog-posts">
+                    @foreach (var item in (List<FeaturedMessage>)ViewBag.FeaturedMessage)
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+
+            <!-- Widget [Categories Widget]-->
+            <div class="widget categories">
+                <header>
+                    <h3 class="h6">Категории</h3>
+                </header>
+                @{
+                    List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
+                    foreach (var item in themes)
+                    {
+                        <div class="item d-flex justify-content-between">
+                            @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
+                            <span>@item.MessageCount</span>
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </aside>
+    </div>
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/blog")
+
+    <script type="text/javascript">
+
+        function OnSuccess(data) {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                $("#userLike").html(data);
+            };
+        }
+
+    </script>
+}

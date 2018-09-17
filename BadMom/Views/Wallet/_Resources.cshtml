@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BadMom.Models.Wallet.Source>
+@{
+    Layout = null;
+}
+
+
+
+    @{ foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card" style="margin-top:20px">
+                    <div class="card-header resource-name" style="background-color:#3d97d299 ">
+                        @item.Name (@item.ResourceType.Name)
+                    </div>
+                    @if (item.Sum < 0)
+                    {
+                        <div class="card-body" style="color:red">
+                            @item.Sum
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body resorce-sum">
+                            @item.Sum
+                        </div>
+                    }
+                    <div class="card-footer">
+
+                        <div class="row ">
+                            <div class="col-10 resource-info">
+                                @Ajax.ActionLink("Информация", "ShowSourceInfo", new { sourceId = item.Id }, new AjaxOptions { UpdateTargetId = "sourceInfoDiv", OnSuccess = "InfoSuccess", HttpMethod = "POST" }, new { })
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="">@Ajax.ActionLink(" ", "DeleteResource", new { sourceId = item.Id }, new AjaxOptions { UpdateTargetId = "sourceDiv", OnBegin = "OnBegin", HttpMethod = "POST" }, new { @class = "fa fa-trash", @style = "color:red" })</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+    }
+
+
+

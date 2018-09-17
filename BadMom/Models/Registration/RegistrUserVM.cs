@@ -19,7 +19,7 @@ namespace BadMom.Models.Registration
         [Required]
         public string Password { get; set; }
 
-        [Display(Name = "Пвроль ёще раз")]
+        [Display(Name = "Пароль ёще раз")]
         [DataType(DataType.Password)]
         [Required]
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]

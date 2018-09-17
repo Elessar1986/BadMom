@@ -1,7 +1,172 @@
-﻿
+﻿@using BadMom.Models.Blog
+@using PagedList.Mvc
+@model PagedList.IPagedList<BadMom.Models.Blog.PostVM>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blog";
 }
 
-<h2>Index</h2>
+<section style="background: url(../../Resources/banner-blog.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1>Блог</h1>
+            </div>
+        </div>
+    </div>
+</section>
 
+<div class="container">
+    <div class="row">
+        <!-- Latest Posts -->
+        <main class="posts-listing col-lg-8">
+            <div class="container">
+                <div class="row">
+                    <!-- post -->
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <div class="post col-xl-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a href="@Url.Action("Post","Blog",new { message= item.Id })">
+                                            @if (item.Photo != null && item.Photo.Length != 0)
+                                            {
+                                                        var base64 = Convert.ToBase64String(item.Photo);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                <img src="@imgSrc" class="img-fluid"/>
+                                            }
+                                            else
+                                            {<img src="~/Resources/img/blog-post-2.jpg" alt="..." class="img-fluid">}
+                                        </a>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <a href="@Url.Action("Post","Blog",new { message= item.Id })">
+                                            <h3 class="h4">@item.Title</h3>
+                                        </a>
+                                        <div class="post-meta d-flex justify-content-between">
+                                            <div class="date meta-last">@item.Created.ToShortDateString()</div>
+                                            <div class="category">
+                                                @Html.ActionLink(item.ThemeObj.Name, "Index", "Blog", new { themeId = item.Theme }, new { })
+                                            </div>
+                                        </div>
+                                        <p class="text-muted">@item.Body</p>
+                                    </div>
+                                </div>
+                                <footer class="post-footer d-flex align-items-center">
+                                    <a href="#" class="author d-flex align-items-center flex-wrap">
+                                        <div class="avatar"><img src="~/Resources/user-icon-png-pnglogocom.png" alt="..." class="img-fluid"></div>
+                                        <div class="title"><span>@Html.ActionLink(@item.User.Login, "UserInfo", "User", new { UserName = @item.User.Login }, new { }) </span></div>
+                                    </a>
+                                    <div class="date"><i class="fa fa-heart"></i>@item.UsersLikes.Count</div>
+                                    <div class="comments meta-last"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                </footer>
+                            </div>
+                        }
+                    }
+
+
+
+
+
+                </div>
+                <!-- Pagination -->
+                @*Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount*@
+
+                <nav class="d-flex justify-content-center">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, themeId = ViewBag.ThemeId }))
+                </nav>
+
+            </div>
+        </main>
+        <aside class="col-lg-4">
+            <!-- Widget [Search Bar Widget]-->
+            @*<div class="widget search">
+                    <header>
+                        <h3 class="h6">Search the blog</h3>
+                    </header>
+                    <form action="#" class="search-form">
+                        <div class="form-group">
+                            <input type="search" placeholder="What are you looking for?">
+                            <button type="submit" class="submit"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
+                </div>*@
+
+            <!-- Widget [Latest Posts Widget]   -->
+            <div class="widget categories">
+
+                @Html.ActionLink("Добавить пост", "AddPost", "Blog", new { })
+
+            </div>
+
+            <div class="widget latest-posts">
+                <header>
+                    <h3 class="h6">Последние посты</h3>
+                </header>
+                <div class="blog-posts">
+                    @foreach (var item in (List<LastMessage>)ViewBag.LastMessage)
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+                <header>
+                    <h3 class="h6">Популярные посты</h3>
+                </header>
+                <div class="blog-posts">
+                    @foreach (var item in (List<FeaturedMessage>)ViewBag.FeaturedMessage)
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+
+            <!-- Widget [Categories Widget]-->
+
+            <div class="widget categories">
+                <header>
+                    <h3 class="h6">Категории</h3>
+                </header>
+                @{
+                    List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
+                    foreach (var item in themes)
+                    {
+                        <div class="item d-flex justify-content-between">
+                            @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
+                            @*<a href="theme_@item.Id">@item.Name</a>*@
+                            <span>@item.MessageCount</span>
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </aside>
+    </div>
+</div>
