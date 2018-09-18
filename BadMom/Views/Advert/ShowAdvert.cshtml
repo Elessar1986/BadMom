@@ -24,7 +24,7 @@
                                 <img src="@imgSrc" class="img-fluid" />
                             }
                             else
-                            {<img src="~/Resources/img/blog-post-2.jpg" alt="..." class="img-fluid">}
+                            {<img src="~/Resources/nophoto.jpg" alt="..." class="img-fluid">}
                         </a>
                     </div>
                     <div class="content-block">
@@ -46,8 +46,8 @@
                         <button class="btn btn-default " onclick="window.history.back()">Назад</button>
                         @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.UserName)
                         {
-                            <button class="btn btn-default saler">Редактировать</button>
-                            <button class="btn btn-default favorite">Удалить</button>
+                            <button class="btn btn-default saler" onclick="window.location='@Url.Action("EditAdvert",new { id = Model.Id })'">Редактировать</button>
+                            <button class="btn btn-default favorite" onclick="window.location='@Url.Action("DeleteAdvert", new { id = Model.Id })'">Удалить</button>
                         }
                         else
                         {
@@ -75,6 +75,10 @@
                                 </div>
 
                             }
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <button class="btn btn-default favorite" style="background-color:#ff2b2b" onclick="window.location='@Url.Action("DeleteAdvert", new { id = Model.Id, admin = true })'">Удалить (админ)</button>
                         }
 
                         <div class="d-flex justify-content-end align-content-end">

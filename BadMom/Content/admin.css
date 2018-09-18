@@ -31,3 +31,11 @@
 .user-item:hover {
     cursor: pointer;
 }
+
+.admin-nav input {
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}

@@ -15,7 +15,7 @@ namespace BadMom.Controllers
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-        
+
         IDataHelper dataHelper;
         LoggerHelper logger;
 
@@ -32,20 +32,33 @@ namespace BadMom.Controllers
         }
 
 
-        public ActionResult Logger()
+        public ActionResult Logger(int? page, int days = 1)
         {
-            return View();
+            try
+            {
+                var logs = dataHelper.GetLog(DateTime.Now.AddDays(-days));
+                int pageSize = 20;
+                int pageNumber = (page ?? 1);
+                return View(logs.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
         }
 
 
-        public ActionResult Users(int? page)
+        public ActionResult Users(string find, int? page, string status, string conf, string role, string order)
         {
             try
             {
                 ViewBag.User = dataHelper.GetUserData(User.Identity.Name);
-
-                var users = dataHelper.GetAllUsers().OrderByDescending(x => x.Created);
-
+                var users = dataHelper.GetAllUsers(find, status, conf, role, order);
+                ViewBag.Role = role;
+                ViewBag.Status = status;
+                ViewBag.Conf = conf;
+                ViewBag.Order = order;
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 return View(users.ToPagedList(pageNumber, pageSize));
@@ -57,7 +70,113 @@ namespace BadMom.Controllers
             }
         }
 
+        public ActionResult BlockUser(long id, string status)
+        {
+            try
+            {
+                switch (status)
+                {
+                    case "blocked":
+                        dataHelper.ChangeUserStatus(id, 1);
+                        break;
+                    case "unblocked":
+                        dataHelper.ChangeUserStatus(id, 0);
+                        break;
+                    default:
+                        break;
+                }
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
 
+        public ActionResult SetUserRole(long id, string role)
+        {
+            try
+            {
+                dataHelper.ChangeUserRole(id, role);
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        public ActionResult DeleteUser(long id)
+        {
+            try
+            {
+                dataHelper.DeleteUser(id);
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        public ActionResult SendEmail(long id)
+        {
+            try
+            {
+                // TODO: SendEmail
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        public ActionResult SendMessage(long id)
+        {
+            try
+            {
+                // TODO: SendMessage
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        public ActionResult ShowPost(long id)
+        {
+            try
+            {
+                // TODO: ShowPost
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        public ActionResult ShowAdvert(long id)
+        {
+            try
+            {
+                // TODO: ShowAdvert
+                return RedirectToAction("Users");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} \n Inner: {ex.InnerException.Message} \n InnerInner: {ex.InnerException.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
 
 
     }

@@ -675,12 +675,46 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             }
         }
 
-        public List<AdminUserDataVM> GetAllUsers()
+        public List<AdminUserDataVM> GetAllUsers(string find, string status, string conf, string role, string order)
         {
-            var users = data.GetAllUsers();
+            var users = data.GetAllUsers(find, status, conf, role , order );
             var mapper = new MapperConfiguration(c => c.CreateMap<AdminUserData, AdminUserDataVM>()).CreateMapper();
             var mappedRes = mapper.Map<List<AdminUserData>, List<AdminUserDataVM>>(users);
             return mappedRes;
+        }
+
+        public bool DeleteUser(long id)
+        {
+            data.DeleteUser(id);
+            return true;
+        }
+
+        public bool ChangeUserStatus(long id, int status)
+        {
+            data.ChangeUserStatus(id, status);
+            return true;
+        }
+
+        public bool ChangeUserRole(long id, string role)
+        {
+            data.ChangeUserRole(id, role);
+            return true;
+        }
+
+        public List<LoggerEvent> GetLog(DateTime from)
+        {
+            var logs = data.GetLog(from);
+            var mapper = new MapperConfiguration(c => c.CreateMap<logEvents, LoggerEvent>()).CreateMapper();
+            var mappedRes = mapper.Map<List<logEvents>, List<LoggerEvent>>(logs.ToList());
+            return mappedRes;
+        }
+
+        public bool EditAdvert(AdvertVM advert)
+        {
+            var mapper = new MapperConfiguration(c => c.CreateMap<AdvertVM, Advert>()).CreateMapper();
+            var mappedRes = mapper.Map<AdvertVM, Advert>(advert);
+            data.EditAdvert(mappedRes);
+            return true;
         }
     }
 }

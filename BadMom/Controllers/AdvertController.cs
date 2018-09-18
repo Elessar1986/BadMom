@@ -38,7 +38,7 @@ namespace BadMom.Controllers
         {
             try
             {
-                var adverts = dataHelper.GetAdvertsByCategoryId(categoryId, order);
+                var adverts = dataHelper.GetAdvertsByCategoryId(categoryId, order); 
                 if (!string.IsNullOrEmpty(search))
                 {
                     adverts = adverts.Where(x => x.Title.Contains(search)).ToList();
@@ -106,11 +106,12 @@ namespace BadMom.Controllers
         }
 
         [Authorize]
-        public ActionResult DeleteAdvert(long id)
+        public ActionResult DeleteAdvert(long id, bool? admin)
         {
             try
             {
                 dataHelper.DeleteAdvert(id);
+                if(admin.HasValue && admin.Value == true) return RedirectToAction("Index", "Advert");
                 return RedirectToAction("MyAdverts","User");
             }
             catch (Exception ex)
@@ -138,6 +139,60 @@ namespace BadMom.Controllers
                         advert.Photo = xByte;
                     }
                     if (dataHelper.AddAdvert(advert, User.Identity.Name))
+                    {
+                        return RedirectToAction("Index", "Advert");
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
+                else
+                {
+                    SetViewBag();
+                    return View(advert);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        [Authorize]
+        public ActionResult EditAdvert(long id)
+        {
+            try
+            {
+                var advert = dataHelper.GetAdvert(id);
+                ViewBag.Edit = true;
+                SetViewBag();
+                return View("AddAdvert",advert);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
+                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditAdvert(AdvertVM advert, HttpPostedFileBase fileUpload)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (fileUpload != null)
+                    {
+                        var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true), 300, 200);
+                        ImageConverter _imageConverter = new ImageConverter();
+                        byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
+                        advert.Photo = xByte;
+                    }
+                    if (dataHelper.EditAdvert(advert))
                     {
                         return RedirectToAction("Index", "Advert");
                     }

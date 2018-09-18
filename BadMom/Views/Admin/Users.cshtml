@@ -7,6 +7,64 @@
 }
 
 
+<nav class="navbar navbar-expand-lg navbar-dark admin-nav" style="z-index:7;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        Фильтры
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Статус</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = "all", conf = ViewBag.Conf, order = ViewBag.Order })">Все</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = "blocked", conf = ViewBag.Conf, order = ViewBag.Order })">Забанен</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = "unblocked", conf = ViewBag.Conf, order = ViewBag.Order })">Не забанен</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Подтвержден</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = ViewBag.Status, conf = "all", order = ViewBag.Order })">Все</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = ViewBag.Status, conf = "confirmed", order = ViewBag.Order })">Да</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = ViewBag.Status, conf = "not_confirmed", order = ViewBag.Order })">Нет</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Порядок</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new {role = ViewBag.Role, status = ViewBag.Status, conf = ViewBag.Conf, order = "date" })">Дата</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = ViewBag.Role, status = ViewBag.Status, conf = ViewBag.Conf, order = "login" })">Логин</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Роль</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = "all", status = ViewBag.Status, conf = ViewBag.Conf, order = ViewBag.Order })">Все</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = "user", status = ViewBag.Status, conf = ViewBag.Conf, order = ViewBag.Order })">Пользователи</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = "moder", status = ViewBag.Status, conf = ViewBag.Conf, order = ViewBag.Order })">Модераторы</a>
+                    <a class="dropdown-item" href="@Url.Action("Users","Admin", new { role = "admin", status = ViewBag.Status, conf = ViewBag.Conf, order = ViewBag.Order })">Администраторы</a>
+                </div>
+            </li>
+
+
+        </ul>
+        @using (Html.BeginForm("Users", "Admin", FormMethod.Get, new { @class = "form-inline my-2 my-md-0" }))
+        {
+            <input class="form-control" type="text" placeholder="Поиск" aria-label="Search" name="find" >
+            <input type="hidden" name="role" value="@ViewBag.Role">
+            <input type="hidden" name="status" value="@ViewBag.Status">
+            <input type="hidden" name="conf" value="@ViewBag.Conf">
+            <input type="hidden" name="order" value="@ViewBag.Order">
+        }
+    </div>
+</nav>
+
+
 
 
 <div class="container">
@@ -49,8 +107,14 @@
                         {
                             <td>нет</td>
                         }
-                        <td> @item.Status</td>
-
+                        @if (item.Status == 0 || item.Status == null)
+                        {
+                            <td> normal </td>
+                        }
+                        else
+                        {
+                            <td> blocked </td>
+                        }
                     </tr>
 
 
@@ -73,3 +137,87 @@
 </div>
 
 
+@section script{
+    <script>
+        $(function () {
+            $.contextMenu({
+                selector: '.context-menu-one',
+                trigger: 'left',
+                callback: function (key, options) {
+                    var m = "clicked: " + key + " on element " + options.$trigger.attr("id");
+                    //window.console && console.log(m) || alert(m);
+                    switch (key) {
+                        case "showAdvert":
+                            window.location = '/admin/showAdvert?id=' + options.$trigger.attr("id");
+                            break;
+                        case "showPost":
+                            window.location = '/admin/showPost?id=' + options.$trigger.attr("id");
+                            break;
+                        case "sendMessage":
+                            window.location = '/admin/sendMessage?id=' + options.$trigger.attr("id");
+                            break;
+                        case "sendEmail":
+                            window.location = '/admin/sendEmail?id=' + options.$trigger.attr("id");
+                            break;
+                        case "ban":
+                            window.location = '/admin/blockuser?id=' + options.$trigger.attr("id") + '&status=blocked';
+                            break;
+                        case "unban":
+                            window.location = '/admin/blockuser?id=' + options.$trigger.attr("id") + '&status=unblocked';
+                            break;
+                        case "delete":
+                            if (confirm("Вы уверенны что хотите удалить этого пользователя?")) {
+                                window.location = '/admin/deleteUser?id=' + options.$trigger.attr("id");
+                            };
+                            break;
+                        case "user":
+                            window.location = '/admin/setUserRole?id=' + options.$trigger.attr("id") + '&role=user';
+                            break;
+                        case "admin":
+                            window.location = '/admin/setUserRole?id=' + options.$trigger.attr("id") + '&role=admin';
+                            break;
+                        case "moder":
+                            window.location = '/admin/setUserRole?id=' + options.$trigger.attr("id") + '&role=moder';
+                            break;
+
+                        default:
+                            break;
+                    }
+                },
+                items: {
+                    "showAdvert": { name: "Показать обьявления", icon: "fa-list-alt" },
+                    "showPost": { name: "Показать посты", icon: "fa-file-text-o" },
+                    "sendMessage": { name: "Послать сообщение", icon: "fa-comment-o" },
+                    "sendEmail": { name: "Послать e-mail", icon: "fa-envelope-o" },
+                    "sep1": "---------",
+                    "fold1": {
+                        "name": "Роли",
+                        "items": {
+                            "user": { "name": "Пользователь" },
+                            "admin": { "name": "Администратор" },
+                            "moder": { "name": "Модератор" }
+                        },
+                        icon: "fa-user-o"
+                    },
+                    "sep2": "---------",
+                    "fold2": {
+                        name: "Бан",
+                        "items": {
+                            "ban": { name: "Заблокировать" },
+                            "unban": { name: "Разблокировать" },
+                        },
+                        icon: "fa-ban"
+                    },
+                    "delete": { name: "Удалить", icon: "fa-trash-o" }
+                }
+            });
+
+
+        });
+
+        $('.context-menu-one').on('click', function (e) {
+            console.log('clicked', this.id);
+        })
+    </script>
+
+}

@@ -12,11 +12,31 @@
 
 
             <div class="advert-add">
-                <div class="text-center header">
-                    Добавить обьявление
-                </div>
+                @if (ViewBag.Edit == true)
+                {
+                    <div class="text-center header">
+                        Редактировать обьявление
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center header">
+                        Добавить обьявление
+                    </div>
+                }
+                @{ 
+                    string submitMethod;
+                    if (!ViewBag.Edit == true)
+                    {
+                        submitMethod = "AddAdvert";
+                    }
+                    else
+                    {
+                        submitMethod = "EditAdvert";
+                    }
+                }
 
-                @using (Html.BeginForm("AddAdvert", "Advert", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm(submitMethod, "Advert", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -46,13 +66,29 @@
                                     @Html.Label("Новое")
                                     @Html.EditorFor(model => model.New, new { @class = "form-control", @required = "required" })
                                 </div>
+
+                                @if (ViewBag.Edit == true)
+                                {
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.Created)
+                                    @Html.HiddenFor(m => m.UserId)
+                                    @Html.HiddenFor(m => m.UserName)
+                                }
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div>
                                 <div class="form-group">
+                                    @if (Model != null && Model.Photo.Length != 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(Model.Photo);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img style="display:inline; max-width:300px; max-height:200px;" src="@imgSrc" id="avatar_preview" />
+                                        
+                                    }
+                                    else
+                                    {<img style="display:inline; max-width:300px; max-height:200px;" src="http://via.placeholder.com/300x200" id="avatar_preview" />}
 
-                                    <img style="display:inline; max-width:300px; max-height:200px;" src="http://via.placeholder.com/300x200" id="avatar_preview" />
 
                                 </div>
                                 <div class="form-group d-flex justify-content-end">
@@ -67,7 +103,14 @@
 
 
                     <div class="form-group d-flex justify-content-end">
-                        <button type="submit" class="btn btn-secondary">Опубликовать обьявление</button>
+                        @if (ViewBag.Edit == true)
+                        {
+                            <button type="submit" class="btn btn-secondary">Сохранить изменения</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-secondary">Опубликовать обьявление</button>
+                        }
                     </div>
                 }
             </div>

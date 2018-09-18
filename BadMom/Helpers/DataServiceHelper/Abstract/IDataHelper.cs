@@ -119,6 +119,16 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 
         List<EventVM> GetEventsByUser(string userName);
 
-        List<AdminUserDataVM> GetAllUsers();
+        List<AdminUserDataVM> GetAllUsers(string find, string status, string conf, string role, string order);
+
+        bool DeleteUser(long id);
+
+        bool ChangeUserStatus(long id, int status);
+
+        bool ChangeUserRole(long id, string role);
+
+        List<LoggerEvent> GetLog(DateTime from);
+
+        bool EditAdvert(AdvertVM advert);
     }
 }

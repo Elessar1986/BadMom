@@ -190,6 +190,7 @@
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Models\Admin\AdminUserDataVM.cs" />
+    <Compile Include="Models\Admin\LoggerEvent.cs" />
     <Compile Include="Models\Advert\AdvertVM.cs" />
     <Compile Include="Models\Advert\Categories.cs" />
     <Compile Include="Models\Advert\Favorite.cs" />
@@ -334,10 +335,10 @@
     <Content Include="Resources\main1.jpg" />
     <Content Include="Resources\main2.jpg" />
     <Content Include="Resources\main3.jpg" />
+    <Content Include="Resources\nophoto.jpg" />
     <Content Include="Resources\OtherBPI_1920x300_5.jpg" />
     <Content Include="Resources\planer_main.jpg" />
     <Content Include="Resources\planer_main1.jpg" />
-    <Content Include="Resources\shell-logo-design.gif" />
     <Content Include="Resources\Shopping-bag-title.jpg" />
     <Content Include="Resources\The-physiotherapist-banner-nhs04sz884l8lghbms573azwkdyz9fjxbf1ozdhnso.png" />
     <Content Include="Resources\travel-collection.jpg" />
@@ -620,7 +621,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -687,6 +690,7 @@
     <Content Include="Views\User\ChangePassRegistered.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Logger.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Logger\" />

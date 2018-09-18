@@ -858,13 +858,142 @@ namespace BadMom.BLL.Services
             return mappedRes;
         }
 
-        public List<AdminUserData> GetAllUsers()
+        public List<AdminUserData> GetAllUsers(string find, string status = "all", string conf = "all", string role = "all", string order = "date")
         {
-            var users = data.Users.GetAll().ToList();
+            var users = data.Users.GetAll();
+            if (!string.IsNullOrEmpty(find)) users = users.Where(x => x.Login.ToUpper().Contains(find.ToUpper()));
+            switch (status)
+            {
+                case "unblocked":
+                    users = users.Where(x => x.Status == null || x.Status == 0);
+                    break;
+                case "blocked":
+                    users = users.Where(x => x.Status == 1);
+                    break;
+                default:
+                    break;
+            }
+            switch (conf)
+            {
+                case "confirmed":
+                    users = users.Where(x => x.Confirmed == true);
+                    break;
+                case "not_confirmed":
+                    users = users.Where(x => x.Confirmed == false);
+                    break;
+                default:
+                    break;
+            }
+            switch (role)
+            {
+                case "user":
+                    users = users.Where(x => x.Roles == "user");
+                    break;
+                case "admin":
+                    users = users.Where(x => x.Roles.Contains("admin") );
+                    break;
+                case "moder":
+                    users = users.Where(x => x.Roles.Contains("moder"));
+                    break;
+                default:
+                    break;
+            }
+            switch (order)
+            {
+                case "date":
+                    users = users.OrderByDescending(x => x.Created);
+                    break;
+                case "login":
+                    users = users.OrderBy(x => x.Login);
+                    break;
+                default:
+                    break;
+            }
             var mapper = new MapperConfiguration(c => c.CreateMap<DAL.Model.Users, DataTransferObjects.AdminUserData>()).CreateMapper();
 
-            var mappedRes = mapper.Map<List<DAL.Model.Users>, List<DataTransferObjects.AdminUserData>>(users);
+            var mappedRes = mapper.Map<List<DAL.Model.Users>, List<DataTransferObjects.AdminUserData>>(users.ToList());
             return mappedRes;
+        }
+
+        public bool DeleteUser(long id)
+        {
+            data.Users.Delete(id);
+            data.Save();
+            return true;
+        }
+
+        public bool ChangeUserStatus(long id, int status)
+        {
+            var user = data.Users.Get(id);
+            if(user != null)
+            {
+                user.Status = status;
+                data.Users.Update(user);
+                data.Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ChangeUserRole(long id, string role)
+        {
+            var user = data.Users.Get(id);
+            if (user != null)
+            {
+                switch (role)
+                {
+                    case "user":
+                        user.Roles = "user";
+                        break;
+                    case "admin":
+                        user.Roles = "admin";
+                        break;
+                    case "moder":
+                        user.Roles = "moder";
+                        break;
+                    default:
+                        user.Roles = "user";
+                        break;
+                }
+                data.Users.Update(user);
+                data.Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<DataTransferObjects.logEvents> GetLog(DateTime from)
+        {
+            var logs = data.logEvents.GetAll().Where(x => x.Created > from);
+            var mapper = new MapperConfiguration(c => c.CreateMap<DAL.Model.logEvents, DataTransferObjects.logEvents>()).CreateMapper();
+            var mappedRes = mapper.Map<List<DAL.Model.logEvents>, List<DataTransferObjects.logEvents>>(logs.ToList());
+            return mappedRes;
+        }
+
+        public bool EditAdvert(DataTransferObjects.Advert advert)
+        {
+            //var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.Advert, DAL.Model.Advert>()).CreateMapper();
+            //var mappedRes = mapper.Map<DataTransferObjects.Advert, DAL.Model.Advert>(advert);
+            var old = data.Advert.Get(advert.Id);
+            old.Body = advert.Body;
+            old.Category = advert.Category;
+            old.New = advert.New;
+            old.Price = advert.Price;
+            old.Title = advert.Title;
+            if (advert.Photo.Length > 0)
+            {
+                old.Photo = advert.Photo;
+            }
+            old.LastUpdate = DateTime.Now;
+            data.Advert.Update(old);
+            data.Save();
+            return true;
         }
     }
 }

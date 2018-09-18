@@ -89,10 +89,21 @@ namespace BadMom.Controllers
                 }else
                 if ( passwordHelper.CheckPassword(loginData.Password, passData))
                 {
-                    FormsAuthentication.SetAuthCookie(passData.Login, true);
-                    var user = dataHelper.GetUserData(passData.Login);
-                    Session["userId"] = user.Id;
-                    return RedirectToAction("Index", "Home");
+                    var user = dataHelper.GetUserData(loginData.Login);
+                    if (!user.Confirmed)
+                    {
+                        ModelState.AddModelError("Login", "Вы не подтвердили регистрацию по E-mail!");
+                    }
+                    else if (user.Status == 1) 
+                    {
+                        ModelState.AddModelError("Login", "Вы ЗАБЛОКИРОВАНЫ! С вопросами обращайтесь к администрации.");
+                    }
+                    else
+                    {
+                        FormsAuthentication.SetAuthCookie(passData.Login, true);
+                        Session["userId"] = user.Id;
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {

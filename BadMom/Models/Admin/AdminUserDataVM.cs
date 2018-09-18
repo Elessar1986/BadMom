@@ -28,4 +28,17 @@ namespace BadMom.Models.Admin
         public int? Status { get; set; }
 
     }
+
+    public enum UserStatus
+    {
+        Blocked,
+        Unblocked
+    }
+
+    public enum UserRoles
+    {
+        User,
+        Admin,
+        Moder
+    }
 }

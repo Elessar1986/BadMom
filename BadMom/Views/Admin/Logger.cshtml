@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<BadMom.Models.Admin.LoggerEvent>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Logger";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark admin-nav" style="z-index:7;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">За последние:</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" href="@Url.Action("Logger","Admin", new { days = 1 })">1 день</a>
+                    <a class="dropdown-item" href="@Url.Action("Logger","Admin", new { days = 2 })">2 дня</a>
+                    <a class="dropdown-item" href="@Url.Action("Logger","Admin", new { days = 14 })">2 недели</a>
+                    <a class="dropdown-item" href="@Url.Action("Logger","Admin", new { days = 30 })">1 месяц</a>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    @*<span class="context-menu-one btn btn-neutral">right click me</span>*@
+
+    <table class="table table-light table-hover users-table">
+        <thead>
+            <tr>
+                <th scope="col">Дата</th>
+                <th class="d-none d-md-table-cell" scope="col">Код</th>
+                <th scope="col">Тип</th>
+                <th class="d-none d-md-table-cell" scope="col">Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td scope="row">
+                            @item.Created
+                        </td>
+
+                        <td class="d-none d-md-table-cell">@item.Code</td>
+                        <td>@item.Type</td>
+                        <td class="d-none d-md-table-cell">@item.Description</td>
+
+                    </tr>
+
+
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+
+
+
+    <nav class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("Logger", new { page }))
+    </nav>
+
+
+
+</div>

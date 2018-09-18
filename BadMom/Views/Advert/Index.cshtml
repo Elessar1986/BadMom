@@ -29,7 +29,7 @@
                                             <img src="@imgSrc" class="img-fluid" />
                                         }
                                         else
-                                        {<img src="~/Resources/img/blog-post-2.jpg" alt="..." class="img-fluid">}
+                                        {<img src="~/Resources/nophoto.jpg" alt="..." class="img-fluid">}
                                     </a>
                                 </div>
                                 <div class="content-block">
@@ -69,7 +69,7 @@
                                     <button class="btn btn-default " onclick="window.location='@Url.Action("ShowAdvert",new { id = item.Id })'">Подробнее</button>
                                     @if (User.Identity.IsAuthenticated && User.Identity.Name == item.UserName)
                                     {
-                                        <button class="btn btn-default saler">Редактировать</button>
+                                        <button class="btn btn-default saler" onclick="window.location='@Url.Action("EditAdvert",new { id = item.Id })'">Редактировать</button>
                                     }
                                     else
                                     {
