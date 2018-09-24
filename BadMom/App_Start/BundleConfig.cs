@@ -122,6 +122,9 @@ namespace BadMom
             bundles.Add(new StyleBundle("~/Content/contextmenu").Include(
                                  "~/Content/jquery.contextMenu.min.css"));
 
+            bundles.Add(new StyleBundle("~/Content/blog").Include(
+                                 "~/Content/blog.css"));
+
             //bundles.Add(new StyleBundle("~/Content/css").Include(
             //          "~/Content/bootstrap.css",
             //          "~/Content/site.css"));

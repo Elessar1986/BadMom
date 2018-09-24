@@ -21,7 +21,12 @@
                     }
                 </div>
                 <div class="title">
-                    <strong>@Html.ActionLink(@item.Users.Login, "UserInfo", "User", new { UserName = @item.Users.Login }, new { })</strong>
+                    <strong>
+                        @if (item.Users.Login == User.Identity.Name)
+                        {@Html.ActionLink(@item.Users.Login, "Index", "User", new { UserName = @item.Users.Login }, new { }) }
+                    else
+                    {@Html.ActionLink(@item.Users.Login, "UserInfo", "User", new { UserName = @item.Users.Login }, new { })}
+                    </strong>
                     @if (item.Users.Login == User.Identity.Name || User.IsInRole("admin"))
                     {
 

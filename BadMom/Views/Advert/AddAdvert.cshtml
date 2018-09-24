@@ -12,7 +12,7 @@
 
 
             <div class="advert-add">
-                @if (ViewBag.Edit == true)
+                @if (ViewBag.Edit != null && ViewBag.Edit == true)
                 {
                     <div class="text-center header">
                         Редактировать обьявление
@@ -26,13 +26,14 @@
                 }
                 @{ 
                     string submitMethod;
-                    if (!ViewBag.Edit == true)
+                    if (ViewBag.Edit != null && ViewBag.Edit == true)
                     {
-                        submitMethod = "AddAdvert";
+
+                        submitMethod = "EditAdvert";
                     }
                     else
                     {
-                        submitMethod = "EditAdvert";
+                        submitMethod = "AddAdvert";
                     }
                 }
 
@@ -67,7 +68,7 @@
                                     @Html.EditorFor(model => model.New, new { @class = "form-control", @required = "required" })
                                 </div>
 
-                                @if (ViewBag.Edit == true)
+                                @if (ViewBag.Edit != null && ViewBag.Edit == true)
                                 {
                                     @Html.HiddenFor(m => m.Id)
                                     @Html.HiddenFor(m => m.Created)
@@ -103,7 +104,7 @@
 
 
                     <div class="form-group d-flex justify-content-end">
-                        @if (ViewBag.Edit == true)
+                        @if (ViewBag.Edit != null && ViewBag.Edit == true)
                         {
                             <button type="submit" class="btn btn-secondary">Сохранить изменения</button>
                         }

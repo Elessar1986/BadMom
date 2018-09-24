@@ -37,7 +37,7 @@
                 <div>@Model.Source1.Name</div>
                 @if (Model.AdvertId != null)
                 {
-                <div><a href="@Url.Action("ShowAdvert","Advert",new {id = Model.AdvertId})" style="color: @Model.EventType.Color">Посмотреть обьявление</a></div>
+                    <div><a href="@Url.Action("ShowAdvert","Advert",new {id = Model.AdvertId})" style="color: @Model.EventType.Color">Посмотреть обьявление</a></div>
                 }
             </div>
         }
@@ -59,10 +59,36 @@
         }
     </div>
 
+    @if (Model.Type == 6 && Model.DateStart < DateTime.Now)
+    {
+        <div>
+            <p>
+                Для зачисления ежемесячного дохода нажмите подтвердить.
+            </p>
+        </div>
+    }
+    @if (Model.Type == 7 && Model.DateStart < DateTime.Now)
+    {
+        <div>
+            <p>
+                Для зачисления ежемесячного расхода нажмите подтвердить.
+            </p>
+        </div>
+    }
 
 
 </div>
 <div class="modal-footer">
+    @if (Model.Type == 6 && Model.DateStart < DateTime.Now)
+    {<button type="button" class="btn btn-secondary" style="background-color: @Model.EventType.Color" 
+             onclick="window.location = '@Url.Action("ConfirmIncome",
+                                        "Wallet", 
+                                        new { incomeId = Model.AdvertId, date = Model.DateStart, oldevent = Model.Id })'">Подтвердить</button>}
+    @if (Model.Type == 7 && Model.DateStart < DateTime.Now)
+    {<button type="button" class="btn btn-secondary" style="background-color: @Model.EventType.Color" 
+             onclick="window.location = '@Url.Action("ConfirmConsumption",
+                                        "Wallet", 
+                                        new { consumptionId = Model.AdvertId, date = Model.DateStart, oldevent = Model.Id })'">Подтвердить</button>}
     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: @Model.EventType.Color">Закрыть</button>
     <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("DeleteEvent","Planer", new { id = Model.Id })'" style="background-color: @Model.EventType.Color">Удалить</button>
 </div>

@@ -81,7 +81,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle @if (ViewBag.Menu == "setting"){ <text>active</text> }" " href="https://example.com" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройки</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown1">
-                    <a class="dropdown-item" href="#">Профиль</a>
+                    <a class="dropdown-item" href="@Url.Action("ChangeAvatar","User")">Сменить аватар</a>
                     <a class="dropdown-item" href="@Url.Action("ChangePassRegistered","User")">Сменить пароль</a>
 
                 </div>

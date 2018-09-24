@@ -37,7 +37,7 @@ namespace BadMom.BLL.Interfaces
 
         void DeletePost(long id);
 
-        Message EditPost(Message mess);
+        bool EditPost(Message mess);
 
         List<Message> GetFeaturedPosts();
 
@@ -69,6 +69,8 @@ namespace BadMom.BLL.Interfaces
 
         bool AddIncome(Income income, string userName);
 
+        Income GetIncomeById(long id);
+
         List<Income> GetIncomeByUser(string userName, DateTime from, DateTime to, long sourceId = 0);
 
         bool DeleteIncome(long incomeId);
@@ -77,11 +79,13 @@ namespace BadMom.BLL.Interfaces
 
         List<Consumption> GetConsumptionByUser(string userName, DateTime from, DateTime to, long sourceId = 0);
 
+        Consumption GetConsumptionById(long id);
+
         bool DeleteConsumption(long consumptionId);
 
         bool SendMessage(DataTransferObjects.PersonalMessage personalMessage, string userFrom);
 
-        List<PrivateMessageByUser> GetMessagesByUsers(string userName);
+        List<PrivateMessageByUser> GetMessagesByUsers(long userId);
 
         List<DataTransferObjects.PersonalMessage> SetMessageStatus(List<DataTransferObjects.PersonalMessage> messages, int status);
 
@@ -124,6 +128,8 @@ namespace BadMom.BLL.Interfaces
         List<logEvents> GetLog(DateTime from);
 
         bool EditAdvert(Advert advert);
+
+        bool ChangeAvatar(byte[] photo, long id);
 
         void Dispose();
     }

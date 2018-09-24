@@ -12,36 +12,24 @@
     </div>
 </section>
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top: 30px;">
         <div class="text-center">
             @if (User.Identity.IsAuthenticated)
             {
                 <h3>Уважаймый, @User.Identity.Name, во времмя выполнения данной операции произошла ошибка!</h3>
             }
+            else
+            {
+                <h3>Во времмя выполнения данной операции произошла ошибка!</h3>
+            }
         </div>
-        <div>
-            <hr />
-            <dl class="dl-horizontal">
-                @*<dt>
-                    @Html.DisplayNameFor(model => model.Code)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Code)
-                </dd>*@
-                <dt>
-                    @Html.DisplayNameFor(model => model.ExDescription)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ExDescription)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ExInnerDescription)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ExInnerDescription)
-                </dd>
-            </dl>
+
+        <div class="text-center" style="margin-top: 30px; margin-bottom: 50px;">
+          
+            <h4>@Html.DisplayFor(model => model.ExDescription)</h4>
+            
         </div>
+        
     </div>
 </div>
 

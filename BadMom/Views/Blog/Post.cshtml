@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Index";
 }
+
+@section styles{
+    @Styles.Render("~/Content/blog")
+}
 <section style="background: url(../../Resources/banner-blog.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
     <div class="container">
         <div class="row">
@@ -29,31 +33,55 @@
                             <img src="@imgSrc" class="img-fluid" />
                         }
                         else
-                        {<img src="~/Resources/img/blog-post-3.jpeg" alt="..." class="img-fluid">}
+                        {<img src="~/Resources/nofotoblog.jpg" alt="..." class="img-fluid">}
                     </div>
                     <div class="post-details">
                         <div class="post-meta d-flex justify-content-between">
                             <div class="category"><a href="@Url.Action("Index", "Blog", new { themeId = Model.ThemeObj.Id })">@Model.ThemeObj.Name</a></div>
                         </div>
                         <h1>@Model.Title<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
-                        <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
-                            <a href="#" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar">
-                                    @if (Model.User.Photo.Length != 0)
-                                    {
-                                        var base64 = Convert.ToBase64String(Model.User.Photo);
-                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <div class="post-footer d-flex align-items-center flex-column flex-sm-row" style="font-size: 18px;">
+                            @if (User.Identity.Name != Model.User.Login)
+                            {
+                                <a href="@Url.Action("UserInfo", "User", new { UserName = Model.User.Login })" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar">
+                                        @if (Model.User.Photo.Length != 0)
+                                        {
+                                            var base64 = Convert.ToBase64String(Model.User.Photo);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
 
-                                        <img src="@imgSrc" class="img-fluid" />
-                                    }
-                                    else
-                                    {
-                                        <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid" />
-                                    }
-                                </div>
-                                <div class="title"><span>@Html.ActionLink(@Model.User.Login, "UserInfo", "User", new { UserName = Model.User.Login }, new { })</span></div>
-                            </a>
+                                            <img src="@imgSrc" class="img-fluid" />
+                                        }
+                                        else
+                                        {
+                                            <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid" />
+                                        }
+                                    </div>
+                                    <div class="title"><span>@Model.User.Login</span></div>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", "User", new { UserName = Model.User.Login })" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar">
+                                        @if (Model.User.Photo.Length != 0)
+                                        {
+                                            var base64 = Convert.ToBase64String(Model.User.Photo);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                            <img src="@imgSrc" class="img-fluid" />
+                                        }
+                                        else
+                                        {
+                                            <img style="" src="~/Resources/user-icon-png-pnglogocom.png" class="img-fluid" />
+                                        }
+                                    </div>
+                                    <div class="title"><span>@Model.User.Login</span></div>
+                                </a>
+                            }
+
                             <div class="d-flex align-items-center flex-wrap">
                                 <div class="date"><i class="fa fa-clock-o"></i> @Model.Created.ToShortDateString()</div>
                                 <div class="views" id="userLike">
@@ -75,10 +103,38 @@
                                     @Model.UsersLikes.Count
                                 </div>
                                 <div class="comments meta-last"><i class="fa fa-comments-o"></i>@Model.Comments.Count</div>
+                                @if (User.Identity.Name == Model.User.Login || User.IsInRole("moder"))
+                                {
+                                    <div class="d-none d-sm-flex justify-content-center align-content-center" style="margin-left: 10px;">
+                                        <div class="manage-post edit" onclick="window.location='@Url.Action("EditPost", "Blog", new { id = Model.Id })'"><i class="fa fa-2x fa-pencil-square-o"></i></div>
+                                        <div class="manage-post delete " onclick="javascript: OnDeletePost();"><i class="fa fa-2x fa-trash-o"></i></div>
+                                    </div>
+                                }else
+                                if (User.IsInRole("admin"))
+                                {
+                                    <div class="d-none d-sm-flex justify-content-center align-content-center" style="margin-left: 10px;">
+                                        <div class="manage-post delete" onclick="javascript: OnDeletePost();"><i class="fa fa-2x fa-trash-o"></i></div>
+                                    </div>
+                                }
 
 
                             </div>
                         </div>
+
+                        @if (User.Identity.Name == Model.User.Login || User.IsInRole("moder"))
+                        {
+                            <div class="d-flex justify-content-center align-content-center d-sm-none">
+                                <div class="manage-post edit" onclick="window.location='@Url.Action("EditPost", "Blog", new { id = Model.Id })'"><i class="fa fa-2x fa-pencil-square-o"></i></div>
+                                <div class="manage-post delete" onclick="javascript: OnDeletePost();"><i class="fa fa-2x fa-trash-o"></i></div>
+                            </div>
+                        }else
+                        if (User.IsInRole("admin"))
+                        {
+                            <div class="d-flex d-sm-none justify-content-center align-content-center">
+                                <div class="manage-post delete" onclick="javascript: OnDeletePost();"><i class="fa fa-2x fa-trash-o"></i></div>
+                            </div>
+                        }
+
                         <div class="post-body">
                             <p class="lead">@Model.Body</p>
                             <p></p>
@@ -148,14 +204,14 @@
                     <h3 class="h6">Категории</h3>
                 </header>
                 @{
-            List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
-            foreach (var item in themes)
-            {
-                <div class="item d-flex justify-content-between">
-                    @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
-                    <span>@item.MessageCount</span>
-                </div>
-    }
+                    List<ThemesVM> themes = (List<ThemesVM>)ViewBag.Themes;
+                    foreach (var item in themes)
+                    {
+                        <div class="item d-flex justify-content-between">
+                            @Html.ActionLink(item.Name, "Index", "Blog", new { themeId = item.Id }, new { })
+                            <span>@item.MessageCount</span>
+                        </div>
+                    }
                 }
 
             </div>
@@ -166,20 +222,20 @@
                 </header>
                 <div class="blog-posts">
                     @foreach (var item in (List<LastMessage>)ViewBag.LastMessage)
-            {
-                <a href="~/blog/post?message=@item.Id">
-                    <div class="item d-flex align-items-center">
-                        <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                        <div class="title">
-                            <strong>@item.Title</strong>
-                            <div class="d-flex align-items-center">
-                                <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
-                                <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </a>
-    }
+                        </a>
+                    }
 
                 </div>
                 <header>
@@ -187,20 +243,20 @@
                 </header>
                 <div class="blog-posts">
                     @foreach (var item in (List<FeaturedMessage>)ViewBag.FeaturedMessage)
-            {
-                <a href="~/blog/post?message=@item.Id">
-                    <div class="item d-flex align-items-center">
-                        <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                        <div class="title">
-                            <strong>@item.Title</strong>
-                            <div class="d-flex align-items-center">
-                                <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
-                                <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                    {
+                        <a href="~/blog/post?message=@item.Id">
+                            <div class="item d-flex align-items-center">
+                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="title">
+                                    <strong>@item.Title</strong>
+                                    <div class="d-flex align-items-center">
+                                        <div class="views"><i class="fa fa-heart"></i> @item.UsersLikes.Count</div>
+                                        <div class="comments"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </a>
-    }
+                        </a>
+                    }
 
                 </div>
             </div>
@@ -222,6 +278,12 @@
             } else {
                 $("#userLike").html(data);
             };
+        }
+
+        function OnDeletePost() {
+            if (confirm("Вы уверены что хотите удалить этот пост")) {
+                window.location = '@Url.Action("DeletePost", "Blog", new { id = Model.Id })';
+            }
         }
 
     </script>

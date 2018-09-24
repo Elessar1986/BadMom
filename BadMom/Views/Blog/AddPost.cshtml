@@ -6,9 +6,18 @@
 <section style="background: url(../../Resources/banner-blog.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
     <div class="container">
         <div class="row">
-            <div class="col-lg-7">
-                <h1>Добавит пост</h1>
-            </div>
+            @if (ViewBag.Edit != null && ViewBag.Edit)
+            {
+                <div class="col-lg-7">
+                    <h1>Редактировать пост</h1>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-7">
+                    <h1>Добавит пост</h1>
+                </div>
+            }
         </div>
     </div>
 </section>
@@ -20,8 +29,19 @@
 
 
             <div class="widget">
+                @{
+                    string submitMethod;
+                    if (ViewBag.Edit != null && ViewBag.Edit == true)
+                    {
+                        submitMethod = "EditPost";
 
-                @using (Html.BeginForm("AddPost", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    }
+                    else
+                    {
+                        submitMethod = "AddPost";
+                    }
+                }
+                @using (Html.BeginForm(submitMethod, "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -31,10 +51,10 @@
                             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group col-sm-6 offset-sm-3">
-                            @Html.DropDownListFor(model => model.Theme , (List<SelectListItem>)ViewBag.Themes, new {  @class = "form-control", @required = "required" })
+                            @Html.DropDownListFor(model => model.Theme, (List<SelectListItem>)ViewBag.Themes, new { @class = "form-control", @required = "required" })
                             @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
                         </div>
-                       
+
                         <div class="form-group col-sm-6 offset-sm-3">
                             @Html.TextAreaFor(model => model.Body, new { @placeholder = "Текст поста", @class = "form-control", @required = "required" })
                             @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
@@ -44,12 +64,34 @@
                                 <input style="display:none;" type="file" name="fileUpload" accept="image/*" onchange="readURL(this);" />
                                 Добавить фото
                             </label>
-                            <img style="display:inline; max-width:200px; max-height:200px;" src="http://via.placeholder.com/200x200" id="avatar_preview" />
+                            @if (Model != null && Model.Photo.Length != 0)
+                            {
+                                var base64 = Convert.ToBase64String(Model.Photo);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <img style="display:inline; max-width:200px; max-height:200px;" src="@imgSrc" id="avatar_preview" />
+
+                            }
+                            else
+                            {<img style="display:inline; max-width:200px; max-height:200px;" src="http://via.placeholder.com/200x200" id="avatar_preview" />}
+                            @if (ViewBag.Edit != null && ViewBag.Edit)
+                            {
+                                @Html.HiddenFor(x => x.Id)
+                            }
 
                         </div>
-                        <div class="form-group col-sm-6 offset-sm-3">
-                            <button type="submit" class="btn btn-secondary">Добавит пост</button>
-                        </div>
+                        @if (ViewBag.Edit != null && ViewBag.Edit)
+                        {
+                            <div class="form-group col-sm-6 offset-sm-3">
+                                <button type="submit" class="btn btn-secondary">Сохранить изменения</button>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="form-group col-sm-6 offset-sm-3">
+                                <button type="submit" class="btn btn-secondary">Добавит пост</button>
+                            </div>
+                        }
                     </div>
                 }
             </div>

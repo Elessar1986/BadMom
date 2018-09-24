@@ -19,7 +19,6 @@ namespace BadMom.Controllers
     public class RegistrationController : Controller
     {
 
-        //IBadMomDataService data;
         PasswordHelper passwordHelper = new PasswordHelper(20);
         IDataHelper dataHelper;
         LoggerHelper logger;
@@ -61,7 +60,8 @@ namespace BadMom.Controllers
                     ModelState.AddModelError(ve.Property, ve.Message);
                     return View(user);
                 }
-                emailHelper.SendEmail(newUser.Login, newUser.PasswordHash, newUser.Email, EmailHelper.EmailType.Registration); 
+                emailHelper.SendRegistrationMessage(newUser.Login, newUser.PasswordHash, newUser.Email, EmailHelper.EmailType.Registration);
+                logger.InfoMessage("101", $"Send conf email to {newUser.Login} : {newUser.Email}");
                 return View("RegistrationLink",newUser);        //for test
             }
             else
@@ -102,6 +102,7 @@ namespace BadMom.Controllers
                     {
                         FormsAuthentication.SetAuthCookie(passData.Login, true);
                         Session["userId"] = user.Id;
+                        logger.InfoMessage("104", $"User {passData.Login} has login in");
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -116,6 +117,7 @@ namespace BadMom.Controllers
 
         public ActionResult Logoff()
         {
+            logger.InfoMessage("103", $"User {User.Identity.Name} has login out");
             FormsAuthentication.SignOut();
             Session.Clear();
             return RedirectToAction("Index", "Home");
@@ -134,6 +136,7 @@ namespace BadMom.Controllers
                 var user = dataHelper.ConfirmAuth(login, pass);
                 if (user != null)
                 {
+                    logger.InfoMessage("102", $"User {login} has confirmed email registration");
                     return View(user);
                 }
                 return View("Error");
@@ -155,15 +158,20 @@ namespace BadMom.Controllers
                 try
                 {
                     passData = dataHelper.GetPasswordData(userEmail.Email);
-                    if(passData == null) return View("Error", new Error() { ExDescription = "Incorect email!" });
+                    if (passData == null)
+                    {
+                        ModelState.AddModelError("Email", "Пользователь с таким E-mail не зарегистрирован!");
+                        return View(userEmail);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    logger.ErrorMessage("305", ex);
+                    return View("Error", new Error() { ExDescription = ex.Message });
                 }
-                if (emailHelper.SendEmail(passData.Login, passData.passwordHash, userEmail.Email, EmailHelper.EmailType.ChangePassword))
+                if (emailHelper.SendRegistrationMessage(passData.Login, passData.passwordHash, userEmail.Email, EmailHelper.EmailType.ChangePassword))
                 {
-
+                    logger.InfoMessage("201", $"Send change password email to {passData.Login} : {userEmail.Email}");
                 }
                 return View("ChangePassLink", passData);
             }
@@ -191,6 +199,11 @@ namespace BadMom.Controllers
             catch (ValidationException ve)
             {
                 return View("UserError", ve);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
             return View("Error", new Error() { ExDescription = "Error in login data!" });
         }

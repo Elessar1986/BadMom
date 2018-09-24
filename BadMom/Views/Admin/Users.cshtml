@@ -147,14 +147,18 @@
                     var m = "clicked: " + key + " on element " + options.$trigger.attr("id");
                     //window.console && console.log(m) || alert(m);
                     switch (key) {
+                        case "showProfile":
+                            window.location = '/user/UserInfo?id=' + options.$trigger.attr("id");
+                            break;
                         case "showAdvert":
-                            window.location = '/admin/showAdvert?id=' + options.$trigger.attr("id");
+                            window.location = '/user/UserAdvert?id=' + options.$trigger.attr("id");
                             break;
                         case "showPost":
                             window.location = '/admin/showPost?id=' + options.$trigger.attr("id");
                             break;
                         case "sendMessage":
-                            window.location = '/admin/sendMessage?id=' + options.$trigger.attr("id");
+                            @*@Url.Action("UserMessages", new { id = user.Id, userLogin = user.Login })*@
+                            window.location = '/User/UserMessages?id=' + options.$trigger.attr("id");
                             break;
                         case "sendEmail":
                             window.location = '/admin/sendEmail?id=' + options.$trigger.attr("id");
@@ -185,6 +189,7 @@
                     }
                 },
                 items: {
+                    "showProfile": { name: "Профиль", icon: "fa-user" },
                     "showAdvert": { name: "Показать обьявления", icon: "fa-list-alt" },
                     "showPost": { name: "Показать посты", icon: "fa-file-text-o" },
                     "sendMessage": { name: "Послать сообщение", icon: "fa-comment-o" },

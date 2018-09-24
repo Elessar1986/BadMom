@@ -70,8 +70,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -85,8 +85,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -100,8 +100,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -116,8 +116,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -155,8 +155,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -172,8 +172,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -204,13 +204,14 @@ namespace BadMom.Controllers
                 else
                 {
                     SetViewBag();
+                    ViewBag.Edit = true;
                     return View(advert);
                 }
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -226,8 +227,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
             
         }
@@ -245,8 +246,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
 
         }

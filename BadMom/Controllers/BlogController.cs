@@ -32,14 +32,21 @@ namespace BadMom.Controllers
 
         public ActionResult Index(int? page, int themeId = 0)
         {
-            List<PostVM> mess = dataHelper.GetPostsByTheme(themeId);
-            SetViewBags();
-            mess.ForEach(x => { if (x.Body.Length >= 200) x.Body = x.Body.Substring(0, 200); });
-            //return View(mess);
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            ViewBag.ThemeId = themeId;
-            return View(mess.ToPagedList(pageNumber, pageSize));
+            try
+            {
+                List<PostVM> mess = dataHelper.GetPostsByTheme(themeId);
+                SetViewBags();
+                mess.ForEach(x => { if (x.Body.Length >= 200) x.Body = x.Body.Substring(0, 200); });
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                ViewBag.ThemeId = themeId;
+                return View(mess.ToPagedList(pageNumber, pageSize));
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         public ActionResult Post(int message = 0)
@@ -53,10 +60,12 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
+        [Authorize]
         public ActionResult DeletePost(long id)
         {
             try
@@ -66,8 +75,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -77,18 +86,34 @@ namespace BadMom.Controllers
         [HttpPost]
         public ActionResult AddComment( string Comment, int MessageId)
         {
-            var comments = dataHelper.AddComment(User.Identity.Name, Comment, MessageId, null);
-            if (comments == null) logger.ErrorMessage("301", "Empty data. Method: AddCommentes / dataHelper.AddComment returned null.");
-            return PartialView("Comments", comments);
+            try
+            {
+                var comments = dataHelper.AddComment(User.Identity.Name, Comment, MessageId, null);
+                if (comments == null) throw new Exception("Empty data. Method: AddCommentes / dataHelper.AddComment returned null.");
+                return PartialView("Comments", comments);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
 
         }
 
         [Authorize]
         public ActionResult DeleteComment( int commentId, int messageId)
         {
-            var comments = dataHelper.DeleteComment(commentId, messageId);
-            if (comments == null) logger.ErrorMessage("301", "Empty data. Method: AddCommentes / dataHelper.AddComment returned null.");
-            return PartialView("Comments", comments);
+            try
+            {
+                var comments = dataHelper.DeleteComment(commentId, messageId);
+                if (comments == null) throw new Exception("Empty data. Method: AddCommentes / dataHelper.AddComment returned null.");
+                return PartialView("Comments", comments);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
 
         }
 
@@ -110,10 +135,18 @@ namespace BadMom.Controllers
         [Authorize]
         public ActionResult AddPost()
         {
-            var themes = dataHelper.GetThemes();
-            if (!User.IsInRole("admin")) themes.RemoveAt(0);
-            ViewBag.Themes = themes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
-            return View();
+            try
+            {
+                var themes = dataHelper.GetThemes();
+                if (!User.IsInRole("admin")) themes.RemoveAt(0);
+                ViewBag.Themes = themes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [Authorize]
@@ -121,30 +154,98 @@ namespace BadMom.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPost(PostVM post, HttpPostedFileBase fileUpload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (fileUpload != null)
+                if (ModelState.IsValid)
                 {
-                    var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true), 600, 400);
-                    ImageConverter _imageConverter = new ImageConverter();
-                    byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
-                    post.Photo = xByte;
-                }
-                if (dataHelper.AddMessage(post, User.Identity.Name))
-                {
-                    return RedirectToAction("Index", new { page = 1, themeId = post.Theme });
+                    if (fileUpload != null)
+                    {
+                        var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true), 600, 400);
+                        ImageConverter _imageConverter = new ImageConverter();
+                        byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
+                        post.Photo = xByte;
+                    }
+                    if (dataHelper.AddMessage(post, User.Identity.Name))
+                    {
+                        return RedirectToAction("Index", new { page = 1, themeId = post.Theme });
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                 }
                 else
                 {
-                    return View("Error");
+                    var themes = dataHelper.GetThemes();
+                    if (!User.IsInRole("admin")) themes.RemoveAt(0);
+                    ViewBag.Themes = themes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                    return View(post);
                 }
             }
-            else
+            catch (Exception ex)
             {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
+        [Authorize]
+        public ActionResult EditPost(int id)
+        {
+            try
+            {
+                var post = dataHelper.GetPostById(id);
                 var themes = dataHelper.GetThemes();
                 if (!User.IsInRole("admin")) themes.RemoveAt(0);
                 ViewBag.Themes = themes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
-                return View(post);
+                ViewBag.Edit = true;
+                return View("AddPost", post);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPost(PostVM post, HttpPostedFileBase fileUpload)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (fileUpload != null)
+                    {
+                        var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true), 600, 400);
+                        ImageConverter _imageConverter = new ImageConverter();
+                        byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
+                        post.Photo = xByte;
+                    }
+                    if (dataHelper.EditPost(post))
+                    {
+                        return RedirectToAction("Post", new { message = post.Id });
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
+                else
+                {
+                    var themes = dataHelper.GetThemes();
+                    if (!User.IsInRole("admin")) themes.RemoveAt(0);
+                    ViewBag.Themes = themes.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                    ViewBag.Edit = true;
+                    return View(post);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 

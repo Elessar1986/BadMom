@@ -2,6 +2,7 @@
 using BadMom.Helpers;
 using BadMom.Helpers.DataServiceHelper.Abstract;
 using BadMom.Helpers.DataServiceHelper.Concrete;
+using BadMom.Models.Shared;
 using BadMom.Models.Wallet;
 using System;
 using System.Collections.Generic;
@@ -34,42 +35,125 @@ namespace BadMom.Controllers
 
         public ActionResult Income()
         {
-            SetVievBag();
-            var income = dataHelper.GetIncomeByUser(User.Identity.Name, DateTime.Now.AddMonths(-1), DateTime.Now, 0);
-            return View(income);
+            try
+            {
+                SetVievBag();
+                var income = dataHelper.GetIncomeByUser(User.Identity.Name, DateTime.Now.AddMonths(-1), DateTime.Now, 0);
+                return View(income);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Income(DateTime dateTo, DateTime dateFrom, int sourceId)
         {
-            SetVievBag();
-            var income = dataHelper.GetIncomeByUser(User.Identity.Name, dateFrom, dateTo, sourceId);
-            return View(income);
+            try
+            {
+                SetVievBag();
+                var income = dataHelper.GetIncomeByUser(User.Identity.Name, dateFrom, dateTo, sourceId);
+                return View(income);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddIncome(Income income)
         {
-            SetVievBag();
-            var incomes = dataHelper.AddIncome(income, User.Identity.Name);
-            return PartialView("_Incomes", incomes);
+            try
+            {
+                SetVievBag();
+                var incomes = dataHelper.AddIncome(income, User.Identity.Name);
+                return PartialView("_Incomes", incomes);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult ConfirmIncome(long incomeId, DateTime date, long oldevent)
+        {
+            try
+            {
+                var old = dataHelper.GetIncomeById(incomeId);
+                old.Date = date;
+                old.IncomeReason = null;
+                old.OperationType = null;
+                old.Source = null;
+                dataHelper.AddIncome(old, User.Identity.Name);
+                dataHelper.DeleteEvent(oldevent);
+                return RedirectToAction("Income");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmConsumption(long consumptionId, DateTime date, long oldevent)
+        {
+            try
+            {
+                var old = dataHelper.GetConsumptionById(consumptionId);
+                old.Date = date;
+                old.ConsumptionReason = null;
+                old.OperationType = null;
+                old.Source1 = null;
+                dataHelper.AddConsumption(old, User.Identity.Name);
+                dataHelper.DeleteEvent(oldevent);
+                return RedirectToAction("Income");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         public ActionResult DeleteIncome(int incomeId)
         {
-            SetVievBag();
-            var incomes = dataHelper.DeleteIncome(incomeId, User.Identity.Name);
-            return PartialView("_Incomes", incomes);
+            try
+            {
+                SetVievBag();
+                var incomes = dataHelper.DeleteIncome(incomeId, User.Identity.Name);
+                return PartialView("_Incomes", incomes);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         public ActionResult Resources()
         {
-            ViewBag.ResourceType = dataHelper.GetResourceTypeList().Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            try
+            {
+                ViewBag.ResourceType = dataHelper.GetResourceTypeList().Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
-            return View(dataHelper.GetSourceByUser(User.Identity.Name));
+                return View(dataHelper.GetSourceByUser(User.Identity.Name));
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -93,35 +177,67 @@ namespace BadMom.Controllers
 
         public ActionResult Consumption()
         {
-            SetVievBag();
-            var income = dataHelper.GetConsumptionByUser(User.Identity.Name, DateTime.Now.AddMonths(-1), DateTime.Now, 0);
-            return View(income);
+            try
+            {
+                SetVievBag();
+                var income = dataHelper.GetConsumptionByUser(User.Identity.Name, DateTime.Now.AddMonths(-1), DateTime.Now, 0);
+                return View(income);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Consumption(DateTime dateTo, DateTime dateFrom, int sourceId)
         {
-            SetVievBag();
-            var income = dataHelper.GetConsumptionByUser(User.Identity.Name, dateFrom, dateTo, sourceId);
-            return View(income);
+            try
+            {
+                SetVievBag();
+                var income = dataHelper.GetConsumptionByUser(User.Identity.Name, dateFrom, dateTo, sourceId);
+                return View(income);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddConsumption(Consumption consumption)
         {
-            SetVievBag();
-            var consumptions = dataHelper.AddConsumption(consumption, User.Identity.Name);
-            return PartialView("_Consumption", consumptions);
+            try
+            {
+                SetVievBag();
+                var consumptions = dataHelper.AddConsumption(consumption, User.Identity.Name);
+                return PartialView("_Consumption", consumptions);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         [HttpPost]
         public ActionResult DeleteConsumption(int consumptionId)
         {
-            SetVievBag();
-            var consumptions = dataHelper.DeleteConsumption(consumptionId, User.Identity.Name);
-            return PartialView("_Consumption", consumptions);
+            try
+            {
+                SetVievBag();
+                var consumptions = dataHelper.DeleteConsumption(consumptionId, User.Identity.Name);
+                return PartialView("_Consumption", consumptions);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
         }
 
         public ActionResult Statistics()

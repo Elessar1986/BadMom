@@ -1,0 +1,51 @@
+﻿.blog-post .add-comment textarea {
+    min-height: 120px;
+}
+
+.add-post-link {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+    .add-post-link:hover {
+        text-decoration: none !important;
+    }
+
+@media (max-width: 576px) {
+    .blog-post .add-comment textarea {
+        min-height: 50px;
+    }
+
+    main {
+        padding-bottom: 0px;
+    }
+
+    aside {
+        padding: 0px;
+    }
+}
+
+.add-post {
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+}
+
+.manage-post {
+    margin: 10px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+    .manage-post.edit {
+        color: #0537fa;
+    }
+
+    .manage-post.delete {
+        color: #f81e1e;
+    }
+.manage-post:hover {
+    cursor:pointer;
+}

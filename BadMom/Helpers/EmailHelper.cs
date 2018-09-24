@@ -14,7 +14,7 @@ namespace BadMom.Helpers
     public class EmailHelper
     {
 
-        public bool SendEmail(string login, string passHash, string email, EmailType type)
+        public bool SendRegistrationMessage(string login, string passHash, string email, EmailType type)
         {
             SmtpClient client = new SmtpClient();
             MailMessage mailMessage = new MailMessage();
@@ -24,7 +24,7 @@ namespace BadMom.Helpers
             switch (type)
             {
                 case EmailType.Registration:
-                    mailMessage.Subject = "Подтвердить регистрайию на GoodMom";
+                    mailMessage.Subject = "Подтвердить регистрацию на GoodMom";
                     mailMessage.Body = GetBody(WebConfigurationManager.AppSettings["AuthTemplate"].ToString(), login, passHash, WebConfigurationManager.AppSettings["AuthLink"].ToString());
                     break;
                 case EmailType.ChangePassword:
@@ -34,7 +34,7 @@ namespace BadMom.Helpers
                 default:
                     break;
             }
-           
+
             client.Send(mailMessage);
             return true;
         }
@@ -46,7 +46,7 @@ namespace BadMom.Helpers
             {
                 body = sr.ReadToEnd();
             }
-            
+
             string messageBody = string.Format(body, login, link + "?login=" + login + "&pass=" + password);
             return messageBody;
         }
@@ -56,5 +56,22 @@ namespace BadMom.Helpers
             Registration,
             ChangePassword
         }
+
+        public bool SendMail(string subject, string body, string email)
+        {
+            SmtpClient client = new SmtpClient();
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("info@goodmomonline.com.ua");
+            mailMessage.To.Add(email);
+            mailMessage.IsBodyHtml = true;
+
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
+
+
+            client.Send(mailMessage);
+            return true;
+        }
+
     }
 }

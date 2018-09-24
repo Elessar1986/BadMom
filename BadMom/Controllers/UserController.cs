@@ -7,6 +7,7 @@ using BadMom.Models.Shared;
 using BadMom.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,19 +42,25 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
 
-        public ActionResult UserInfo(string UserName)
+        public ActionResult UserInfo(string UserName, long? id)
         {
             try
             {
                 if (!string.IsNullOrEmpty(UserName))
                 {
                     var user = dataHelper.GetUserData(UserName);
+                    ViewBag.User = user;
+                    return View(user);
+                }
+                else if (id.HasValue)
+                {
+                    var user = dataHelper.GetUserData(id.Value);
                     ViewBag.User = user;
                     return View(user);
                 }
@@ -64,8 +71,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -76,13 +83,13 @@ namespace BadMom.Controllers
             {
                 var user = dataHelper.GetUserData(User.Identity.Name);
                 ViewBag.User = user;
-                ViewBag.UsersMessages = dataHelper.GetMessagesByUsers(user.Login);
+                ViewBag.UsersMessages = dataHelper.GetMessagesByUsers(user.Id);
                 return View(user);
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -97,8 +104,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -113,8 +120,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -124,13 +131,13 @@ namespace BadMom.Controllers
             {
                 var user = dataHelper.GetUserData(User.Identity.Name);
                 ViewBag.User = user;
-                var posts = dataHelper.GetPostsByUser(user.Id);
+                var posts = dataHelper.GetPostsByUser(user.Id).OrderByDescending(x => x.Created).ToList();
                 return View(posts);
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -140,7 +147,8 @@ namespace BadMom.Controllers
             {
                 var user = dataHelper.GetUserData(User.Identity.Name);
                 ViewBag.User = user;
-                var userMess = dataHelper.GetMessagesByUsers(user.Login).Where(x => x.Id == id).ToList();
+                if (user.Id == id) throw new Exception("Невозможно отправить сообщение самому себе!");
+                var userMess = dataHelper.GetMessagesByUsers(user.Id).Where(x => x.Id == id).ToList();
                 PrivateMessageByUserVM mess;
                 if (userMess.Count != 0)
                 {
@@ -149,7 +157,7 @@ namespace BadMom.Controllers
                 }
                 else
                 {
-                    var userFrom = dataHelper.GetUserData(userLogin);
+                    var userFrom = dataHelper.GetUserData(id);
                     mess = new PrivateMessageByUserVM
                     {
                         Avatar = userFrom.Photo,
@@ -163,8 +171,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -180,8 +188,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -195,24 +203,23 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
-
 
         public ActionResult UserAdvert(long id, string userName)
         {
             try
             {
-                ViewBag.User = dataHelper.GetUserData(userName);
+                ViewBag.User = dataHelper.GetUserData(id);
                 var adverts = dataHelper.GetAdvertsByUserId(id);
                 return View(adverts);
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -226,8 +233,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -259,9 +266,49 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
+
+        public ActionResult ChangeAvatar()
+        {
+            try
+            {
+                var user = dataHelper.GetUserData(User.Identity.Name);
+                ViewBag.User = user;
+                return View(user.Photo);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeAvatar(HttpPostedFileBase fileUpload)
+        {
+            try
+            {
+                var user = dataHelper.GetUserData(User.Identity.Name);
+                ViewBag.User = user;
+                if (fileUpload != null)
+                {
+                    var res = ImageHelper.ScaleImage(Image.FromStream(fileUpload.InputStream, true, true), 200, 200);
+                    ImageConverter _imageConverter = new ImageConverter();
+                    byte[] xByte = (byte[])_imageConverter.ConvertTo(res, typeof(byte[]));
+                    dataHelper.ChangeAvatar(xByte, user.Id);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
+            }
+        }
+
     }
 }

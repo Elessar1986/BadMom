@@ -119,7 +119,7 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             var mess = data.GetFeaturedPosts();
             var mapper = new MapperConfiguration(c => c.CreateMap<Message, FeaturedMessage>().ForMember(
                 d => d.UsersLikes, a => a.MapFrom(s => s.UsersLikes)).ForMember(
-                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();  
+                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();
             var mapped_mess = mapper.Map<IEnumerable<Message>, IEnumerable<FeaturedMessage>>(mess);
             return mapped_mess.ToList();
         }
@@ -129,7 +129,7 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             var mess = data.GetLastPosts();
             var mapper = new MapperConfiguration(c => c.CreateMap<Message, LastMessage>().ForMember(
                 d => d.UsersLikes, a => a.MapFrom(s => s.UsersLikes)).ForMember(
-                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();  
+                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();
             var mapped_mess = mapper.Map<IEnumerable<Message>, IEnumerable<LastMessage>>(mess);
             return mapped_mess.ToList();
         }
@@ -141,15 +141,13 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
                 d => d.User, a => a.MapFrom(s => s.User)).ForMember(
                 d => d.UsersLikes, a => a.MapFrom(s => s.UsersLikes)).ForMember(
                 s => s.ThemeObj, a => a.MapFrom(s => s.ThemeObj)).ForMember(
-                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();  
+                s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();
             var mapped_mess = mapper.Map<Message, PostVM>(mess);
             return mapped_mess;
         }
 
         public List<PostVM> GetPostsByTheme(int themeId)
         {
-            try
-            {
                 var mess = data.GetPostsByTheme(themeId);
                 var mapper = new MapperConfiguration(c => c.CreateMap<Message, PostVM>().ForMember(
                     d => d.User, a => a.MapFrom(s => s.User)).ForMember(
@@ -158,17 +156,11 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
                     s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();
                 var mapped_mess = mapper.Map<IEnumerable<Message>, IEnumerable<PostVM>>(mess);
                 return mapped_mess.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            
         }
 
         public List<PostVM> GetPostsByUser(long userId)
         {
-            try
-            {
                 var mess = data.GetPostsByUser(userId);
                 var mapper = new MapperConfiguration(c => c.CreateMap<Message, PostVM>().ForMember(
                     d => d.User, a => a.MapFrom(s => s.User)).ForMember(
@@ -177,40 +169,19 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
                     s => s.Comments, a => a.MapFrom(s => s.Comments))).CreateMapper();
                 var mapped_mess = mapper.Map<IEnumerable<Message>, IEnumerable<PostVM>>(mess);
                 return mapped_mess.ToList();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
         }
 
         public void DeletePost(long id)
         {
-            try
-            {
                 data.DeletePost(id);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
         }
 
-        public PostVM EditPost(PostVM post)
+        public bool EditPost(PostVM post)
         {
-            try
-            {
-                var mapper = new MapperConfiguration(c => c.CreateMap<PostVM, Message>()).CreateMapper();
-                var mappedRes = mapper.Map<PostVM, Message>(post);
-                var message = data.EditPost(mappedRes);
-                mapper = new MapperConfiguration(c => c.CreateMap<Message, PostVM>()).CreateMapper();
-                var mapped_mess = mapper.Map<Message, PostVM>(message);
-                return mapped_mess;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            var mapper = new MapperConfiguration(c => c.CreateMap<PostVM, Message>()).CreateMapper();
+            var mappedRes = mapper.Map<PostVM, Message>(post);
+            var message = data.EditPost(mappedRes);
+            return true;
         }
 
         public UserPasswordData GetPasswordData(string login)
@@ -238,6 +209,20 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
         public UserData GetUserData(string login)
         {
             var User = data.FindUserByLogin(login);
+            if (User != null)
+            {
+                var mapper = new MapperConfiguration(c => c.CreateMap<BLL.DataTransferObjects.User, UserData>().ForMember(
+                    s => s.FavoriteAdverts, a => a.MapFrom(s => s.FavoriteAdvert))).CreateMapper();
+                var getUser = mapper.Map<BLL.DataTransferObjects.User, UserData>(User);
+                //getUser.ConnectedUsers = GetConectedUsers(login);
+                return getUser;
+            }
+            return null;
+        }
+
+        public UserData GetUserData(long userId)
+        {
+            var User = data.GetUserById(userId);
             if (User != null)
             {
                 var mapper = new MapperConfiguration(c => c.CreateMap<BLL.DataTransferObjects.User, UserData>().ForMember(
@@ -350,6 +335,15 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             return mapped_Income.ToList();
         }
 
+        public Models.Wallet.Income GetIncomeById(long id)
+        {
+
+            var income = data.GetIncomeById(id);
+            var mapper = new MapperConfiguration(c => c.CreateMap<BLL.DataTransferObjects.Income, Models.Wallet.Income>()).CreateMapper();
+            var mapped_Income = mapper.Map<BLL.DataTransferObjects.Income, Models.Wallet.Income>(income);
+            return mapped_Income;
+        }
+
         public List<Models.Wallet.Income> DeleteIncome(long incomeId, string userName)
         {
             if (data.DeleteIncome(incomeId))
@@ -376,6 +370,14 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             var mapper = new MapperConfiguration(c => c.CreateMap<BLL.DataTransferObjects.Consumption, BadMom.Models.Wallet.Consumption>()).CreateMapper();
             var mapped_Consumption = mapper.Map<IEnumerable<BLL.DataTransferObjects.Consumption>, IEnumerable<BadMom.Models.Wallet.Consumption>>(consumption);
             return mapped_Consumption.ToList();
+        }
+
+        public Models.Wallet.Consumption GetConsumptionById(long id)
+        {
+            var consumption = data.GetConsumptionById(id);
+            var mapper = new MapperConfiguration(c => c.CreateMap<BLL.DataTransferObjects.Consumption, Models.Wallet.Consumption>()).CreateMapper();
+            var mapped_consumption = mapper.Map<BLL.DataTransferObjects.Consumption, Models.Wallet.Consumption>(consumption);
+            return mapped_consumption;
         }
 
         public List<Models.Wallet.Consumption> DeleteConsumption(long consumptionId, string userName)
@@ -432,26 +434,19 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
 
         public bool SendMessage(Models.User.PersonalMessage personalMessage, string userFrom)
         {
-            try
-            {
                 var mapper = new MapperConfiguration(c => c.CreateMap<Models.User.PersonalMessage, BLL.DataTransferObjects.PersonalMessage>()).CreateMapper();
                 var mapped_personalMessage = mapper.Map<Models.User.PersonalMessage, BLL.DataTransferObjects.PersonalMessage>(personalMessage);
 
                 data.SendMessage(mapped_personalMessage, userFrom);
 
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
-        public List<PrivateMessageByUserVM> GetMessagesByUsers(string userName)
+        public List<PrivateMessageByUserVM> GetMessagesByUsers(long userId)
         {
-            var usersMess = data.GetMessagesByUsers(userName);
+            var usersMess = data.GetMessagesByUsers(userId);
             var mapper = new MapperConfiguration(c => c.CreateMap<PrivateMessageByUser, PrivateMessageByUserVM>()).CreateMapper();
-            var mapped_res = mapper.Map<List<PrivateMessageByUser>, List< PrivateMessageByUserVM >> (usersMess);
+            var mapped_res = mapper.Map<List<PrivateMessageByUser>, List<PrivateMessageByUserVM>>(usersMess);
             return mapped_res;
         }
 
@@ -642,9 +637,9 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
 
         public void AddEvent(EventVM eventItem, string userName)
         {
-                var mapper = new MapperConfiguration(c => c.CreateMap<EventVM, Events>()).CreateMapper();
-                var mappedRes = mapper.Map<EventVM, Events>(eventItem);
-                data.AddEvent(mappedRes, userName);
+            var mapper = new MapperConfiguration(c => c.CreateMap<EventVM, Events>()).CreateMapper();
+            var mappedRes = mapper.Map<EventVM, Events>(eventItem);
+            data.AddEvent(mappedRes, userName);
         }
 
         public void DeleteEvent(long eventId)
@@ -677,7 +672,7 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
 
         public List<AdminUserDataVM> GetAllUsers(string find, string status, string conf, string role, string order)
         {
-            var users = data.GetAllUsers(find, status, conf, role , order );
+            var users = data.GetAllUsers(find, status, conf, role, order);
             var mapper = new MapperConfiguration(c => c.CreateMap<AdminUserData, AdminUserDataVM>()).CreateMapper();
             var mappedRes = mapper.Map<List<AdminUserData>, List<AdminUserDataVM>>(users);
             return mappedRes;
@@ -715,6 +710,11 @@ namespace BadMom.Helpers.DataServiceHelper.Concrete
             var mappedRes = mapper.Map<AdvertVM, Advert>(advert);
             data.EditAdvert(mappedRes);
             return true;
+        }
+
+        public bool ChangeAvatar(byte[] photo, long id)
+        {
+            return data.ChangeAvatar(photo, id);
         }
     }
 }

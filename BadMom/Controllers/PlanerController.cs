@@ -40,8 +40,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message + " ||| " + ex.InnerException.InnerException});
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -55,7 +55,7 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
+                logger.ErrorMessage("305", ex);
                 return Json(new { error = ex.Message, JsonRequestBehavior.AllowGet });
             }
         }
@@ -69,15 +69,15 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message + " ||| " + ex.InnerException.InnerException });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
         public ActionResult AddEvent(DateTime dateStart, long? advertId, string title)
         {
             ViewBag.Sources = dataHelper.GetSourceByUser(User.Identity.Name).Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
-            ViewBag.EventType = dataHelper.GetEventTypes().Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            ViewBag.EventType = dataHelper.GetEventTypes().Where(x => x.Id < 6 ).Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             return PartialView("AddEvent", new EventVM { DateStart = dateStart, AdvertId = advertId , Title = string.IsNullOrEmpty(title) ? null : title });
         }
 
@@ -93,8 +93,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message + " ||| " + ex.InnerException.InnerException });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 
@@ -108,8 +108,8 @@ namespace BadMom.Controllers
             }
             catch (Exception ex)
             {
-                logger.ErrorMessage("305", $"Error: {ex.Message} | Inner: {ex.InnerException.Message}");
-                return View("Error", new Error() { ExDescription = ex.Message, ExInnerDescription = ex.InnerException.Message + " ||| " + ex.InnerException.InnerException });
+                logger.ErrorMessage("305", ex);
+                return View("Error", new Error() { ExDescription = ex.Message });
             }
         }
 

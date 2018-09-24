@@ -16,9 +16,15 @@ namespace BadMom.Helpers
             data = service;
         }
 
-        public bool ErrorMessage(string code, string descriptions)
+        public bool ErrorMessage(string code, Exception ex)
         {
-            return SendLoggerMessage(logTypes.Error, code, descriptions);
+            var mess = $"Error: {ex.Message} \n";
+            if (ex.InnerException != null)
+            {
+                mess += $"Inner: {ex.InnerException.Message} \n";
+                if (ex.InnerException.InnerException != null) mess += $"InnerInner: { ex.InnerException.InnerException.Message}";
+            }
+            return SendLoggerMessage(logTypes.Error, code, mess);
         }
 
         public bool SecurityMessage(string code, string descriptions)

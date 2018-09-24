@@ -5,6 +5,10 @@
     ViewBag.Title = "Blog";
 }
 
+@section styles{
+    @Styles.Render("~/Content/blog")
+}
+
 <section style="background: url(../../Resources/banner-blog.jpg);background-color: violet; background-size: cover; background-position: center center" class="hero-wallet">
     <div class="container">
         <div class="row">
@@ -38,7 +42,7 @@
                                                 <img src="@imgSrc" class="img-fluid" />
                                             }
                                             else
-                                            {<img src="~/Resources/img/blog-post-2.jpg" alt="..." class="img-fluid">}
+                                            {<img src="~/Resources/nofotoblog.jpg" alt="..." class="img-fluid">}
                                         </a>
 
                                     </div>
@@ -56,10 +60,48 @@
                                     </div>
                                 </div>
                                 <footer class="post-footer d-flex align-items-center">
-                                    <a href="#" class="author d-flex align-items-center flex-wrap">
-                                        <div class="avatar"><img src="~/Resources/user-icon-png-pnglogocom.png" alt="..." class="img-fluid"></div>
-                                        <div class="title"><span>@Html.ActionLink(@item.User.Login, "UserInfo", "User", new { UserName = @item.User.Login }, new { }) </span></div>
-                                    </a>
+                                    @if (User.Identity.Name != item.User.Login)
+                                    {
+                                        <a href="@Url.Action("UserInfo", "User", new { UserName = item.User.Login })" class="author d-flex align-items-center flex-wrap">
+                                            <div class="avatar">
+                                                @if (item.User.Photo.Length != 0)
+                                                {
+                                                    var base64 = Convert.ToBase64String(item.User.Photo);
+                                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                    <img src="@imgSrc" class="img-fluid" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Resources/user-icon-png-pnglogocom.png" alt="..." class="img-fluid">
+                                                }
+
+                                            </div>
+                                            <div class="title"><span>@item.User.Login</span></div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Index", "User", new { UserName = item.User.Login })" class="author d-flex align-items-center flex-wrap">
+                                            <div class="avatar">
+                                                @if (item.User.Photo.Length != 0)
+                                                {
+                                                    var base64 = Convert.ToBase64String(item.User.Photo);
+                                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                                    <img src="@imgSrc" class="img-fluid" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Resources/user-icon-png-pnglogocom.png" alt="..." class="img-fluid">
+                                                }
+
+                                            </div>
+                                            <div class="title"><span>@item.User.Login</span></div>
+                                        </a>
+                                    }
                                     <div class="date"><i class="fa fa-heart"></i>@item.UsersLikes.Count</div>
                                     <div class="comments meta-last"><i class="fa fa-comments-o"></i>@item.Comments.Count</div>
                                 </footer>
@@ -98,7 +140,13 @@
             <!-- Widget [Latest Posts Widget]   -->
             <div class="widget categories">
 
-                @Html.ActionLink("Добавить пост", "AddPost", "Blog", new { })
+                <a href="@Url.Action("AddPost", "Blog")" class="add-post-link">
+                    <div class="d-flex align-content-center align-items-center add-post">
+
+                        <i class="fa fa-3x fa-plus-square" style="margin-right:3px;"></i> Добавить пост
+
+                    </div>
+                </a>
 
             </div>
 
@@ -131,7 +179,19 @@
                     {
                         <a href="~/blog/post?message=@item.Id">
                             <div class="item d-flex align-items-center">
-                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="image">
+                                    @if (item.Photo != null && item.Photo.Length != 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.Photo);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                        <img src="@imgSrc" class="img-fluid" />
+                                    }
+                                    else
+                                    {<img src="~/Resources/nofotoblog.jpg" alt="..." class="img-fluid">}
+                                    @*<img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid">*@
+                                </div>
                                 <div class="title">
                                     <strong>@item.Title</strong>
                                     <div class="d-flex align-items-center">
@@ -152,7 +212,19 @@
                     {
                         <a href="~/blog/post?message=@item.Id">
                             <div class="item d-flex align-items-center">
-                                <div class="image"><img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="image">
+                                    @if (item.Photo != null && item.Photo.Length != 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.Photo);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                                        <img src="@imgSrc" class="img-fluid" />
+                                    }
+                                    else
+                                    {<img src="~/Resources/nofotoblog.jpg" alt="..." class="img-fluid">}
+                                    @*<img src="~/Resources/img/small-thumbnail-1.jpg" alt="..." class="img-fluid">*@
+                                </div>
                                 <div class="title">
                                     <strong>@item.Title</strong>
                                     <div class="d-flex align-items-center">

@@ -29,6 +29,8 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 
         UserData GetUserData(string login);
 
+        UserData GetUserData(long userId);
+
         List<ThemesVM> GetThemes();
 
         List<PostVM> GetPostsByTheme(int themeId);
@@ -41,7 +43,7 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 
         List<PostVM> GetPostsByUser(long userId);
 
-        PostVM EditPost(PostVM post);
+        bool EditPost(PostVM post);
 
         void DeletePost(long id);
 
@@ -73,11 +75,15 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 
         List<Income> GetIncomeByUser(string userName, DateTime from, DateTime to, long sourceId = 0);
 
+        Income GetIncomeById(long id);
+
         List<Income> DeleteIncome(long incomeId, string userName);
 
         List<Consumption> AddConsumption(Consumption consumption, string userName);
 
         List<Consumption> GetConsumptionByUser(string userName, DateTime from, DateTime to, long sourceId = 0);
+
+        Consumption GetConsumptionById(long id);
 
         List<Consumption> DeleteConsumption(long consumptionId, string userName);
 
@@ -87,7 +93,7 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
 
         bool SendMessage(PersonalMessage personalMessage, string userFrom);
 
-        List<PrivateMessageByUserVM> GetMessagesByUsers(string userName);
+        List<PrivateMessageByUserVM> GetMessagesByUsers(long userId);
 
         List<PersonalMessage> SetMessageStatus(List<PersonalMessage> messages, PersonalMessageStatus status);
 
@@ -130,5 +136,7 @@ namespace BadMom.Helpers.DataServiceHelper.Abstract
         List<LoggerEvent> GetLog(DateTime from);
 
         bool EditAdvert(AdvertVM advert);
+
+        bool ChangeAvatar(byte[] photo, long id);
     }
 }
