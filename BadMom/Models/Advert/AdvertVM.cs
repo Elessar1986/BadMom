@@ -12,7 +12,7 @@ namespace BadMom.Models.Advert
         public long Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "Максимальная длина заголовка 100 символов.")]
         public string Title { get; set; }
 
         [Required]

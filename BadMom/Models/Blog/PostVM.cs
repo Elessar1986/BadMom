@@ -4,6 +4,7 @@ using BadMom.Models.Registration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace BadMom.Models.Blog
 {
@@ -11,6 +12,7 @@ namespace BadMom.Models.Blog
     {
         public long Id { get; set; }
 
+        [StringLength(100, ErrorMessage ="Максимальная длина заголовка 100 символов.")]
         public string Title { get; set; }
 
         [AllowHtml]

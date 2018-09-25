@@ -20,6 +20,7 @@ namespace BadMom.Models.Wallet
         public DateTime? Date { get; set; }
 
         [Required]
+        [StringLength(500, ErrorMessage = "Максимальная длина описания 500 символов.")]
         public string Description { get; set; }
 
         public bool Potentian { get; set; }

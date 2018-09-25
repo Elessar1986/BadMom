@@ -19,7 +19,6 @@ namespace BadMom.DAL.Model
         public string Code { get; set; }
 
         [Required]
-        [StringLength(500)]
         public string Description { get; set; }
 
         public virtual logTypes logTypes { get; set; }
