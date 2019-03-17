@@ -472,7 +472,9 @@ namespace BadMom.BLL.Services
 
         public bool AddIncome(DataTransferObjects.Income income, string userName)
         {
-            income.UserId = GetUserId(userName) > 0 ? GetUserId(userName) : throw new Exception();
+            if (GetUserId(userName) > 0) income.UserId = GetUserId(userName);
+            else
+                throw new Exception();
             income.Created = DateTime.Now;
             var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.Income, DAL.Model.Income>()).CreateMapper();
             var mapped_income = mapper.Map<DataTransferObjects.Income, DAL.Model.Income>(income);
@@ -535,7 +537,9 @@ namespace BadMom.BLL.Services
 
         public bool AddConsumption(DataTransferObjects.Consumption consumption, string userName)
         {
-            consumption.UserId = GetUserId(userName) > 0 ? GetUserId(userName) : throw new Exception();
+            if (GetUserId(userName) > 0) consumption.UserId = GetUserId(userName);
+            else
+                throw new Exception();
             consumption.Created = DateTime.Now;
             var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.Consumption, DAL.Model.Consumption>()).CreateMapper();
             var mapped_consumption = mapper.Map<DataTransferObjects.Consumption, DAL.Model.Consumption>(consumption);
