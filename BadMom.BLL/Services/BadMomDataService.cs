@@ -435,7 +435,10 @@ namespace BadMom.BLL.Services
 
         public bool AddSource(DataTransferObjects.Source source, string userName)
         {
-            source.UserId = GetUserId(userName) > 0 ? GetUserId(userName) : throw new Exception();
+
+            if (GetUserId(userName) > 0) source.UserId = GetUserId(userName);
+            else
+                throw new Exception();
             source.Created = DateTime.Now;
             var mapper = new MapperConfiguration(c => c.CreateMap<DataTransferObjects.Source, DAL.Model.Source>()).CreateMapper();
             var mapped_Source = mapper.Map<DataTransferObjects.Source, DAL.Model.Source>(source);
@@ -924,11 +927,37 @@ namespace BadMom.BLL.Services
             return true;
         }
 
-        public bool ChangeAvatar(byte[] photo, long id )
+        public bool ChangeAvatar(byte[] photo, long id)
         {
             var user = data.Users.Get(id);
             user.Photo = photo;
             data.Users.Update(user);
+            data.Save();
+            return true;
+        }
+
+        public bool AddItemToList(string item, string listName)
+        {
+            switch (listName)
+            {
+                case "IncomeReason":
+                    data.IncomeReason.Create(new DAL.Model.IncomeReason { Name = item });
+                    break;
+                case "ConsumptionReason":
+                    data.ConsumptionReason.Create(new DAL.Model.ConsumptionReason { Name = item });
+                    break;
+                case "ResourceType":
+                    data.ResourceType.Create(new DAL.Model.ResourceType { Name = item });
+                    break;
+                case "Category":
+                    data.Category.Create(new DAL.Model.Category { Name = item });
+                    break;
+                case "Themes":
+                    data.Themes.Create(new DAL.Model.Themes { Name = item });
+                    break;
+                default:
+                    break;
+            }
             data.Save();
             return true;
         }
